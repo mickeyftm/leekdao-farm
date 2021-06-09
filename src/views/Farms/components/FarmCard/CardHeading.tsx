@@ -33,7 +33,7 @@ const CardHeading: React.FC<ExpandableSectionProps> = ({
   console.log(depositFee);
   return (
     <Wrapper justifyContent="space-between" alignItems="center" mb="12px">
-      <Image src={`/images/farms/${farmImage}.png`} alt={tokenSymbol} width={64} height={64} />
+      <Image src={`./images/farms/${farmImage}.png`} alt={tokenSymbol} width={64} height={64} />
       <Flex flexDirection="column" alignItems="flex-end">
         <Heading mb="4px">{lpLabel}</Heading>
         <Flex justifyContent="center">
