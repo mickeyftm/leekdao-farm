@@ -8,12 +8,12 @@ const farms: FarmConfig[] = [
     lpSymbol: 'LEEK-USDT LP',
     lpAddresses: {
       97: '',
-      137: '0x2fd5e4BF1f6F55DEb738b054141ccAD744328B17',
+      137: '0xaaAdb74F10BADe6f54fABd181efe13DB6c6d1A22',
     },
     tokenSymbol: 'LEEK',
     tokenAddresses: {
       97: '',
-      137: '0xE745F190A0085c4dDbF41A193BCfB3Dadf1401A1',
+      137: '0xB82f7f11188ACbc90D6ABd621CD2C338c3C75eA2',
     },
     quoteTokenSymbol: QuoteToken.BUSD,
     quoteTokenAdresses: contracts.busd,
@@ -24,12 +24,12 @@ const farms: FarmConfig[] = [
     lpSymbol: 'LEEK-MATIC LP',
     lpAddresses: {
       97: '',
-      137: '0xAd9bc703cbfe6DEa90Cf6db51267361BaE3F856C',
+      137: '0x113AcAd027141bB6252Bb2Baeb66C8DFbA16E8Af',
     },
     tokenSymbol: 'LEEK',
     tokenAddresses: {
       97: '',
-      137: '0xE745F190A0085c4dDbF41A193BCfB3Dadf1401A1',
+      137: '0xB82f7f11188ACbc90D6ABd621CD2C338c3C75eA2',
     },
     quoteTokenSymbol: QuoteToken.BNB,
     quoteTokenAdresses: contracts.wbnb,
@@ -40,7 +40,7 @@ const farms: FarmConfig[] = [
     lpSymbol: 'WMATIC-USDT LP',
     lpAddresses: {
       97: '',
-      137: '0x55FF76BFFC3Cdd9D5FdbBC2ece4528ECcE45047e',
+      137: '0x085Fe343aaF4B049B54dc68AB47c2121c70763E9',
     },
     tokenSymbol: 'WMATIC',
     tokenAddresses: {

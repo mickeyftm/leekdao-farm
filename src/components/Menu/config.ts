@@ -12,11 +12,11 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Exchange',
-        href: 'https://exchange.goosedefi.com/',
+        href: 'https://michaelwu1995.github.io/leek-finance-swap/#/swap',
       },
       {
         label: 'Liquidity',
-        href: 'https://exchange.goosedefi.com/#/pool',
+        href: 'https://michaelwu1995.github.io/leek-finance-swap/#/pool',
       },
     ],
   },

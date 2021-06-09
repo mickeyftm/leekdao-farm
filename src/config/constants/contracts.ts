@@ -4,7 +4,7 @@ export default {
     97: '',
   },
   masterChef: {
-    137: '0xCfEA86A8866f2A6DD074dddacEBa08ECF16Ba2c0',
+    137: '0x8eA6bEE665c2cC4AA0098F2Cc2Da46Dc1601A8d7',
     97: '',
   },
   wbnb: {
@@ -20,7 +20,7 @@ export default {
     97: '',
   },
   mulltiCall: {
-    137: '0xa951e14C8f1BFA4DC4bb9AEbA60b8701044d8EDb',
+    137: '0x7b00f6e0bc0F90d938de02Eb9174735FfCe17E56',
     97: '',
   },
   busd: {
