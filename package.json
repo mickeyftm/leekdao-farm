@@ -1,6 +1,6 @@
 {
-  "name": "goose-frontend",
-  "version": "0.1.0",
+  "name": "leek-finance-farm",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "deploy": "gh-pages -d build",
