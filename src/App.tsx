@@ -42,10 +42,10 @@ const App: React.FC = () => {
       <Menu>
         <Suspense fallback={<PageLoader />}>
           <Switch>
-            <Route path="/" exact>
+            <Route strict path="/" exact>
               <Home />
             </Route>
-            <Route path="/farms">
+            <Route strict path="/farms">
               <Farms />
             </Route>
             {/* <Route path="/nests">
