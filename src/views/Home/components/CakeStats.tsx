@@ -26,15 +26,15 @@ const CakeStats = () => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getCakeAddress())
-  const farms = useFarms();
-  const leekPrice = usePriceCakeBusd();
-  const circSupply = totalSupply ? totalSupply.minus(burnedBalance) : new BigNumber(0);
-  const cakeSupply = getBalanceNumber(circSupply);
-  const marketCap = leekPrice.times(circSupply);
+  const farms = useFarms()
+  const leekPrice = usePriceCakeBusd()
+  const circSupply = totalSupply ? totalSupply.minus(burnedBalance) : new BigNumber(0)
+  const cakeSupply = getBalanceNumber(circSupply)
+  const marketCap = leekPrice.times(circSupply)
 
-  let leekPerBlock = 0;
-  if(farms && farms[0] && farms[0].leekPerBlock){
-    leekPerBlock = new BigNumber(farms[0].leekPerBlock).div(new BigNumber(10).pow(18)).toNumber();
+  let leekPerBlock = 0
+  if (farms && farms[0] && farms[0].leekPerBlock) {
+    leekPerBlock = new BigNumber(farms[0].leekPerBlock).div(new BigNumber(10).pow(18)).toNumber()
   }
 
   return (
@@ -61,7 +61,9 @@ const CakeStats = () => {
         </Row>
         <Row>
           <Text fontSize="14px">{TranslateString(540, 'New LEEK/block')}</Text>
-          <Text bold fontSize="14px">{leekPerBlock}</Text>
+          <Text bold fontSize="14px">
+            {leekPerBlock}
+          </Text>
         </Row>
       </CardBody>
     </StyledCakeStats>

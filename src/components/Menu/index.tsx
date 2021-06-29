@@ -8,7 +8,7 @@ import { Menu as UikitMenu } from 'leek-uikit'
 import config from './config'
 
 const Menu = (props) => {
-  const { account, connect, reset } = useWallet()
+  const { account, connect, reset, error } = useWallet()
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = usePriceCakeBusd()
@@ -26,6 +26,7 @@ const Menu = (props) => {
       cakePriceUsd={cakePriceUsd.toNumber()}
       links={config}
       priceLink="https://www.coingecko.com/en/coins/goose-finance"
+      error={error}
       {...props}
     />
   )
