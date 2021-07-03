@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components'
 import { Text, Modal } from 'leek-uikit'
 import { ConfirmedIcon } from './helpers'
 
-type ConfirmationPendingContentProps = { onDismiss: () => void; }
+type ConfirmationPendingContentProps = { onDismiss: () => void }
 
 const rotate = keyframes`
   from {
@@ -20,7 +20,7 @@ const Spinner = styled.img`
   height: 16px;
 `
 
-const CustomLightSpinner = styled(Spinner) <{ size: string }>`
+const CustomLightSpinner = styled(Spinner)<{ size: string }>`
   height: ${({ size }) => size};
   width: ${({ size }) => size};
 `

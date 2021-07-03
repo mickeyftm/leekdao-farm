@@ -4,14 +4,14 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import BigNumber from 'bignumber.js'
 import { Card, CardBody, CardRibbon, Button, useModal } from 'leek-uikit'
 import { Ifo, IfoStatus } from 'config/constants/types'
-import moment from "moment"
+import moment from 'moment'
 import useI18n from 'hooks/useI18n'
 import useBlock from 'hooks/useBlock'
 import { useIfoContract } from 'hooks/useContract'
 import UnlockButton from 'components/UnlockButton'
 import { getBalanceNumber } from 'utils/formatBalance'
 import IfoCardHeader from './IfoCardHeader'
-import ParticipateModal from "./ParticipateModal"
+import ParticipateModal from './ParticipateModal'
 import IfoCardProgress from './IfoCardProgress'
 import IfoCardDetails from './IfoCardDetails'
 
@@ -19,7 +19,7 @@ export interface IfoCardProps {
   ifo: Ifo
 }
 
-const StyledIfoCard = styled(Card) <{ ifoId: string }>`
+const StyledIfoCard = styled(Card)<{ ifoId: string }>`
   background-repeat: no-repeat;
   background-size: contain;
   padding-top: 10px;
@@ -34,8 +34,8 @@ const Divider = styled.div`
   height: 1px;
   margin-left: auto;
   margin-right: auto;
-  margin-top:20px;
-  margin-bottom:20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%;
 `
 
@@ -104,10 +104,10 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
         contract.methods.isOpen().call(),
         contract.methods.hasClosed().call(),
         contract.methods._rate().call(),
-        contract.methods.remainingTokens().call()
+        contract.methods.remainingTokens().call(),
       ])
 
-      const status = getStatus(isOpen, hasClosed);
+      const status = getStatus(isOpen, hasClosed)
 
       setState({
         isLoading: false,
@@ -115,7 +115,7 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
         openingTime,
         closingTime,
         rate,
-        availableToken
+        availableToken,
       })
     }
 
@@ -125,16 +125,18 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
   const isActive = state.status === 'live'
   const isFinished = state.status === 'finished'
 
-  const launchTime = moment(Number(state.openingTime) * 1000).format('MMMM Do YYYY, h:mm a') || moment(startTime * 1000).format('MMMM Do YYYY, h:mm a')
-  const closingTime = moment(Number(state.closingTime) * 1000).format('MMMM Do YYYY, h:mm a') || moment(endTime * 1000).format('MMMM Do YYYY, h:mm a')
+  const launchTime =
+    moment(Number(state.openingTime) * 1000).format('MMMM Do YYYY, h:mm a') ||
+    moment(startTime * 1000).format('MMMM Do YYYY, h:mm a')
+  const closingTime =
+    moment(Number(state.closingTime) * 1000).format('MMMM Do YYYY, h:mm a') ||
+    moment(endTime * 1000).format('MMMM Do YYYY, h:mm a')
 
   const remainingTokens = getBalanceNumber(new BigNumber(state.availableToken))
 
   const progress = isActive ? ((salesAmount - remainingTokens) / salesAmount) * 100 : 0
 
-  const [onPresentParticipateModal] = useModal(
-    <ParticipateModal tokenName={name} contract={contract} />,
-  )
+  const [onPresentParticipateModal] = useModal(<ParticipateModal tokenName={name} contract={contract} />)
 
   return (
     <>
@@ -142,7 +144,13 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
         <CardBody>
           <IfoCardHeader ifoId={id} name={name} subTitle={subTitle} />
           <IfoCardProgress progress={progress} />
-          {!account ? <UnlockButton fullWidth /> : <Button fullWidth onClick={onPresentParticipateModal}>Participate</Button>}
+          {!account ? (
+            <UnlockButton fullWidth />
+          ) : (
+            <Button fullWidth onClick={onPresentParticipateModal}>
+              Participate
+            </Button>
+          )}
           <Divider />
           <IfoCardDetails
             launchTime={launchTime}
@@ -155,7 +163,7 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
             availableToken={state.availableToken}
           />
         </CardBody>
-      </StyledIfoCard >
+      </StyledIfoCard>
     </>
   )
 }

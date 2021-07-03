@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import { Text, LinkExternal, Link } from 'leek-uikit'
 import { getBalanceNumber } from 'utils/formatBalance'
 import useI18n from 'hooks/useI18n'
-import numeral from "numeral"
+import numeral from 'numeral'
 
 export interface IfoCardDetailsProps {
   launchTime: string
@@ -39,10 +39,10 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({
   rate,
   mainToken,
   tokenName,
-  availableToken
+  availableToken,
 }) => {
   const TranslateString = useI18n()
-  const tokenNumber = getBalanceNumber(new BigNumber(availableToken));
+  const tokenNumber = getBalanceNumber(new BigNumber(availableToken))
 
   return (
     <>
@@ -60,7 +60,6 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({
               {launchTime}
             </Link>
           </Text>
-
         </Item>
 
         <Item>
@@ -80,17 +79,23 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({
 
         <Item>
           <Display>{TranslateString(584, 'For Sale')}</Display>
-          <Text>{numeral(salesAmount).format('0,0')} {tokenName}</Text>
+          <Text>
+            {numeral(salesAmount).format('0,0')} {tokenName}
+          </Text>
         </Item>
 
         <Item>
           <Display>Available Token</Display>
-          <Text>{numeral(tokenNumber).format('0,0')} {tokenName}</Text>
+          <Text>
+            {numeral(tokenNumber).format('0,0')} {tokenName}
+          </Text>
         </Item>
 
         <Item>
           <Display>LEEK per MATIC</Display>
-          <Text>1 {mainToken} = {rate} {tokenName}</Text>
+          <Text>
+            1 {mainToken} = {rate} {tokenName}
+          </Text>
         </Item>
       </StyledIfoCardDetails>
       <LinkExternal href={projectSiteUrl} style={{ margin: 'auto' }}>

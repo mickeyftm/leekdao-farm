@@ -92,7 +92,7 @@ const Ifo = () => {
           </div>
         </div>
       </LaunchIfoCallout>
-    </div >
+    </div>
   )
 }
 

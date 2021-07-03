@@ -24,7 +24,7 @@ const Description = styled(Text)`
   color: ${({ theme }) => theme.colors.textSubtle};
   font-size: 14px;
   text-align: left;
-  margin-left:20px;
+  margin-left: 20px;
 `
 
 const IfoCardHeader: React.FC<IfoCardHeaderProps> = ({ ifoId, name, subTitle }) => {

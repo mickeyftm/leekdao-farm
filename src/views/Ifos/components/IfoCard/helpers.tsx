@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Heading, IconButton, CloseIcon } from 'leek-uikit'
 import { AutoColumn, ColumnCenter } from './Column'
 
-
 export const Wrapper = styled.div`
   width: 100%;
   overflow-y: auto;
@@ -35,15 +34,15 @@ const StyledContentHeader = styled.div`
 `
 
 type ContentHeaderProps = {
-    children: ReactNode
-    onDismiss: () => void
+  children: ReactNode
+  onDismiss: () => void
 }
 
 export const ContentHeader = ({ children, onDismiss }: ContentHeaderProps) => (
-    <StyledContentHeader>
-        <Heading>{children}</Heading>
-        <IconButton onClick={onDismiss} variant="text">
-            <CloseIcon color="primary" />
-        </IconButton>
-    </StyledContentHeader>
+  <StyledContentHeader>
+    <Heading>{children}</Heading>
+    <IconButton onClick={onDismiss} variant="text">
+      <CloseIcon color="primary" />
+    </IconButton>
+  </StyledContentHeader>
 )
