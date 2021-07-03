@@ -25,6 +25,11 @@ const config: MenuEntry[] = [
     icon: 'FarmIcon',
     href: '/farms',
   },
+  {
+    label: 'IDO',
+    icon: 'IfoIcon',
+    href: '/ido',
+  },
   // {
   //   label: 'Nests',
   //   icon: 'PoolIcon',

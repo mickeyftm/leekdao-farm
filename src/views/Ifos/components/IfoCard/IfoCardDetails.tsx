@@ -2,17 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { Text, LinkExternal, Link } from 'leek-uikit'
+import { getBalanceNumber } from 'utils/formatBalance'
 import useI18n from 'hooks/useI18n'
+import numeral from "numeral"
 
 export interface IfoCardDetailsProps {
-  launchDate: string
   launchTime: string
-  saleAmount: string
-  raiseAmount: string
-  cakeToBurn: string
+  closingTime: string
+  salesAmount: number
   projectSiteUrl: string
-  raisingAmount: BigNumber
-  totalAmount: BigNumber
+  rate: number
+  mainToken: string
+  tokenName: string
+  availableToken: number
 }
 
 const StyledIfoCardDetails = styled.div`
@@ -30,26 +32,26 @@ const Display = styled(Text)`
 `
 
 const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({
-  launchDate,
   launchTime,
-  saleAmount,
-  raiseAmount,
-  cakeToBurn,
+  closingTime,
+  salesAmount,
   projectSiteUrl,
-  raisingAmount,
-  totalAmount,
+  rate,
+  mainToken,
+  tokenName,
+  availableToken
 }) => {
   const TranslateString = useI18n()
+  const tokenNumber = getBalanceNumber(new BigNumber(availableToken));
 
   return (
     <>
       <StyledIfoCardDetails>
         <Item>
-          <Display>{TranslateString(582, 'Launch Time')}</Display>
+          <Display>Launch Time</Display>
           <Text>
-            {launchDate},
             <Link
-              href="https://www.timeanddate.com/worldclock/singapore/singapore"
+              href="https://www.timeanddate.com/time/zones/aest"
               target="blank"
               rel="noopener noreferrer"
               ml="4px"
@@ -58,22 +60,37 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({
               {launchTime}
             </Link>
           </Text>
+
         </Item>
+
+        <Item>
+          <Display>Closing Time</Display>
+          <Text>
+            <Link
+              href="https://www.timeanddate.com/time/zones/aest"
+              target="blank"
+              rel="noopener noreferrer"
+              ml="4px"
+              style={{ display: 'inline' }}
+            >
+              {closingTime}
+            </Link>
+          </Text>
+        </Item>
+
         <Item>
           <Display>{TranslateString(584, 'For Sale')}</Display>
-          <Text>{saleAmount}</Text>
+          <Text>{numeral(salesAmount).format('0,0')} {tokenName}</Text>
         </Item>
+
         <Item>
-          <Display>{TranslateString(999, 'To raise (USD)')}</Display>
-          <Text>{raiseAmount}</Text>
+          <Display>Available Token</Display>
+          <Text>{numeral(tokenNumber).format('0,0')} {tokenName}</Text>
         </Item>
+
         <Item>
-          <Display>{TranslateString(586, 'CAKE to burn (USD)')}</Display>
-          <Text>{cakeToBurn}</Text>
-        </Item>
-        <Item>
-          <Display>{TranslateString(999, 'Total raised (% of target)')}</Display>
-          <Text>{`${totalAmount.div(raisingAmount).times(100).toFixed(2)}%`}</Text>
+          <Display>LEEK per MATIC</Display>
+          <Text>1 {mainToken} = {rate} {tokenName}</Text>
         </Item>
       </StyledIfoCardDetails>
       <LinkExternal href={projectSiteUrl} style={{ margin: 'auto' }}>

@@ -2,45 +2,53 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import BigNumber from 'bignumber.js'
-import { Card, CardBody, CardRibbon } from 'leek-uikit'
-import { BSC_BLOCK_TIME } from 'config'
+import { Card, CardBody, CardRibbon, Button, useModal } from 'leek-uikit'
 import { Ifo, IfoStatus } from 'config/constants/types'
+import moment from "moment"
 import useI18n from 'hooks/useI18n'
 import useBlock from 'hooks/useBlock'
 import { useIfoContract } from 'hooks/useContract'
 import UnlockButton from 'components/UnlockButton'
+import { getBalanceNumber } from 'utils/formatBalance'
 import IfoCardHeader from './IfoCardHeader'
+import ParticipateModal from "./ParticipateModal"
 import IfoCardProgress from './IfoCardProgress'
-import IfoCardDescription from './IfoCardDescription'
 import IfoCardDetails from './IfoCardDetails'
-import IfoCardTime from './IfoCardTime'
-import IfoCardContribute from './IfoCardContribute'
 
 export interface IfoCardProps {
   ifo: Ifo
 }
 
-const StyledIfoCard = styled(Card)<{ ifoId: string }>`
-  background-image: ${({ ifoId }) => `url('/images/ifos/${ifoId}-bg.svg')`};
+const StyledIfoCard = styled(Card) <{ ifoId: string }>`
   background-repeat: no-repeat;
   background-size: contain;
-  padding-top: 112px;
+  padding-top: 10px;
   margin-left: auto;
   margin-right: auto;
   max-width: 437px;
   width: 100%;
 `
 
-const getStatus = (currentBlock: number, startBlock: number, endBlock: number): IfoStatus | null => {
-  if (currentBlock < startBlock) {
+const Divider = styled.div`
+  background-color: ${({ theme }) => theme.colors.borderColor};
+  height: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:20px;
+  margin-bottom:20px;
+  width: 100%;
+`
+
+const getStatus = (isOpen: boolean | null, hasClosed: boolean | null) => {
+  if (!isOpen) {
     return 'coming_soon'
   }
 
-  if (currentBlock >= startBlock && currentBlock <= endBlock) {
+  if (isOpen && !hasClosed) {
     return 'live'
   }
 
-  if (currentBlock > endBlock) {
+  if (!isOpen && hasClosed) {
     return 'finished'
   }
 
@@ -64,118 +72,91 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
     id,
     address,
     name,
+    mainToken,
     subTitle,
-    description,
-    launchDate,
-    launchTime,
-    saleAmount,
-    raiseAmount,
-    cakeToBurn,
+    startTime,
+    endTime,
+    salesAmount,
     projectSiteUrl,
-    currency,
-    currencyAddress,
+    tokenAddress,
     tokenDecimals,
-    releaseBlockNumber,
   } = ifo
   const [state, setState] = useState({
     isLoading: true,
     status: null,
-    blocksRemaining: 0,
-    secondsUntilStart: 0,
-    progress: 0,
-    secondsUntilEnd: 0,
-    raisingAmount: new BigNumber(0),
-    totalAmount: new BigNumber(0),
-    startBlockNum: 0,
-    endBlockNum: 0,
+    openingTime: 0,
+    closingTime: 0,
+    rate: 0,
+    availableToken: 0,
   })
   const { account } = useWallet()
   const contract = useIfoContract(address)
 
-  const currentBlock = useBlock()
   const TranslateString = useI18n()
 
   const Ribbon = getRibbonComponent(state.status, TranslateString)
 
   useEffect(() => {
     const fetchProgress = async () => {
-      const [startBlock, endBlock, raisingAmount, totalAmount] = await Promise.all([
-        contract.methods.startBlock().call(),
-        contract.methods.endBlock().call(),
-        contract.methods.raisingAmount().call(),
-        contract.methods.totalAmount().call(),
+      const [openingTime, closingTime, isOpen, hasClosed, rate, availableToken] = await Promise.all([
+        contract.methods._openingTime().call(),
+        contract.methods._closingTime().call(),
+        contract.methods.isOpen().call(),
+        contract.methods.hasClosed().call(),
+        contract.methods._rate().call(),
+        contract.methods.remainingTokens().call()
       ])
 
-      const startBlockNum = parseInt(startBlock, 10)
-      const endBlockNum = parseInt(endBlock, 10)
-
-      const status = getStatus(currentBlock, startBlockNum, endBlockNum)
-      const totalBlocks = endBlockNum - startBlockNum
-      const blocksRemaining = endBlockNum - currentBlock
-
-      // Calculate the total progress until finished or until start
-      const progress =
-        currentBlock > startBlockNum
-          ? ((currentBlock - startBlockNum) / totalBlocks) * 100
-          : ((currentBlock - releaseBlockNumber) / (startBlockNum - releaseBlockNumber)) * 100
+      const status = getStatus(isOpen, hasClosed);
 
       setState({
         isLoading: false,
-        secondsUntilEnd: blocksRemaining * BSC_BLOCK_TIME,
-        secondsUntilStart: (startBlockNum - currentBlock) * BSC_BLOCK_TIME,
-        raisingAmount: new BigNumber(raisingAmount),
-        totalAmount: new BigNumber(totalAmount),
         status,
-        progress,
-        blocksRemaining,
-        startBlockNum,
-        endBlockNum,
+        openingTime,
+        closingTime,
+        rate,
+        availableToken
       })
     }
 
     fetchProgress()
-  }, [currentBlock, contract, releaseBlockNumber, setState])
+  }, [contract, setState])
 
   const isActive = state.status === 'live'
   const isFinished = state.status === 'finished'
 
+  const launchTime = moment(Number(state.openingTime) * 1000).format('MMMM Do YYYY, h:mm a') || moment(startTime * 1000).format('MMMM Do YYYY, h:mm a')
+  const closingTime = moment(Number(state.closingTime) * 1000).format('MMMM Do YYYY, h:mm a') || moment(endTime * 1000).format('MMMM Do YYYY, h:mm a')
+
+  const remainingTokens = getBalanceNumber(new BigNumber(state.availableToken))
+
+  const progress = isActive ? ((salesAmount - remainingTokens) / salesAmount) * 100 : 0
+
+  const [onPresentParticipateModal] = useModal(
+    <ParticipateModal tokenName={name} contract={contract} />,
+  )
+
   return (
-    <StyledIfoCard ifoId={id} ribbon={Ribbon} isActive={isActive}>
-      <CardBody>
-        <IfoCardHeader ifoId={id} name={name} subTitle={subTitle} />
-        <IfoCardProgress progress={state.progress} />
-        <IfoCardTime
-          isLoading={state.isLoading}
-          status={state.status}
-          secondsUntilStart={state.secondsUntilStart}
-          secondsUntilEnd={state.secondsUntilEnd}
-          block={isActive || isFinished ? state.endBlockNum : state.startBlockNum}
-        />
-        {!account && <UnlockButton fullWidth />}
-        {(isActive || isFinished) && (
-          <IfoCardContribute
-            address={address}
-            currency={currency}
-            currencyAddress={currencyAddress}
-            contract={contract}
-            status={state.status}
-            raisingAmount={state.raisingAmount}
-            tokenDecimals={tokenDecimals}
+    <>
+      <StyledIfoCard ifoId={id} ribbon={Ribbon} isActive={isActive}>
+        <CardBody>
+          <IfoCardHeader ifoId={id} name={name} subTitle={subTitle} />
+          <IfoCardProgress progress={progress} />
+          {!account ? <UnlockButton fullWidth /> : <Button fullWidth onClick={onPresentParticipateModal}>Participate</Button>}
+          <Divider />
+          <IfoCardDetails
+            launchTime={launchTime}
+            closingTime={closingTime}
+            projectSiteUrl={projectSiteUrl}
+            salesAmount={salesAmount}
+            rate={state.rate}
+            mainToken={mainToken}
+            tokenName={name}
+            availableToken={state.availableToken}
           />
-        )}
-        <IfoCardDescription description={description} />
-        <IfoCardDetails
-          launchDate={launchDate}
-          launchTime={launchTime}
-          saleAmount={saleAmount}
-          raiseAmount={raiseAmount}
-          cakeToBurn={cakeToBurn}
-          projectSiteUrl={projectSiteUrl}
-          raisingAmount={state.raisingAmount}
-          totalAmount={state.totalAmount}
-        />
-      </CardBody>
-    </StyledIfoCard>
+        </CardBody>
+      </StyledIfoCard >
+    </>
   )
 }
 

@@ -75,7 +75,7 @@ const ComingSoon = () => {
           </Block>
           <MobileImage src="/images/ifo-bunny.svg" alt="ifo bunny" />
           <Block>
-            <Title as="h2">{TranslateString(512, 'Want to launch your own IFO?')}</Title>
+            <Title as="h2">{TranslateString(512, 'Want to launch your own IDO?')}</Title>
             <Text mb={3}>
               {TranslateString(
                 514,
