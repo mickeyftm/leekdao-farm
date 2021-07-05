@@ -36,7 +36,7 @@ const StyledTokenSymbol = styled.span`
   font-weight: 700;
 `
 
-const BalanceInput: React.FC<Props> = ({ max, symbol, onChange, onSelectMax, value, rate, token }) => {
+const BalanceInput: React.FC<Props> = ({ symbol, onChange, onSelectMax, value, rate, token }) => {
   const TranslateString = useI18n()
   const inputValue = Number(value)
   const tokenReceived = inputValue * rate

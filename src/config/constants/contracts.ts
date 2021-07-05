@@ -27,4 +27,8 @@ export default {
     137: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
     97: '',
   },
+  vesting: {
+    137: "0x1f04309347AC2E0Bb904deC85805f7f617f0c408",
+    97: ''
+  }
 }
