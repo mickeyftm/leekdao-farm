@@ -10,7 +10,6 @@ interface Props extends InputProps {
   onSelectMax?: () => void
   rate: number
   token: string
-
 }
 
 const StyledSpacer = styled.div`
@@ -39,8 +38,8 @@ const StyledTokenSymbol = styled.span`
 
 const BalanceInput: React.FC<Props> = ({ max, symbol, onChange, onSelectMax, value, rate, token }) => {
   const TranslateString = useI18n()
-  const inputValue = Number(value);
-  const tokenReceived = inputValue * rate;
+  const inputValue = Number(value)
+  const tokenReceived = inputValue * rate
 
   return (
     <div>
