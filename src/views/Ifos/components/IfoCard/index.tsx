@@ -18,7 +18,7 @@ export interface IfoCardProps {
   ifo: Ifo
 }
 
-const StyledIfoCard = styled(Card)<{ ifoId: string }>`
+const StyledIfoCard = styled(Card) <{ ifoId: string }>`
   background-repeat: no-repeat;
   background-size: contain;
   padding-top: 10px;
@@ -127,7 +127,7 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
 
   const progress = isActive || isFinished ? ((salesAmount - remainingTokens) / salesAmount) * 100 : 0
 
-  const [onPresentParticipateModal] = useModal(<ParticipateModal tokenName={name} contract={contract} />)
+  const [onPresentParticipateModal] = useModal(<ParticipateModal tokenName={name} contract={contract} mainToken={mainToken} rate={state.rate} />)
 
   return (
     <>

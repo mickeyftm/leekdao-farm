@@ -14,9 +14,11 @@ interface Props {
   tokenName: string
   onDismiss?: () => void
   contract: any
+  mainToken: string
+  rate: number
 }
 
-const ParticipateModal: React.FC<Props> = ({ tokenName, onDismiss = () => null, contract }) => {
+const ParticipateModal: React.FC<Props> = ({ tokenName, onDismiss = () => null, contract, mainToken, rate }) => {
   const [value, setValue] = useState('')
   const wallet = useWallet()
   const balance = getBalanceNumber(new BigNumber(wallet.balance)).toFixed(4)
@@ -47,9 +49,11 @@ const ParticipateModal: React.FC<Props> = ({ tokenName, onDismiss = () => null, 
         <BalanceInput
           value={value}
           onChange={(e) => setValue(e.currentTarget.value)}
-          symbol="MATIC"
+          symbol={mainToken}
           max={balance}
           onSelectMax={() => setValue(balance)}
+          rate={rate}
+          token={tokenName}
         />
         <Flex justifyContent="space-between" mb="24px">
           <Button variant="primary" mr="8px" onClick={buyTokens} disabled={isValueInValid}>
