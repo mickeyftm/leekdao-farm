@@ -21,7 +21,7 @@ const TransactionSubmittedContent = ({ onDismiss }: TransactionSubmittedContentP
       </ConfirmedIcon>
       <AutoColumn gap="8px" justify="center">
         {transaction.hash && (
-          <LinkExternal href={`https://polygonscan.com/tx/${transaction.hash}`}>View on Matic Explorer</LinkExternal>
+          <LinkExternal href={`https://polygonscan.com/tx/${transaction.hash}`}>View on PolygonScan</LinkExternal>
         )}
         <Button onClick={onDismiss} mt="20px">
           Close

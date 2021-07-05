@@ -4,7 +4,7 @@ import Container from 'components/layout/Container'
 import IfoTabButtons from './components/IfoTabButtons'
 import Hero from './components/Hero'
 import CurrentIfo from './CurrentIfo'
-// import PastIfo from './PastIfo'
+import PastIfo from './PastIfo'
 
 const Ifos = () => {
   const { path } = useRouteMatch()
@@ -17,9 +17,9 @@ const Ifos = () => {
         <Route exact path={`${path}`}>
           <CurrentIfo />
         </Route>
-        {/* <Route path={`${path}/history`}>
+        <Route path={`${path}/history`}>
           <PastIfo />
-        </Route> */}
+        </Route>
       </Container>
     </>
   )

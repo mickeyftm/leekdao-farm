@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import { Text, Modal } from 'leek-uikit'
+import { Modal } from 'leek-uikit'
 import { ConfirmedIcon } from './helpers'
 
 type ConfirmationPendingContentProps = { onDismiss: () => void }

@@ -2485,9 +2485,9 @@
     csstype "^3.0.2"
 
 "@types/styled-system@^5.1.10":
-  version "5.1.11"
-  resolved "https://registry.yarnpkg.com/@types/styled-system/-/styled-system-5.1.11.tgz#158849f3b14cdf8bf27a10f0cf87a2c3a89eb680"
-  integrity sha512-R+JxEZYa5T0HD2urViR/mdklVaGhwbNOtDoWWGQ1+z1CGs/gF1UAKCaS//YwsUwterEKpyaKxgaXyFNKF04GCA==
+  version "5.1.12"
+  resolved "https://registry.yarnpkg.com/@types/styled-system/-/styled-system-5.1.12.tgz#4f3ca8da3dffe3c5a6cc3b2a97f51b41464c104a"
+  integrity sha512-7x4BYKKfK9QewfsFC2x5r9BK/OrfX+JF/1P21jKPMHruawDw9gvG7bTZgTVk6YkzDO2JUlsk4i8hdiAepAhD0g==
   dependencies:
     csstype "^3.0.2"
 
@@ -9887,10 +9887,10 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
-leek-uikit@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/leek-uikit/-/leek-uikit-1.1.0.tgz#4f92633c8d521b27212d569086280a52a9d3fe2a"
-  integrity sha512-fsCt8DI5iy3rkj/SGcQsZEZpFqnzu/hDZ8uih4mWs2Fru4WKhRiWSDJh9BwVaFm1hKhW8U9d3maIOJdL00vQLg==
+leek-uikit@1.3.8:
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/leek-uikit/-/leek-uikit-1.3.8.tgz#d1247a8f0586c7a213c9eb19c39f317765a4615a"
+  integrity sha512-2Hfxdp9n7J8dpU7GKBDo7Vy6HqpAC2qxpnRQpNiVPfNQP7HEt00mUvfE2LYdLeYvowNU4YSuPKbtBcFnoJxmFQ==
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"

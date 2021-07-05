@@ -39,6 +39,8 @@ const ParticipateModal: React.FC<Props> = ({ tokenName, onDismiss = () => null, 
   const [onPresentPendingModal] = useModal(<ConfirmationPendingContent onDismiss={onDismiss} />)
   const [onPresentSubmittedModal] = useModal(<TransactionSubmittedContent onDismiss={onDismiss} />)
 
+  const isValueInValid = Number(value) === 0
+
   return (
     <>
       <Modal title="Participate LEEK IDO" onDismiss={onDismiss}>
@@ -50,7 +52,7 @@ const ParticipateModal: React.FC<Props> = ({ tokenName, onDismiss = () => null, 
           onSelectMax={() => setValue(balance)}
         />
         <Flex justifyContent="space-between" mb="24px">
-          <Button variant="primary" mr="8px" onClick={buyTokens}>
+          <Button variant="primary" mr="8px" onClick={buyTokens} disabled={isValueInValid}>
             Buy {tokenName}
           </Button>
 

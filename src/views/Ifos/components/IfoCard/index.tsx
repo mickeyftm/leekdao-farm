@@ -6,7 +6,6 @@ import { Card, CardBody, CardRibbon, Button, useModal } from 'leek-uikit'
 import { Ifo, IfoStatus } from 'config/constants/types'
 import moment from 'moment'
 import useI18n from 'hooks/useI18n'
-import useBlock from 'hooks/useBlock'
 import { useIfoContract } from 'hooks/useContract'
 import UnlockButton from 'components/UnlockButton'
 import { getBalanceNumber } from 'utils/formatBalance'
@@ -40,7 +39,7 @@ const Divider = styled.div`
 `
 
 const getStatus = (isOpen: boolean | null, hasClosed: boolean | null) => {
-  if (!isOpen) {
+  if (!isOpen && !hasClosed) {
     return 'coming_soon'
   }
 
@@ -60,6 +59,10 @@ const getRibbonComponent = (status: IfoStatus, TranslateString: (translationId: 
     return <CardRibbon variantColor="textDisabled" text={TranslateString(999, 'Coming Soon')} />
   }
 
+  if (status === 'finished') {
+    return <CardRibbon variantColor="primary" text={TranslateString(999, 'FINISHED')} />
+  }
+
   if (status === 'live') {
     return <CardRibbon variantColor="primary" text={TranslateString(999, 'LIVE NOW!')} />
   }
@@ -68,19 +71,7 @@ const getRibbonComponent = (status: IfoStatus, TranslateString: (translationId: 
 }
 
 const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
-  const {
-    id,
-    address,
-    name,
-    mainToken,
-    subTitle,
-    startTime,
-    endTime,
-    salesAmount,
-    projectSiteUrl,
-    tokenAddress,
-    tokenDecimals,
-  } = ifo
+  const { id, address, name, mainToken, subTitle, startTime, endTime, salesAmount, projectSiteUrl } = ifo
   const [state, setState] = useState({
     isLoading: true,
     status: null,
@@ -134,7 +125,7 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
 
   const remainingTokens = getBalanceNumber(new BigNumber(state.availableToken))
 
-  const progress = isActive ? ((salesAmount - remainingTokens) / salesAmount) * 100 : 0
+  const progress = isActive || isFinished ? ((salesAmount - remainingTokens) / salesAmount) * 100 : 0
 
   const [onPresentParticipateModal] = useModal(<ParticipateModal tokenName={name} contract={contract} />)
 
@@ -147,7 +138,7 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
           {!account ? (
             <UnlockButton fullWidth />
           ) : (
-            <Button fullWidth onClick={onPresentParticipateModal}>
+            <Button fullWidth onClick={onPresentParticipateModal} disabled={!isActive}>
               Participate
             </Button>
           )}

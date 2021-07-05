@@ -12,11 +12,11 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Exchange',
-        href: 'https://michaelwu1995.github.io/leek-finance-swap/#/swap',
+        href: '/swap',
       },
       {
         label: 'Liquidity',
-        href: 'https://michaelwu1995.github.io/leek-finance-swap/#/pool',
+        href: '/pool',
       },
     ],
   },
@@ -78,15 +78,19 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Github',
-        href: 'http://www.google.com',
+        href: 'https://github.com/cryptoleek-team',
       },
       {
         label: 'Docs',
-        href: 'http://www.baidu.com',
+        href: 'https://docs.leekdao.xyz/',
       },
       {
-        label: 'Blog',
-        href: 'http://www.facebook.com',
+        label: 'CryptoLeek Website',
+        href: 'https://www.bitcoinleek.com/',
+      },
+      {
+        label: 'LeekDAO Website',
+        href: '#',
       },
     ],
   },

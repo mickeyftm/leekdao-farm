@@ -52,7 +52,7 @@ const Ifo = () => {
             <li>Wait for the Sale to start</li>
           </List>
           <Flex mb="16px">
-            <LinkExternal href="https://exchange.pancakeswap.finance/#/swap" mr="16px">
+            <LinkExternal href="https://quickswap.exchange/#/swap" mr="16px">
               Buy MATIC
             </LinkExternal>
           </Flex>
@@ -65,28 +65,14 @@ const Ifo = () => {
             <li>Claim the tokens you bought, along with any unspent funds.</li>
             <li>{TranslateString(608, 'Done!')}</li>
           </List>
-          {/* <Text as="div" pt="16px">
-            <Button
-              as="a"
-              variant="secondary"
-              href="https://docs.pancakeswap.finance/core-products/ifo-initial-farm-offering"
-            >
-              {TranslateString(610, 'Read more')}
-            </Button>
-          </Text> */}
         </div>
         <div>
-          {/* <Image src="/images/ifo-bunny.svg" alt="ifo bunny" width={436} height={406} responsive /> */}
           <div>
             <Title as="h2">{TranslateString(512, 'Want to launch your own IDO?')}</Title>
             <Text mb={3}>
               Launch your project with LEEK, Polygon Network’s most transparent and active DeFi Platform
             </Text>
-            <Button
-              as="a"
-              href="https://docs.google.com/forms/d/e/1FAIpQLScGdT5rrVMr4WOWr08pvcroSeuIOtEJf1sVdQGVdcAOqryigQ/viewform"
-              external
-            >
+            <Button as="a" href="https://forms.gle/bry8f1ZJa5u4VRGZ6" external>
               Contact Us
             </Button>
           </div>

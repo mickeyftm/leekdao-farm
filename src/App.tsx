@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react'
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from 'leek-uikit'
 import BigNumber from 'bignumber.js'
@@ -12,11 +12,13 @@ import PageLoader from './components/PageLoader'
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page'
 const Home = lazy(() => import('./views/Home'))
-const Farms = lazy(() => import('./views/Farms'))
+const Farms = lazy(() => import('./views/ComingSoon'))
 // const Lottery = lazy(() => import('./views/Lottery'))
 // const Pools = lazy(() => import('./views/Pools'))
 const Ifos = lazy(() => import('./views/Ifos'))
 const NotFound = lazy(() => import('./views/NotFound'))
+const Exchange = lazy(() => import('./views/ComingSoon'))
+const Liquidity = lazy(() => import('./views/ComingSoon'))
 // const Nft = lazy(() => import('./views/Nft'))
 
 // This config is required for number formating
@@ -50,6 +52,12 @@ const App: React.FC = () => {
             </Route>
             <Route path="/ido">
               <Ifos />
+            </Route>
+            <Route path="/swap">
+              <Exchange />
+            </Route>
+            <Route path="/pool">
+              <Liquidity />
             </Route>
             {/* <Route path="/nests">
               <Farms tokenMode/>
