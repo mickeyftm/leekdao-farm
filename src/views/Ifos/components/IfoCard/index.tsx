@@ -117,11 +117,11 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
   const isFinished = state.status === 'finished'
 
   const launchTime =
-    moment(Number(state.openingTime) * 1000).format('MMMM Do YYYY, h:mm a') ||
-    moment(startTime * 1000).format('MMMM Do YYYY, h:mm a')
+    moment.utc(Number(state.openingTime) * 1000).format('MMMM Do YYYY, HH:mm') ||
+    moment.utc(startTime * 1000).format('MMMM Do YYYY, HH:mm')
   const closingTime =
-    moment(Number(state.closingTime) * 1000).format('MMMM Do YYYY, h:mm a') ||
-    moment(endTime * 1000).format('MMMM Do YYYY, h:mm a')
+    moment.utc(Number(state.closingTime) * 1000).format('MMMM Do YYYY, HH:mm') ||
+    moment.utc(endTime * 1000).format('MMMM Do YYYY, HH:mm')
 
   const remainingTokens = getBalanceNumber(new BigNumber(state.availableToken))
 

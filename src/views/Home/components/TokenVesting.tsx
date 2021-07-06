@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Card, CardBody, Heading, Text } from 'leek-uikit'
+import { Card, CardBody, Heading, Text, Link } from 'leek-uikit'
 import BigNumber from 'bignumber.js/bignumber'
 import styled from 'styled-components'
-import moment from "moment"
-import numeral from "numeral"
+import moment from 'moment'
+import numeral from 'numeral'
 import { getVestingAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { useVestingContract } from "../../../hooks/useContract"
+import { useVestingContract } from '../../../hooks/useContract'
 import useRefresh from '../../../hooks/useRefresh'
-
 
 const StyledCakeStats = styled(Card)`
   margin-left: auto;
@@ -24,103 +23,125 @@ const Row = styled.div`
 `
 
 const TokenVesting = () => {
-    const [state, setState] = useState({
-        cliff: 0,
-        releaseTime: 0,
-        finalTime: 0,
-        nextReleaseTime: 0,
-        linearReleaseInterval: 0,
-        releaseCount: 0,
-        releaseAmount: 0,
-        remainingTokens: 0,
-    })
-    const { slowRefresh } = useRefresh()
+  const [state, setState] = useState({
+    cliff: 0,
+    releaseTime: 0,
+    finalTime: 0,
+    nextReleaseTime: 0,
+    linearReleaseInterval: 0,
+    releaseCount: 0,
+    releaseAmount: 0,
+    remainingTokens: 0,
+  })
+  const { slowRefresh } = useRefresh()
 
-    const contract = useVestingContract(getVestingAddress())
+  const contract = useVestingContract(getVestingAddress())
 
-    useEffect(() => {
-        const fetchVestingInfo = async () => {
-            const [cliff, releaseTime, finalTime, nextReleaseTime, linearReleaseInterval, releaseCount, releaseAmount, remainingTokens] = await Promise.all([
-                contract.methods.cliff().call(),
-                contract.methods.releaseTime().call(),
-                contract.methods.finalTime().call(),
-                contract.methods.nextReleaseTime().call(),
-                contract.methods.linearReleaseInterval().call(),
-                contract.methods.releaseTotalCount().call(),
-                contract.methods.releaseAmount().call(),
-                contract.methods.remainingTokens().call()
-            ])
+  useEffect(() => {
+    const fetchVestingInfo = async () => {
+      const [
+        cliff,
+        releaseTime,
+        finalTime,
+        nextReleaseTime,
+        linearReleaseInterval,
+        releaseCount,
+        releaseAmount,
+        remainingTokens,
+      ] = await Promise.all([
+        contract.methods.cliff().call(),
+        contract.methods.releaseTime().call(),
+        contract.methods.finalTime().call(),
+        contract.methods.nextReleaseTime().call(),
+        contract.methods.linearReleaseInterval().call(),
+        contract.methods.releaseTotalCount().call(),
+        contract.methods.releaseAmount().call(),
+        contract.methods.remainingTokens().call(),
+      ])
 
-            setState({
-                cliff,
-                releaseTime,
-                finalTime,
-                nextReleaseTime,
-                linearReleaseInterval,
-                releaseCount,
-                releaseAmount,
-                remainingTokens
-            })
-        }
-        fetchVestingInfo()
-    }, [contract, setState, slowRefresh])
+      setState({
+        cliff,
+        releaseTime,
+        finalTime,
+        nextReleaseTime,
+        linearReleaseInterval,
+        releaseCount,
+        releaseAmount,
+        remainingTokens,
+      })
+    }
+    fetchVestingInfo()
+  }, [contract, setState, slowRefresh])
 
+  const releaseTime = moment.utc(Number(state.releaseTime) * 1000).format('MMMM Do YYYY, HH:mm')
+  const finalTime = moment(Number(state.finalTime) * 1000).format('MMMM Do YYYY, HH:mm')
+  const nextReleaseTime = moment(Number(state.nextReleaseTime) * 1000).format('MMMM Do YYYY, HH:mm')
+  const linearReleaseInterval = Number(state.cliff / 3600 / 24).toString()
+  const releaseAmount = numeral(getBalanceNumber(new BigNumber(state.releaseAmount))).format('0,0')
+  const remainingTokens = numeral(getBalanceNumber(new BigNumber(state.remainingTokens))).format('0,0')
 
-    const cliff = Number(state.cliff / 3600).toString();
-    const releaseTime = moment(Number(state.releaseTime) * 1000).format('MMMM Do, YYYY')
-    const finalTime = moment(Number(state.finalTime) * 1000).format('MMMM Do, YYYY')
-    const nextReleaseTime = moment(Number(state.nextReleaseTime) * 1000).format('MMMM Do, YYYY')
-    const linearReleaseInterval = Number(state.cliff / 3600 / 24).toString()
-    const releaseAmount = numeral(getBalanceNumber(new BigNumber(state.releaseAmount))).format('0,0')
-    const remainingTokens = numeral(getBalanceNumber(new BigNumber(state.remainingTokens))).format('0,0')
+  return (
+    <StyledCakeStats>
+      <CardBody>
+        <Heading size="xl" mb="24px">
+          Leek Vesting Info
+        </Heading>
 
-    return (
-        <StyledCakeStats>
-            <CardBody>
-                <Heading size="xl" mb="24px">
-                    Leek Vesting Info
-                </Heading>
+        <Row>
+          <Text fontSize="14px">LEEK Release Start Time</Text>
+          <Link href="https://www.timeanddate.com/worldclock/timezone/utc">
+            <Text bold fontSize="14px" color="primary">
+              {releaseTime} UTC
+            </Text>
+          </Link>
+        </Row>
 
-                <Row>
-                    <Text fontSize="14px">LEEK Cliff Time</Text>
-                    <Text bold fontSize="14px" >{cliff} Hours</Text>
-                </Row>
+        <Row>
+          <Text fontSize="14px">LEEK Release End Time</Text>
+          <Link href="https://www.timeanddate.com/worldclock/timezone/utc">
+            <Text bold fontSize="14px" color="primary">
+              {finalTime} UTC
+            </Text>
+          </Link>
+        </Row>
 
-                <Row>
-                    <Text fontSize="14px">LEEK Release Start Date</Text>
-                    <Text bold fontSize="14px" >{releaseTime}</Text>
-                </Row>
+        <Row>
+          <Text fontSize="14px">Next LEEK Release Date</Text>
+          <Link href="https://www.timeanddate.com/worldclock/timezone/utc">
+            <Text bold fontSize="14px" color="primary">
+              {nextReleaseTime} UTC
+            </Text>
+          </Link>
+        </Row>
+        <Row>
+          <Text fontSize="14px">LEEK Release Interval</Text>
+          <Text bold fontSize="14px">
+            {linearReleaseInterval} Days
+          </Text>
+        </Row>
 
-                <Row>
-                    <Text fontSize="14px">LEEK Release End Date</Text>
-                    <Text bold fontSize="14px" >{finalTime}</Text>
-                </Row>
+        <Row>
+          <Text fontSize="14px">LEEK Release Count </Text>
+          <Text bold fontSize="14px">
+            {state.releaseCount}
+          </Text>
+        </Row>
 
-                <Row>
-                    <Text fontSize="14px">Next LEEK Release Date</Text>
-                    <Text bold fontSize="14px" >{nextReleaseTime}</Text>
-                </Row>
-                <Row>
-                    <Text fontSize="14px">LEEK Release Interval</Text>
-                    <Text bold fontSize="14px" >{linearReleaseInterval} Days</Text>
-                </Row>
-
-                <Row>
-                    <Text fontSize="14px">LEEK Release Count </Text>
-                    <Text bold fontSize="14px" >{state.releaseCount}</Text>
-                </Row>
-
-                <Row>
-                    <Text fontSize="14px">LEEK Release Every Time </Text>
-                    <Text bold fontSize="14px" >{releaseAmount} LEEK</Text>
-                </Row>
-                <Row>
-                    <Text fontSize="14px">LEEK Locked </Text>
-                    <Text bold fontSize="14px" >{remainingTokens} LEEK</Text>
-                </Row>
-            </CardBody>
-        </StyledCakeStats>
-    )
+        <Row>
+          <Text fontSize="14px">LEEK Release Every Time </Text>
+          <Text bold fontSize="14px">
+            {releaseAmount} LEEK
+          </Text>
+        </Row>
+        <Row>
+          <Text fontSize="14px">LEEK Locked </Text>
+          <Text bold fontSize="14px">
+            {remainingTokens} LEEK
+          </Text>
+        </Row>
+      </CardBody>
+    </StyledCakeStats>
+  )
 }
 
 export default TokenVesting

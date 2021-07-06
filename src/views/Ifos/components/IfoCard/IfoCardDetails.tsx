@@ -51,13 +51,13 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({
           <Display>Launch Time</Display>
           <Text>
             <Link
-              href="https://www.timeanddate.com/time/zones/aest"
+              href="https://www.timeanddate.com/worldclock/timezone/utc"
               target="blank"
               rel="noopener noreferrer"
               ml="4px"
               style={{ display: 'inline' }}
             >
-              {launchTime}
+              {launchTime} UTC
             </Link>
           </Text>
         </Item>
@@ -66,13 +66,13 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({
           <Display>Closing Time</Display>
           <Text>
             <Link
-              href="https://www.timeanddate.com/time/zones/aest"
+              href="https://www.timeanddate.com/worldclock/timezone/utc"
               target="blank"
               rel="noopener noreferrer"
               ml="4px"
               style={{ display: 'inline' }}
             >
-              {closingTime}
+              {closingTime} UTC
             </Link>
           </Text>
         </Item>
