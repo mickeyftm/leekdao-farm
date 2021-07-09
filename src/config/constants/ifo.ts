@@ -17,7 +17,7 @@ const ifos: Ifo[] = [
     subTitle: 'A community driven crypto and knowledge sharing DAO powered by $LEEK Social Token',
     startTime: 1625625327,
     endTime: 1626625327,
-    salesAmount: 1000000,
+    salesAmount: 500000,
     projectSiteUrl: '#',
     tokenDecimals: 18,
   },
