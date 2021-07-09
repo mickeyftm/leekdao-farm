@@ -1,7 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-
-
 # dependencies
 /node_modules
 /.pnp
@@ -19,7 +17,8 @@
 
 # misc
 .DS_Store
-.env*
+.env.development
+.env.production
 .eslintcache
 
 # debug
