@@ -4,6 +4,7 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/hooks'
+import BigNumber from 'bignumber.js'
 import { Menu as UikitMenu } from 'leek-uikit'
 import config from './config'
 
@@ -12,6 +13,13 @@ const Menu = (props) => {
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = usePriceCakeBusd()
+  let leekPrice
+
+  if (cakePriceUsd.toNumber() === 0) {
+    leekPrice = new BigNumber(0)
+  } else {
+    leekPrice = cakePriceUsd.toNumber()
+  }
 
   return (
     <UikitMenu
@@ -23,9 +31,9 @@ const Menu = (props) => {
       currentLang={selectedLanguage && selectedLanguage.code}
       langs={allLanguages}
       setLang={setSelectedLanguage}
-      cakePriceUsd={cakePriceUsd.toNumber()}
+      cakePriceUsd={leekPrice}
       links={config}
-      priceLink="https://www.coingecko.com/en/coins/goose-finance"
+      priceLink="#"
       error={error}
       {...props}
     />

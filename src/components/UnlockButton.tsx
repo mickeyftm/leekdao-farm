@@ -10,7 +10,7 @@ const UnlockButton = (props) => {
   let comp
   if (error) {
     comp = (
-      <Button onClick={onPresentWrongNetworkModal} {...props} variant="danger" title="Currently only ">
+      <Button onClick={onPresentWrongNetworkModal} {...props} variant="danger">
         Wrong Network
       </Button>
     )

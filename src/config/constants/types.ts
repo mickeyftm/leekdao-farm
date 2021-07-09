@@ -3,8 +3,8 @@ export type IfoStatus = 'coming_soon' | 'live' | 'finished'
 export interface Ifo {
   id: string
   isActive: boolean
-  address: string
-  tokenAddress: string
+  idoAddress: Address
+  tokenAddress: Address
   mainToken: string
   name: string
   subTitle?: string
@@ -32,7 +32,7 @@ export enum PoolCategory {
 }
 
 export interface Address {
-  97?: string
+  80001?: string
   137?: string
 }
 

@@ -9,6 +9,7 @@ import useI18n from 'hooks/useI18n'
 import { useIfoContract } from 'hooks/useContract'
 import UnlockButton from 'components/UnlockButton'
 import { getBalanceNumber } from 'utils/formatBalance'
+import useRefresh from 'hooks/useRefresh'
 import IfoCardHeader from './IfoCardHeader'
 import ParticipateModal from './ParticipateModal'
 import IfoCardProgress from './IfoCardProgress'
@@ -17,6 +18,8 @@ import IfoCardDetails from './IfoCardDetails'
 export interface IfoCardProps {
   ifo: Ifo
 }
+
+const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
 
 const StyledIfoCard = styled(Card)<{ ifoId: string }>`
   background-repeat: no-repeat;
@@ -71,7 +74,7 @@ const getRibbonComponent = (status: IfoStatus, TranslateString: (translationId: 
 }
 
 const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
-  const { id, address, name, mainToken, subTitle, startTime, endTime, salesAmount, projectSiteUrl } = ifo
+  const { id, idoAddress, name, mainToken, subTitle, startTime, endTime, salesAmount, projectSiteUrl } = ifo
   const [state, setState] = useState({
     isLoading: true,
     status: null,
@@ -80,8 +83,10 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
     rate: 0,
     availableToken: 0,
   })
+
   const { account } = useWallet()
-  const contract = useIfoContract(address)
+  const contract = useIfoContract(idoAddress[CHAIN_ID])
+  const { fastRefresh } = useRefresh()
 
   const TranslateString = useI18n()
 
@@ -111,7 +116,7 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
     }
 
     fetchProgress()
-  }, [contract, setState])
+  }, [contract, fastRefresh, setState])
 
   const isActive = state.status === 'live'
   const isFinished = state.status === 'finished'
@@ -119,6 +124,7 @@ const IfoCard: React.FC<IfoCardProps> = ({ ifo }) => {
   const launchTime =
     moment.utc(Number(state.openingTime) * 1000).format('MMMM Do YYYY, HH:mm') ||
     moment.utc(startTime * 1000).format('MMMM Do YYYY, HH:mm')
+
   const closingTime =
     moment.utc(Number(state.closingTime) * 1000).format('MMMM Do YYYY, HH:mm') ||
     moment.utc(endTime * 1000).format('MMMM Do YYYY, HH:mm')

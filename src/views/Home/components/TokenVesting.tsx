@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Card, CardBody, Heading, Text, Link } from 'leek-uikit'
+import { Card, CardBody, Heading, Text, Link, Button } from 'leek-uikit'
+import { useWallet } from '@binance-chain/bsc-use-wallet'
+import UnlockButton from 'components/UnlockButton'
+
 import BigNumber from 'bignumber.js/bignumber'
 import styled from 'styled-components'
 import moment from 'moment'
@@ -33,7 +36,8 @@ const TokenVesting = () => {
     releaseAmount: 0,
     remainingTokens: 0,
   })
-  const { slowRefresh } = useRefresh()
+  const { fastRefresh } = useRefresh()
+  const { account } = useWallet()
 
   const contract = useVestingContract(getVestingAddress())
 
@@ -71,14 +75,18 @@ const TokenVesting = () => {
       })
     }
     fetchVestingInfo()
-  }, [contract, setState, slowRefresh])
+  }, [contract, setState, fastRefresh])
 
   const releaseTime = moment.utc(Number(state.releaseTime) * 1000).format('MMMM Do YYYY, HH:mm')
-  const finalTime = moment(Number(state.finalTime) * 1000).format('MMMM Do YYYY, HH:mm')
-  const nextReleaseTime = moment(Number(state.nextReleaseTime) * 1000).format('MMMM Do YYYY, HH:mm')
+  const finalTime = moment.utc(Number(state.finalTime) * 1000).format('MMMM Do YYYY, HH:mm')
+  const nextReleaseTime = moment.utc(Number(state.nextReleaseTime) * 1000).format('MMMM Do YYYY, HH:mm')
   const linearReleaseInterval = Number(state.cliff / 3600 / 24).toString()
   const releaseAmount = numeral(getBalanceNumber(new BigNumber(state.releaseAmount))).format('0,0')
   const remainingTokens = numeral(getBalanceNumber(new BigNumber(state.remainingTokens))).format('0,0')
+
+  const claim = async () => {
+    await contract.methods.release().send({ from: account })
+  }
 
   return (
     <StyledCakeStats>
@@ -138,6 +146,16 @@ const TokenVesting = () => {
           <Text bold fontSize="14px">
             {remainingTokens} LEEK
           </Text>
+        </Row>
+
+        <Row>
+          {!account ? (
+            <UnlockButton fullWidth mt="8px" />
+          ) : (
+            <Button mt="8px" onClick={claim}>
+              Claim
+            </Button>
+          )}
         </Row>
       </CardBody>
     </StyledCakeStats>

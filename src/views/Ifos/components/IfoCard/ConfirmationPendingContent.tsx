@@ -29,7 +29,7 @@ const ConfirmationPendingContent = ({ onDismiss }: ConfirmationPendingContentPro
   return (
     <Modal title="Waiting for confirmation" onDismiss={onDismiss}>
       <ConfirmedIcon>
-        <CustomLightSpinner src="/images/blue-loader.svg" alt="loader" size="90px" />
+        <CustomLightSpinner src="./images/blue-loader.svg" alt="loader" size="90px" />
       </ConfirmedIcon>
     </Modal>
   )
