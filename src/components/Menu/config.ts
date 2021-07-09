@@ -12,11 +12,11 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Exchange',
-        href: 'https://cryptoleek-team.github.io/leekdaoswap-mumbai-testnet/#/swap',
+        href: '/swap',
       },
       {
         label: 'Liquidity',
-        href: 'https://cryptoleek-team.github.io/leekdaoswap-mumbai-testnet/#/pool',
+        href: '/pool',
       },
     ],
   },

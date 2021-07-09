@@ -31,6 +31,11 @@ const Hero = styled.div`
   }
 `
 
+const BannerImg = styled.img`
+  width: 100%;
+  margin-bottom:20px;
+`
+
 const Cards = styled(BaseLayout)`
   align-items: stretch;
   justify-content: stretch;
@@ -61,21 +66,21 @@ const Home: React.FC = () => {
     <Page>
       <Hero>
         <Heading as="h1" size="xl" mb="24px" color="primary">
-          {TranslateString(576, 'CryptoLeek Finance')}
+          {TranslateString(576, 'LeekDAO')}
         </Heading>
-        <Text>{TranslateString(578, 'Top 3 best DEFI app on Binance Smart Chain.')}</Text>
+        <Text>{TranslateString(578, 'Popular DEFI app on MATIC Mainnet.')}</Text>
       </Hero>
       <div>
         <a href="./#/ido">
-          <img src="./images/ido-banner.png" alt="banner" style={{ width: '100%', height: '375px' }} />
+          <BannerImg src="./images/ido-banner.png" alt="banner" />
         </a>
       </div>
       <div>
         <Cards>
-          <FarmStakingCard />
+          {/* <FarmStakingCard /> */}
           <TwitterCard />
-          <CakeStats />
-          <TotalValueLockedCard />
+          {/* <CakeStats /> */}
+          {/* <TotalValueLockedCard /> */}
           <TokenVesting />
         </Cards>
       </div>

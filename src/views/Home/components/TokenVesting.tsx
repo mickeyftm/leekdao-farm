@@ -80,7 +80,7 @@ const TokenVesting = () => {
   const releaseTime = moment.utc(Number(state.releaseTime) * 1000).format('MMMM Do YYYY, HH:mm')
   const finalTime = moment.utc(Number(state.finalTime) * 1000).format('MMMM Do YYYY, HH:mm')
   const nextReleaseTime = moment.utc(Number(state.nextReleaseTime) * 1000).format('MMMM Do YYYY, HH:mm')
-  const linearReleaseInterval = Number(state.cliff / 3600 / 24).toString()
+  const linearReleaseInterval = Number(state.linearReleaseInterval / 3600 / 24 / 30).toFixed().toString()
   const releaseAmount = numeral(getBalanceNumber(new BigNumber(state.releaseAmount))).format('0,0')
   const remainingTokens = numeral(getBalanceNumber(new BigNumber(state.remainingTokens))).format('0,0')
 
@@ -124,7 +124,7 @@ const TokenVesting = () => {
         <Row>
           <Text fontSize="14px">LEEK Release Interval</Text>
           <Text bold fontSize="14px">
-            {linearReleaseInterval} Days
+            {linearReleaseInterval} Month
           </Text>
         </Row>
 
