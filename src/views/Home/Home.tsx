@@ -13,14 +13,14 @@ import TokenVesting from './components/TokenVesting'
 const Hero = styled.div`
   align-items: center;
   background-image: url('./images/leek/3.png');
+  background-size: 200px 200px;
   background-repeat: no-repeat;
   background-position: top center;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: auto;
-  margin-bottom: 32px;
-  padding-top: 116px;
+  padding-top: 200px;
   text-align: center;
 
   ${({ theme }) => theme.mediaQueries.lg} {
@@ -34,6 +34,7 @@ const Hero = styled.div`
 const BannerImg = styled.img`
   width: 100%;
   margin-bottom:20px;
+  margin-top:20px;
 `
 
 const Cards = styled(BaseLayout)`
