@@ -16,6 +16,7 @@ const Farms = lazy(() => import('./views/ComingSoon'))
 // const Lottery = lazy(() => import('./views/Lottery'))
 // const Pools = lazy(() => import('./views/Pools'))
 const Ifos = lazy(() => import('./views/Ifos'))
+const Proposals = lazy(() => import('./views/Voting'))
 const NotFound = lazy(() => import('./views/NotFound'))
 const Exchange = lazy(() => import('./views/ComingSoon'))
 const Liquidity = lazy(() => import('./views/ComingSoon'))
@@ -58,6 +59,10 @@ const App: React.FC = () => {
             </Route>
             <Route path="/pool">
               <Liquidity />
+            </Route>
+
+            <Route path="/vote">
+              <Proposals />
             </Route>
             {/* <Route path="/nests">
               <Farms tokenMode/>

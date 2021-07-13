@@ -22,21 +22,25 @@ const Menu = (props) => {
   }
 
   return (
-    <UikitMenu
-      account={account}
-      login={connect}
-      logout={reset}
-      isDark={isDark}
-      toggleTheme={toggleTheme}
-      currentLang={selectedLanguage && selectedLanguage.code}
-      langs={allLanguages}
-      setLang={setSelectedLanguage}
-      cakePriceUsd={leekPrice}
-      links={config}
-      priceLink="#"
-      error={error}
-      {...props}
-    />
+    <div>
+      <UikitMenu
+        account={account}
+        login={connect}
+        logout={reset}
+        isDark={isDark}
+        toggleTheme={toggleTheme}
+        currentLang={selectedLanguage && selectedLanguage.code}
+        langs={allLanguages}
+        setLang={setSelectedLanguage}
+        cakePriceUsd={leekPrice}
+        links={config}
+        priceLink="#"
+        error={error}
+        {...props}
+      />
+
+    </div>
+
   )
 }
 

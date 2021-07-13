@@ -30,6 +30,11 @@ const config: MenuEntry[] = [
     icon: 'IfoIcon',
     href: '/ido',
   },
+  {
+    label: 'Vote',
+    icon: 'GroupsIcon',
+    href: '/vote',
+  },
   // {
   //   label: 'Nests',
   //   icon: 'PoolIcon',

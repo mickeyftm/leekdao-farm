@@ -1,0 +1,6 @@
+export const PROPOSALS_TO_SHOW = 10
+export const LEEKDAO_SPACE = "leekdao.eth"
+export const ADMIN_ADDRESS = [
+    "0xc0e9ec12f342b279676F8f0Cb4268B2F147F1cfB",
+    "0x597737d15b4371B10b6Fc5647903AB775E214864"
+]

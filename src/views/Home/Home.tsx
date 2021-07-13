@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Heading, Text, BaseLayout } from 'leek-uikit'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
+import Footer from 'components/Footer'
 import FarmStakingCard from './components/FarmStakingCard'
 // import LotteryCard from './components/LotteryCard'
 import CakeStats from './components/CakeStats'
@@ -85,6 +86,7 @@ const Home: React.FC = () => {
           {/* <TotalValueLockedCard /> */}
           <TokenVesting />
         </Cards>
+        <Footer />
       </div>
     </Page>
   )

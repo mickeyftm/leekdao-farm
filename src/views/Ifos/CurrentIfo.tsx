@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Text, Heading, BaseLayout, Button, LinkExternal, Flex, Image } from 'leek-uikit'
 import { ifosConfig } from 'config/constants'
 import useI18n from 'hooks/useI18n'
+import Footer from 'components/Footer'
 import IfoCard from './components/IfoCard'
 import Title from './components/Title'
 import IfoCards from './components/IfoCards'
@@ -78,6 +79,8 @@ const Ifo = () => {
           </div>
         </div>
       </LaunchIfoCallout>
+
+      <Footer />
     </div>
   )
 }

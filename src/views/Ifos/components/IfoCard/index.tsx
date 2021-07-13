@@ -15,13 +15,14 @@ import ParticipateModal from './ParticipateModal'
 import IfoCardProgress from './IfoCardProgress'
 import IfoCardDetails from './IfoCardDetails'
 
+
 export interface IfoCardProps {
   ifo: Ifo
 }
 
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
 
-const StyledIfoCard = styled(Card)<{ ifoId: string }>`
+const StyledIfoCard = styled(Card) <{ ifoId: string }>`
   background-repeat: no-repeat;
   background-size: contain;
   padding-top: 10px;

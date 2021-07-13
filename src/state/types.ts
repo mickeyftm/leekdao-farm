@@ -45,3 +45,24 @@ export interface State {
   farms: FarmsState
   pools: PoolsState
 }
+
+export enum ProposalType {
+  ALL = 'all',
+  CORE = 'core',
+  COMMUNITY = 'community',
+}
+
+export enum ProposalState {
+  ACTIVE = 'active',
+  PENDING = 'pending',
+  CLOSED = 'closed',
+}
+
+export interface Proposal {
+  id: string
+  start: number
+  end: number
+  state: ProposalState
+  title: string
+  author: string
+}
