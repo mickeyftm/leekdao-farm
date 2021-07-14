@@ -31,7 +31,7 @@ const Hero = () => {
                             Voting
                         </Title>
                         <Heading mb="16px">
-                            Have your say in the future of the PancakeSwap Ecosystem
+                            Have your say in the future of the LEEKDAO Ecosystem
                         </Heading>
                         <Button onClick={newPage}>
                             Make a Proposal
