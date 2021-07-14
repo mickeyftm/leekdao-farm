@@ -9949,10 +9949,10 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
-leek-uikit@1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/leek-uikit/-/leek-uikit-1.4.2.tgz#2862b3931ad9ffd5eeae496217f3cc4b203ea9e2"
-  integrity sha512-eZCXYvKDoPf/kJVycZLkjycSgU8hs3Zm6FuEwfH8j/TH1um6Y+n91w7AiuvPh70RyZ9AMRDXgRYg5NI/VUHLPA==
+leek-uikit@1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/leek-uikit/-/leek-uikit-1.4.3.tgz#9af000d9f43d5d3b0847d8933e9ecc84d232d513"
+  integrity sha512-LgVBeUn2bZQfVW87oecvA7CpvSSl04LHpA8y+EG+xCnUpRauLLRSZEA5LXQLekCJzGcIiC3RgkKkpIaAcgFapA==
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"

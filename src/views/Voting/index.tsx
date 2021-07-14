@@ -24,11 +24,11 @@ const Title = styled(Heading).attrs({ as: 'h1', size: 'xl' })`
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
         graphQLErrors.map(({ message, locations, path }) =>
-            console.log(
+            console.warn(
                 `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
             )
         );
-    if (networkError) console.log(`[Network error]: ${networkError}`);
+    if (networkError) console.warn(`[Network error]: ${networkError}`);
 });
 
 const link = from([
