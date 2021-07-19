@@ -11,7 +11,7 @@ const ifos: Ifo[] = [
       80001: '0x8AaE8746bCFaAC6AC2927C1C9099943B4de5d7f3',
       137: '0x0E9B41A5D64de6B4BF6e086417E813Df21707748',
     },
-    isActive: true,
+    isActive: false,
     name: 'LEEK',
     mainToken: 'MATIC',
     subTitle: 'A community driven crypto and knowledge sharing DAO powered by $LEEK Social Token',

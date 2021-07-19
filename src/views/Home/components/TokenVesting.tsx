@@ -148,15 +148,15 @@ const TokenVesting = () => {
           </Text>
         </Row>
 
-        <Row>
+        <div>
           {!account ? (
             <UnlockButton fullWidth mt="8px" />
           ) : (
-            <Button mt="8px" onClick={claim}>
+            <Button mt="8px" onClick={claim} fullWidth>
               Claim
             </Button>
           )}
-        </Row>
+        </div>
       </CardBody>
     </StyledCakeStats>
   )

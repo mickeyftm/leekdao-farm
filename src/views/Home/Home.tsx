@@ -74,16 +74,16 @@ const Home: React.FC = () => {
         <Text color="warning">Project in Beta. Please use it at your own risk</Text>
       </Hero>
       <div>
-        <a href="./#/ido">
-          <BannerImg src="./images/ido-banner.png" alt="banner" />
+        <a href="./#/farms">
+          <BannerImg src="./images/banner.png" alt="banner" />
         </a>
       </div>
       <div>
         <Cards>
-          {/* <FarmStakingCard /> */}
+          <FarmStakingCard />
           <TwitterCard />
-          {/* <CakeStats /> */}
-          {/* <TotalValueLockedCard /> */}
+          <CakeStats />
+          <TotalValueLockedCard />
           <TokenVesting />
         </Cards>
         <Footer />
