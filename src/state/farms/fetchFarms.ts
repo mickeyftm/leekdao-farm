@@ -86,9 +86,13 @@ const fetchFarms = async () => {
 
         if (tokenAmount.comparedTo(0) > 0) {
           tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount)
+          console.log("tokenPriceVsQuote>>>1111", tokenPriceVsQuote.toString())
         } else {
           tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP))
+          console.log("tokenPriceVsQuote>>>2222", tokenPriceVsQuote.toString())
         }
+
+
       }
 
       const [info, totalAllocPoint, leekPerBlock] = await multicall(masterchefABI, [
@@ -109,8 +113,6 @@ const fetchFarms = async () => {
 
       const allocPoint = new BigNumber(info.allocPoint._hex)
       const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
-
-      console.log("tokenPriceVsQuote >>>>", tokenPriceVsQuote)
 
       return {
         ...farmConfig,

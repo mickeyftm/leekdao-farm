@@ -68,9 +68,11 @@ export const usePoolFromPid = (sousId): Pool => {
 // Prices
 
 export const usePriceBnbBusd = (): BigNumber => {
-  const pid = 2 // BUSD-BNB LP
+  const pid = 3 // USDC-MATIC LP
   const farm = useFarmFromPid(pid)
-  return farm.tokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote) : ZERO
+  const price = new BigNumber(1)
+  console.log("farm.tokenPriceVsQuote>>>>>aaaa", farm.tokenPriceVsQuote)
+  return farm.tokenPriceVsQuote ? (new BigNumber(farm.tokenPriceVsQuote)).times(price) : ZERO
 }
 
 export const usePriceCakeBusd = (): BigNumber => {
@@ -78,7 +80,7 @@ export const usePriceCakeBusd = (): BigNumber => {
   // const bnbPriceUSD = usePriceBnbBusd()
   // const farm = useFarmFromPid(pid)
   // return farm.tokenPriceVsQuote ? bnbPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
-  const pid = 0 // EGG-BUSD LP
+  const pid = 0 // LEEK-USDC LP
   const farm = useFarmFromPid(pid)
   return farm.tokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote) : ZERO
 }
@@ -91,6 +93,9 @@ export const useTotalValue = (): BigNumber => {
   for (let i = 0; i < farms.length; i++) {
     const farm = farms[i]
     if (farm.lpTotalInQuoteToken) {
+
+      console.log("farm.lpTotalInQuoteToken", farm.lpTotalInQuoteToken)
+
       let val
       if (farm.quoteTokenSymbol === QuoteToken.BNB) {
         val = bnbPrice.times(farm.lpTotalInQuoteToken)

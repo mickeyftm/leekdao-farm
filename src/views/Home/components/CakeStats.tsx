@@ -25,12 +25,14 @@ const Row = styled.div`
 const CakeStats = () => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
-  const burnedBalance = useBurnedBalance(getCakeAddress())
+  const burnedBalance = new BigNumber(2000000000000000000000000)
+  const reservedBalance = new BigNumber(2500000000000000000000000)
+  const yieldFarmBalance = new BigNumber(5000000000000000000000000)
   const farms = useFarms()
   const leekPrice = usePriceCakeBusd()
-  const circSupply = totalSupply ? totalSupply.minus(burnedBalance) : new BigNumber(0)
+  const circSupply = totalSupply ? totalSupply.minus(burnedBalance).minus(reservedBalance).minus(yieldFarmBalance) : new BigNumber(0)
   const cakeSupply = getBalanceNumber(circSupply)
-  const marketCap = leekPrice.times(circSupply)
+  const marketCap = leekPrice.times(totalSupply)
 
   let leekPerBlock = 0
   if (farms && farms[0] && farms[0].leekPerBlock) {
@@ -52,8 +54,16 @@ const CakeStats = () => {
           {totalSupply && <CardValue fontSize="14px" value={getBalanceNumber(totalSupply)} decimals={0} />}
         </Row>
         <Row>
-          <Text fontSize="14px">{TranslateString(538, 'Total Burned')}</Text>
+          <Text fontSize="14px">{TranslateString(538, 'Total Locked')}</Text>
           <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} decimals={0} />
+        </Row>
+        <Row>
+          <Text fontSize="14px">Community Reserved</Text>
+          <CardValue fontSize="14px" value={getBalanceNumber(reservedBalance)} decimals={0} />
+        </Row>
+        <Row>
+          <Text fontSize="14px">Yield Farm Reserved</Text>
+          <CardValue fontSize="14px" value={getBalanceNumber(yieldFarmBalance)} decimals={0} />
         </Row>
         <Row>
           <Text fontSize="14px">{TranslateString(10004, 'Circulating Supply')}</Text>

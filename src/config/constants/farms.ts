@@ -69,34 +69,34 @@ const farms: FarmConfig[] = [
   {
     pid: 4,
     risk: 3,
-    lpSymbol: 'MATIC-WETH SLP',
+    lpSymbol: 'WETH-MATIC SLP',
     lpAddresses: {
       80001: '',
       137: '0xc4e595acDD7d12feC385E5dA5D43160e8A0bAC0E',
     },
-    tokenSymbol: 'MATIC',
+    tokenSymbol: 'WETH',
     tokenAddresses: {
       80001: '0x5B67676a984807a212b1c59eBFc9B3568a474F0a',
-      137: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+      137: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     },
-    quoteTokenSymbol: QuoteToken.ETH,
-    quoteTokenAdresses: contracts.eth,
+    quoteTokenSymbol: QuoteToken.BNB,
+    quoteTokenAdresses: contracts.wbnb,
   },
   {
     pid: 5,
     risk: 3,
-    lpSymbol: 'USDC-WETH SLP',
+    lpSymbol: 'WETH-USDC SLP',
     lpAddresses: {
       80001: '',
       137: '0x34965ba0ac2451A34a0471F04CCa3F990b8dea27',
     },
-    tokenSymbol: 'USDC',
+    tokenSymbol: 'WETH',
     tokenAddresses: {
       80001: '0x5B67676a984807a212b1c59eBFc9B3568a474F0a',
-      137: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+      137: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     },
-    quoteTokenSymbol: QuoteToken.ETH,
-    quoteTokenAdresses: contracts.eth,
+    quoteTokenSymbol: QuoteToken.BUSD,
+    quoteTokenAdresses: contracts.busd,
   },
 
 ]
