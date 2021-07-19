@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Image, Heading } from 'leek-uikit'
+import { Image, Heading, Link, Flex } from 'leek-uikit'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
@@ -93,12 +93,19 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
   return (
     <Page>
-      <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
+      <Heading as="h1" size="lg" color="primary" mb="10px" style={{ textAlign: 'center' }}>
         {tokenMode
           ? TranslateString(10002, 'Stake tokens to earn LEEK')
           : TranslateString(320, 'Stake LP tokens to earn LEEK')}
       </Heading>
-      <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
+      <Flex alignItems="center" justifyContent="center">
+        <Link target="blank" href="https://polygonscan.com/block/countdown/17086800">
+          <Heading as="h2" color="secondary" mb="10px" style={{ textAlign: 'center' }}>
+            🔥🔥 The Yield Farming will start at Block #17086800
+          </Heading>
+        </Link>
+      </Flex>
+      <Heading as="h2" color="" mb="10px" style={{ textAlign: 'center' }}>
         {TranslateString(10000, 'Deposit Fee will be used to buyback LEEK')}
       </Heading>
       <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />

@@ -31,6 +31,10 @@ export default {
     137: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     80001: '',
   },
+  usdt: {
+    137: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+    80001: '',
+  },
   vesting: {
     137: '0x287554F2f0ef03811e1cDc3067b4C4Ae96f726A8',
     80001: '0x7968E3B3029E4d4c8fAc2D85EfaeA476a362AB75',

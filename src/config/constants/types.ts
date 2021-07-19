@@ -22,7 +22,7 @@ export enum QuoteToken {
   'SYRUP' = 'SYRUP',
   'BUSD' = 'USDC',
   'TWT' = 'TWT',
-  'UST' = 'UST',
+  'USDT' = 'USDT',
   'ETH' = 'ETH'
 }
 

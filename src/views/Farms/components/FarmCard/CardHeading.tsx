@@ -30,7 +30,6 @@ const CardHeading: React.FC<ExpandableSectionProps> = ({
   tokenSymbol,
   depositFee,
 }) => {
-  console.log(depositFee)
   return (
     <Wrapper justifyContent="space-between" alignItems="center" mb="12px">
       <Image src={`./images/farms/${farmImage}.png`} alt={tokenSymbol} width={75} height={75} />

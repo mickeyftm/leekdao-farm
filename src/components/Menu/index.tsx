@@ -13,6 +13,7 @@ const Menu = (props) => {
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = usePriceCakeBusd()
+  console.log("cakePriceUsd >>>>> ", cakePriceUsd)
   let leekPrice
 
   if (cakePriceUsd.toNumber() === 0) {
