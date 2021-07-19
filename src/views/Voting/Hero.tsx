@@ -18,7 +18,7 @@ const Title = styled(Heading).attrs({ as: 'h1', size: 'xl' })`
 
 const newPage = () => {
     const w = window.open('about:blank');
-    w.location.href = "https://snapshot.org/#/leekdao.eth/create";
+    w.location.href = "https://vote.leekdao.xyz/#/leekdao.eth/create";
 }
 
 const Hero = () => {
