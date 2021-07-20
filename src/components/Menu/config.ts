@@ -1,4 +1,7 @@
 import { MenuEntry } from 'leek-uikit'
+import UrlConfig from './UrlConfig'
+
+const chainId:string = process.env.REACT_APP_CHAIN_ID || '80001'
 
 const config: MenuEntry[] = [
   {
@@ -12,11 +15,11 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Exchange',
-        href: 'https://exchange.leekdao.xyz/#/swap',
+        href: UrlConfig[chainId].exchange
       },
       {
         label: 'Liquidity',
-        href: 'https://exchange.leekdao.xyz/#/pool',
+        href: UrlConfig[chainId].pool
       },
     ],
   },
