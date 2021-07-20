@@ -6,6 +6,7 @@ import useI18n from 'hooks/useI18n'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import { calculateCakeEarnedPerThousandDollars, apyModalRoi } from 'utils/compoundApyHelpers'
 import { Address } from 'config/constants/types'
+import getUrl from "utils/getLPUrl"
 
 interface ApyCalculatorModalProps {
   onDismiss?: () => void
@@ -126,7 +127,7 @@ const ApyCalculatorModal: React.FC<ApyCalculatorModalProps> = ({
         )}
       </Description>
       <Flex justifyContent="center">
-        <LinkExternal href={`https://exchange.pancakeswap.finance/#/add/${liquidityUrlPathParts}`}>
+        <LinkExternal href={getUrl(tokenAddresses, liquidityUrlPathParts)}>
           {TranslateString(999, 'Get')} {lpLabel}
         </LinkExternal>
       </Flex>
