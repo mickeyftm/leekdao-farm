@@ -118,3 +118,5 @@ dist
 /build
 
 ./buildscript.sh
+
+.DS_Store
