@@ -18,11 +18,12 @@ export interface Ifo {
 
 export enum QuoteToken {
   'BNB' = 'MATIC',
-  'CAKE' = 'SUSHI',
+  'CAKE' = 'LEEK',
   'SYRUP' = 'SYRUP',
-  'BUSD' = 'USDT',
+  'BUSD' = 'USDC',
   'TWT' = 'TWT',
-  'UST' = 'UST',
+  'USDT' = 'USDT',
+  'ETH' = 'ETH'
 }
 
 export enum PoolCategory {

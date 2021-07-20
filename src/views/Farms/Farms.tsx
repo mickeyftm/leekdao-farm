@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Image, Heading } from 'leek-uikit'
+import { Image, Heading, Link, Flex } from 'leek-uikit'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
@@ -57,7 +57,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
         // if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
         //   return farm
         // }
-        const cakeRewardPerBlock = new BigNumber(farm.leekPerBlock || 1)
+        const cakeRewardPerBlock = new BigNumber(farm.leekPerBlock || 1000000000000000000)
           .times(new BigNumber(farm.poolWeight))
           .div(new BigNumber(10).pow(18))
         const cakeRewardPerYear = cakeRewardPerBlock.times(BLOCKS_PER_YEAR)
@@ -70,7 +70,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
           totalValue = totalValue.times(bnbPrice)
         }
 
-        if (totalValue.comparedTo(0) > 0) {
+        if (totalValue.comparedTo(0.3) > 0) {
           apy = apy.div(totalValue)
         }
 
@@ -93,12 +93,19 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
   return (
     <Page>
-      <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
+      <Heading as="h1" size="lg" color="primary" mb="10px" style={{ textAlign: 'center' }}>
         {tokenMode
           ? TranslateString(10002, 'Stake tokens to earn LEEK')
           : TranslateString(320, 'Stake LP tokens to earn LEEK')}
       </Heading>
-      <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
+      <Flex alignItems="center" justifyContent="center">
+        <Link target="blank" href="https://polygonscan.com/block/countdown/17086800">
+          <Heading as="h2" color="secondary" mb="10px" style={{ textAlign: 'center' }}>
+            🔥🔥 The LP Farming will start at Block #17086800
+          </Heading>
+        </Link>
+      </Flex>
+      <Heading as="h2" color="" mb="10px" style={{ textAlign: 'center' }}>
         {TranslateString(10000, 'Deposit Fee will be used to buyback LEEK')}
       </Heading>
       <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />

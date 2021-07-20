@@ -1,4 +1,7 @@
 import { MenuEntry } from 'leek-uikit'
+import UrlConfig from './UrlConfig'
+
+const chainId: string = process.env.REACT_APP_CHAIN_ID || '80001'
 
 const config: MenuEntry[] = [
   {
@@ -12,11 +15,11 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Exchange',
-        href: '/swap',
+        href: UrlConfig[chainId].exchange
       },
       {
         label: 'Liquidity',
-        href: '/pool',
+        href: UrlConfig[chainId].pool
       },
     ],
   },
@@ -31,52 +34,15 @@ const config: MenuEntry[] = [
     href: '/ido',
   },
   {
-    label: 'Vote',
-    icon: 'GroupsIcon',
-    href: '/vote',
-  },
-  // {
-  //   label: 'Nests',
-  //   icon: 'PoolIcon',
-  //   href: '/nests',
-  // },
-  // {
-  //   label: 'Pools',
-  //   icon: 'PoolIcon',
-  //   href: '/pools',
-  // },
-  {
     label: 'Lottery',
     icon: 'TicketIcon',
     href: '/lottery',
   },
-  // {
-  //   label: 'NFT',
-  //   icon: 'NftIcon',
-  //   href: '/nft',
-  // },
-  // {
-  //   label: 'Info',
-  //   icon: 'InfoIcon',
-  //   items: [
-  //     {
-  //       label: 'PancakeSwap',
-  //       href: 'https://pancakeswap.info/token/0xF952Fc3ca7325Cc27D15885d37117676d25BfdA6',
-  //     },
-  //     {
-  //       label: 'CoinGecko',
-  //       href: 'https://www.coingecko.com/en/coins/goose-finance',
-  //     },
-  //     {
-  //       label: 'CoinMarketCap',
-  //       href: 'https://coinmarketcap.com/currencies/goose-finance/',
-  //     },
-  //     {
-  //       label: 'AstroTools',
-  //       href: 'https://app.astrotools.io/pancake-pair-explorer/0x19e7cbecdd23a16dfa5573df54d98f7caae03019',
-  //     },
-  //   ],
-  // },
+  {
+    label: 'Vote',
+    icon: 'GroupsIcon',
+    href: '/vote',
+  },
   {
     label: 'More',
     icon: 'MoreIcon',
@@ -95,7 +61,7 @@ const config: MenuEntry[] = [
       },
       {
         label: 'LeekDAO Website',
-        href: '#',
+        href: 'https://leekdao.xyz/',
       },
     ],
   },

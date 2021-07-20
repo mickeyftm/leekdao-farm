@@ -4,7 +4,7 @@ export default {
     80001: '0xc657EFDb41eaBA15Cea84d34a2A60b18686FA929',
   },
   masterChef: {
-    137: '0x8eA6bEE665c2cC4AA0098F2Cc2Da46Dc1601A8d7',
+    137: '0xbACA38eCfE97Cc4D69a5Fc97456B5E034cA1CCA0',
     80001: '0x345640DA8e87e8aEdf1a0Cd9623cbc771D962081',
   },
   wbnb: {
@@ -24,8 +24,16 @@ export default {
     80001: '0xf9d5cea631006DDaF5D18640351D43CebF1eF97d',
   },
   busd: {
-    137: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+    137: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
     80001: '0x3a93603cEe693674826DF627E1f3fe37b9F8B0c4',
+  },
+  eth: {
+    137: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
+    80001: '',
+  },
+  usdt: {
+    137: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+    80001: '',
   },
   vesting: {
     137: '0x287554F2f0ef03811e1cDc3067b4C4Ae96f726A8',

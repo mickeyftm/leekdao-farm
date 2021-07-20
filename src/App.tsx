@@ -18,8 +18,8 @@ const Lottery = lazy(() => import('./views/Lottery'))
 const Ifos = lazy(() => import('./views/Ifos'))
 const Proposals = lazy(() => import('./views/Voting'))
 const NotFound = lazy(() => import('./views/NotFound'))
-const Exchange = lazy(() => import('./views/ComingSoon'))
-const Liquidity = lazy(() => import('./views/ComingSoon'))
+// const Exchange = lazy(() => import('./views/ComingSoon'))
+// const Liquidity = lazy(() => import('./views/ComingSoon'))
 // const Nft = lazy(() => import('./views/Nft'))
 
 // This config is required for number formating
@@ -36,7 +36,7 @@ const App: React.FC = () => {
     }
   }, [account, connect])
 
-  useFetchPublicData()
+  // useFetchPublicData()
 
   return (
     <Router>
@@ -54,12 +54,12 @@ const App: React.FC = () => {
             <Route path="/ido">
               <Ifos />
             </Route>
-            <Route path="/swap">
+            {/* <Route path="/swap">
               <Exchange />
             </Route>
             <Route path="/pool">
               <Liquidity />
-            </Route>
+            </Route> */}
             <Route path="/vote">
               <Proposals />
             </Route>

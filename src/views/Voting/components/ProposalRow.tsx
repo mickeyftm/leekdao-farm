@@ -34,7 +34,7 @@ const newPage = (url) => {
 
 
 const ProposalRow: React.FC<StateProps> = ({ state, type }) => {
-    const votingLink = `https://snapshot.org/#/${LEEKDAO_SPACE}/proposal/`
+    const votingLink = `https://vote.leekdao.xyz/#/${LEEKDAO_SPACE}/proposal/`
     const { data } = useQuery(LOAD_PROPOSALS, {
         variables: {
             state

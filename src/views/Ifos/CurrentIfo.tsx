@@ -36,13 +36,18 @@ const List = styled.ul`
  */
 const activeIfo = ifosConfig.find((ifo) => ifo.isActive)
 
+
 const Ifo = () => {
   const TranslateString = useI18n()
 
   return (
     <div>
       <IfoCards isSingle>
-        <IfoCard ifo={activeIfo} />
+        {activeIfo !== undefined ? <IfoCard ifo={activeIfo} /> :
+          <Flex alignItems="center" justifyContent="center">
+            <Text mb="16px" bold fontSize="30px">No IDOs Right Now</Text>
+          </Flex>
+        }
       </IfoCards>
       <LaunchIfoCallout>
         <div>

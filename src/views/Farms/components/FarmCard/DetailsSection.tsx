@@ -3,6 +3,7 @@ import useI18n from 'hooks/useI18n'
 import styled from 'styled-components'
 import { Text, Flex, Link, LinkExternal } from 'leek-uikit'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
+import getUrl from 'utils/getLPUrl'
 import { Address } from 'config/constants/types'
 
 export interface ExpandableSectionProps {
@@ -48,6 +49,9 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
   const TranslateString = useI18n()
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAdresses, quoteTokenSymbol, tokenAddresses })
 
+
+  const lpTokenUrl = getUrl(tokenAddresses, liquidityUrlPathParts)
+
   return (
     <Wrapper>
       <Flex justifyContent="space-between">
@@ -55,8 +59,8 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
         <StyledLinkExternal
           href={
             isTokenOnly
-              ? `https://exchange.goosedefi.com/#/swap/${tokenAddresses[process.env.REACT_APP_CHAIN_ID]}`
-              : `https://exchange.goosedefi.com/#/add/${liquidityUrlPathParts}`
+              ? `https://exchange.leekdao.xyz/#/swap/${tokenAddresses[process.env.REACT_APP_CHAIN_ID]}` :
+              lpTokenUrl
           }
         >
           {lpLabel}
