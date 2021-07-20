@@ -1,81 +1,87 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import { ButtonMenu, ButtonMenuItem } from 'leek-uikit'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
-import PastLotteryDataContext from 'contexts/PastLotteryDataContext'
-import { getLotteryIssueIndex } from 'utils/lotteryUtils'
-import useI18n from 'hooks/useI18n'
-import { useLottery } from 'hooks/useContract'
-import Page from 'components/layout/Page'
-import Hero from './components/Hero'
-import Divider from './components/Divider'
-import NextDrawPage from './NextDrawPage'
-import PastDrawsPage from './PastDrawsPage'
+import React, { useState } from "react";
+import { BaseLayout, Box, Flex, Heading } from "leek-uikit";
+import Container from "components/layout/Container";
+import styled from "styled-components";
+import Hero from "./Hero";
+import LotteryCard from "./components/LotteryCard";
+import ParticipationListCard from "./components/ParticipationListCard"
+import LotteryResultCard from "./components/LotteryResultCard"
+import HowToPlay from "./components/HowToPlay"
+import HistoryTabMenu from "./components/HistoryTabMenu";
+import AllHistoryResultCard from "./components/AllHistoryResultCard"
 
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 32px;
+const LotteryRoundContainer = styled.div`
+ background-image:linear-gradient(180deg, #CBD7EF 0%, #9A9FD0 100%);
 `
 
-const Lottery: React.FC = () => {
-  const lotteryContract = useLottery()
-  const { account } = useWallet()
-  const TranslateString = useI18n()
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [historyData, setHistoryData] = useState([])
-  const [historyError, setHistoryError] = useState(false)
-  const [currentLotteryNumber, setCurrentLotteryNumber] = useState(0)
-  const [mostRecentLotteryNumber, setMostRecentLotteryNumber] = useState(1)
+const CurrentLayout = styled(BaseLayout)`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 32px;
+  margin: 0 auto;
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-top:50px;
+  padding-bottom:50px;
 
-  useEffect(() => {
-    fetch(`https://api.pancakeswap.com/api/lotteryHistory`)
-      .then((response) => response.json())
-      .then((data) => setHistoryData(data))
-      .catch(() => {
-        setHistoryError(true)
-      })
-  }, [])
-
-  useEffect(() => {
-    const getInitialLotteryIndex = async () => {
-      const index = await getLotteryIssueIndex(lotteryContract)
-      const previousLotteryNumber = index - 1
-
-      setCurrentLotteryNumber(index)
-      setMostRecentLotteryNumber(previousLotteryNumber)
-    }
-
-    if (account && lotteryContract) {
-      getInitialLotteryIndex()
-    }
-  }, [account, lotteryContract])
-
-  const handleClick = (index) => {
-    setActiveIndex(index)
+  ${({ theme }) => theme.mediaQueries.sm} {
+    grid-template-columns: 1.5fr 1fr;
   }
 
-  return (
-    <>
-      <Hero />
-      <Page>
-        <Wrapper>
-          <ButtonMenu activeIndex={activeIndex} onClick={handleClick} size="sm" variant="subtle">
-            <ButtonMenuItem>{TranslateString(999, 'Next draw')}</ButtonMenuItem>
-            <ButtonMenuItem>{TranslateString(999, 'Past draws')}</ButtonMenuItem>
-          </ButtonMenu>
-        </Wrapper>
-        <Divider />
-        <PastLotteryDataContext.Provider
-          value={{ historyError, historyData, mostRecentLotteryNumber, currentLotteryNumber }}
-        >
-          {activeIndex === 0 ? <NextDrawPage /> : <PastDrawsPage />}
-        </PastLotteryDataContext.Provider>
-      </Page>
-    </>
-  )
+  @media (max-width: 768px) {
+   padding:30px
+  }
+`
+
+const HistoryLayout = styled(Container)`
+  margin: 0 auto;
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-top:50px;
+  padding-bottom:50px;
+
+  @media (max-width: 768px) {
+   padding:30px
+  }
+`
+
+const Lottery = () => {
+    const [historyTabMenuIndex, setHistoryTabMenuIndex] = useState(0)
+    return (
+        <div>
+            <Hero />
+            <LotteryCard />
+
+            <LotteryRoundContainer>
+                <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
+                    <Heading mt="24px" size="xl">
+                        Lucky Draw Rounds
+                    </Heading>
+                    <Box mt="30px">
+                        <HistoryTabMenu
+                            activeIndex={historyTabMenuIndex}
+                            setActiveIndex={(index) => setHistoryTabMenuIndex(index)} />
+                    </Box>
+                </Flex>
+
+                {historyTabMenuIndex === 0 ? <CurrentLayout>
+                    <ParticipationListCard />
+                    <LotteryResultCard />
+                </CurrentLayout> :
+                    <HistoryLayout>
+                        <AllHistoryResultCard />
+                    </HistoryLayout>
+                }
+
+
+
+            </LotteryRoundContainer>
+
+            <Container>
+                <HowToPlay />
+            </Container>
+        </div>
+    )
 }
 
 export default Lottery

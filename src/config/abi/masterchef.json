@@ -293,19 +293,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getLeekBalanceFromContract",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -326,7 +313,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -579,19 +566,6 @@
       }
     ],
     "name": "updatePool",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_startBlock",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateStartBlock",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

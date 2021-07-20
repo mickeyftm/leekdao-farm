@@ -13,7 +13,7 @@ import PageLoader from './components/PageLoader'
 // Only pool is included in the main bundle because of it's the most visited page'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/ComingSoon'))
-// const Lottery = lazy(() => import('./views/Lottery'))
+const Lottery = lazy(() => import('./views/Lottery'))
 // const Pools = lazy(() => import('./views/Pools'))
 const Ifos = lazy(() => import('./views/Ifos'))
 const Proposals = lazy(() => import('./views/Voting'))
@@ -60,9 +60,11 @@ const App: React.FC = () => {
             <Route path="/pool">
               <Liquidity />
             </Route>
-
             <Route path="/vote">
               <Proposals />
+            </Route>
+            <Route path="/lottery">
+              <Lottery />
             </Route>
             {/* <Route path="/nests">
               <Farms tokenMode/>
@@ -70,9 +72,7 @@ const App: React.FC = () => {
             {/* <Route path="/pools"> */}
             {/*  <Pools /> */}
             {/* </Route> */}
-            {/* <Route path="/lottery"> */}
-            {/*  <Lottery /> */}
-            {/* </Route> */}
+
             {/* <Route path="/nft"> */}
             {/*  <Nft /> */}
             {/* </Route> */}

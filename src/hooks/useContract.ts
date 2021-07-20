@@ -60,6 +60,7 @@ export const usePancakeRabbits = (address: string) => {
   return useContract(pancakeRabbitsAbi, address)
 }
 
+
 export const useLottery = () => {
   const abi = (lottery as unknown) as AbiItem
   return useContract(abi, getLotteryAddress())
