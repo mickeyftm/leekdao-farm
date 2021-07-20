@@ -32,7 +32,6 @@ const CakeStats = () => {
   const leekPrice = usePriceCakeBusd()
   const circSupply = totalSupply ? totalSupply.minus(burnedBalance).minus(reservedBalance).minus(yieldFarmBalance) : new BigNumber(0)
   const cakeSupply = getBalanceNumber(circSupply)
-  const marketCap = leekPrice.times(totalSupply)
 
   let leekPerBlock = 0
   if (farms && farms[0] && farms[0].leekPerBlock) {
@@ -47,7 +46,7 @@ const CakeStats = () => {
         </Heading>
         <Row>
           <Text fontSize="14px">{TranslateString(10005, 'Market Cap')}</Text>
-          <CardValue fontSize="14px" value={getBalanceNumber(marketCap)} decimals={0} prefix="$" />
+          {totalSupply && <CardValue fontSize="14px" value={getBalanceNumber(leekPrice.times(totalSupply))} decimals={0} prefix="$" />}
         </Row>
         <Row>
           <Text fontSize="14px">{TranslateString(536, 'Total Minted')}</Text>

@@ -86,10 +86,8 @@ const fetchFarms = async () => {
 
         if (tokenAmount.comparedTo(0) > 0) {
           tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount)
-          console.log("tokenPriceVsQuote>>>1111", tokenPriceVsQuote.toString())
         } else {
           tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP))
-          console.log("tokenPriceVsQuote>>>2222", tokenPriceVsQuote.toString())
         }
 
 

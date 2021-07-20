@@ -57,7 +57,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
         // if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
         //   return farm
         // }
-        const cakeRewardPerBlock = new BigNumber(farm.leekPerBlock || 1)
+        const cakeRewardPerBlock = new BigNumber(farm.leekPerBlock || 1000000000000000000)
           .times(new BigNumber(farm.poolWeight))
           .div(new BigNumber(10).pow(18))
         const cakeRewardPerYear = cakeRewardPerBlock.times(BLOCKS_PER_YEAR)
@@ -70,7 +70,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
           totalValue = totalValue.times(bnbPrice)
         }
 
-        if (totalValue.comparedTo(0) > 0) {
+        if (totalValue.comparedTo(0.3) > 0) {
           apy = apy.div(totalValue)
         }
 
@@ -101,7 +101,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       <Flex alignItems="center" justifyContent="center">
         <Link target="blank" href="https://polygonscan.com/block/countdown/17086800">
           <Heading as="h2" color="secondary" mb="10px" style={{ textAlign: 'center' }}>
-            🔥🔥 The Yield Farming will start at Block #17086800
+            🔥🔥 The LP Farming will start at Block #17086800
           </Heading>
         </Link>
       </Flex>
