@@ -56,7 +56,7 @@ const config: MenuEntry[] = [
       },
       {
         label: 'LeekDAO Website',
-        href: 'https://app.leekdao.xyz/',
+        href: 'https://leekdao.xyz/',
       },
     ],
   },
