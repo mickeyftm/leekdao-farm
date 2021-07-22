@@ -5,7 +5,7 @@ import { useLottery } from 'hooks/useContract'
 import { store } from '../store/store'
 import { GET_ADDRESS_TRANSACTION_HASH, RESET_TO_DEFAULT_STATE } from '../store/reducer'
 
-const url = "http://127.0.0.1:5000";
+const url = process.env.REACT_APP_API_URL;
 const username = process.env.REACT_APP_API_USERNAME
 const password = process.env.REACT_APP_API_PASSWORD
 
