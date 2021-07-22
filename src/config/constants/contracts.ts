@@ -5,7 +5,7 @@ export default {
   },
   masterChef: {
     137: '0xbACA38eCfE97Cc4D69a5Fc97456B5E034cA1CCA0',
-    80001: '0x345640DA8e87e8aEdf1a0Cd9623cbc771D962081',
+    80001: '0x141cca2cc6447Cd05c24D89b89F2351CA1B8D070',
   },
   wbnb: {
     137: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
@@ -25,7 +25,7 @@ export default {
   },
   busd: {
     137: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
-    80001: '0x3a93603cEe693674826DF627E1f3fe37b9F8B0c4',
+    80001: '0x5e2C319e51c7481CBE281A62be983c727dE577De',
   },
   eth: {
     137: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',

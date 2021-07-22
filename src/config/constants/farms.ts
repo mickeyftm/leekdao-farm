@@ -1,6 +1,14 @@
 import contracts from './contracts'
 import { FarmConfig, QuoteToken } from './types'
 
+const chainId = process.env.REACT_APP_CHAIN_ID
+let sliceNumber;
+if (chainId === "80001") {
+  sliceNumber = 3;
+} else {
+  sliceNumber = 7;
+}
+
 const farms: FarmConfig[] = [
   {
     pid: 0,
@@ -23,7 +31,7 @@ const farms: FarmConfig[] = [
     risk: 5,
     lpSymbol: 'LEEK-USDC LP',
     lpAddresses: {
-      80001: '0xe8f118eb4aeb823cb292336f541ed4c75adfa71e',
+      80001: '0x8cfd7f8fa7c824b8619fa2d0af5a01315537192c',
       137: '0x6f447ba529007943E05fc678FB04A777816C81c0',
     },
     tokenSymbol: 'LEEK',
@@ -37,9 +45,9 @@ const farms: FarmConfig[] = [
   {
     pid: 2,
     risk: 3,
-    lpSymbol: 'MATIC-USDC SLP',
+    lpSymbol: chainId === "80001" ? 'MATIC-USDC LP' : 'MATIC-USDC SLP',
     lpAddresses: {
-      80001: '0xa75a44a1d06c11e7cd0764fc4905a4a09982353b',
+      80001: '0xa35f833d37a6d44c15ebea2c7eceb0808e1ffdc3',
       137: '0xcd353F79d9FADe311fC3119B841e1f456b54e858',
     },
     tokenSymbol: 'MATIC',
@@ -55,12 +63,12 @@ const farms: FarmConfig[] = [
     risk: 3,
     lpSymbol: 'MATIC-USDT SLP',
     lpAddresses: {
-      80001: '0xa75a44a1d06c11e7cd0764fc4905a4a09982353b',
+      80001: '',
       137: '0x55FF76BFFC3Cdd9D5FdbBC2ece4528ECcE45047e',
     },
     tokenSymbol: 'MATIC',
     tokenAddresses: {
-      80001: '0x5B67676a984807a212b1c59eBFc9B3568a474F0a',
+      80001: '',
       137: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
     },
     quoteTokenSymbol: QuoteToken.USDT,
@@ -76,7 +84,7 @@ const farms: FarmConfig[] = [
     },
     tokenSymbol: 'WETH',
     tokenAddresses: {
-      80001: '0x5B67676a984807a212b1c59eBFc9B3568a474F0a',
+      80001: '',
       137: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     },
     quoteTokenSymbol: QuoteToken.BNB,
@@ -92,13 +100,12 @@ const farms: FarmConfig[] = [
     },
     tokenSymbol: 'WETH',
     tokenAddresses: {
-      80001: '0x5B67676a984807a212b1c59eBFc9B3568a474F0a',
+      80001: '',
       137: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     },
     quoteTokenSymbol: QuoteToken.BUSD,
     quoteTokenAdresses: contracts.busd,
   },
-
-]
+].slice(0, sliceNumber)
 
 export default farms

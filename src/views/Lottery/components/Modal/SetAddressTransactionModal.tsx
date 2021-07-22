@@ -5,7 +5,7 @@ import ErrorMessage from "../General/ErrorMessage"
 import LoadingContent from '../General/LoadingContent'
 import TransactionMessage from '../General/TransactionMessage'
 import { useSetParticipantsToContract } from '../../api'
-import store from "../../store/store"
+import { store } from "../../store/store"
 
 type TransactionSubmittedContentProps = {
     onDismiss: () => void

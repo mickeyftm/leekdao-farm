@@ -13,7 +13,6 @@ import Row, { AddressColumn, ChoiceColumn, VotingPowerColumn } from '../General/
 import { useGetParticipationList, useGetCurrentRound } from '../../api'
 import ParticipantsListRow from "../General/ParticipantsListRow"
 
-
 const LIST_PER_VIEW = 5
 
 const ParticipationListCard: React.FC = () => {

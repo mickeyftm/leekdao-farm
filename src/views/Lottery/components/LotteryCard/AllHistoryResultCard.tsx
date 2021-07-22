@@ -12,8 +12,6 @@ import {
 import Row, { AddressColumn, VotingPowerColumn } from '../General/Row'
 import WinnersListRow from "../General/WinnersListRow"
 import { useGetCurrentRound, useFetchWinnersAndRound } from '../../api'
-import LoadingContent from '../General/LoadingContent'
-
 
 const LIST_PER_VIEW = 5
 

@@ -15,6 +15,10 @@ const getUrl = (tokenAddresses, liquidityUrlPathParts) => {
     token2 = "ETH";
   }
 
+  if (chainId === "80001") {
+    return `https://cryptoleek-team.github.io/leekdaoswap-mumbai-testnet/#/add/${token1}/${token2}`
+  }
+
   return isLeekToken ? `https://exchange.leekdao.xyz/#/add/${token1}/${token2}` : `https://app.sushi.com/add/${token1}/${token2}`
 }
 

@@ -3,7 +3,7 @@ import { Button, Modal, Flex, Input, Heading, useModal } from 'leek-uikit'
 import { useLottery } from 'hooks/useContract'
 import LuckyDrawTransactionModal from "./LuckyDrawTransactionModal"
 import ConfirmationPendingContent from './ConfirmationPendingModal'
-import store from "../../store/store"
+import { store } from "../../store/store"
 import { GET_LUCKY_DRAW_TRANSACTION_HASH, RESET_TO_DEFAULT_STATE } from '../../store/reducer'
 
 type WinnerNumberInputProps = {

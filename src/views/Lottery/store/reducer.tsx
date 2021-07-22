@@ -42,3 +42,19 @@ export const reducer = (state = defaultState, action) => {
     return state
 }
 
+export const loadingReducer = (state = loadingState, action) => {
+    if (action.type === SET_LOADING_STATE_TRUE) {
+        const newState = JSON.parse(JSON.stringify(state))
+        newState.isLoading = true
+        return newState
+    }
+
+    if (action.type === SET_LOADING_STATE_FALSE) {
+        const newState = JSON.parse(JSON.stringify(state))
+        newState.isLoading = false
+        return newState
+    }
+
+    return state;
+}
+

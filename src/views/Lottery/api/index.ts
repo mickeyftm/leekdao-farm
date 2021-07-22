@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import useRefresh from 'hooks/useRefresh'
 import { useLottery } from 'hooks/useContract'
-import store from '../store/store'
+import { store } from '../store/store'
 import { GET_ADDRESS_TRANSACTION_HASH, RESET_TO_DEFAULT_STATE } from '../store/reducer'
 
 const url = "http://127.0.0.1:5000";

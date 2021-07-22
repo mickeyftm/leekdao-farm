@@ -10,6 +10,7 @@ import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
 import { useFarms, usePriceBnbBusd, usePriceCakeBusd } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
+import { getBlockInfo } from 'utils/chainExplorer'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
@@ -20,6 +21,8 @@ import Divider from './components/Divider'
 export interface FarmsProps {
   tokenMode?: boolean
 }
+
+const chainId = process.env.REACT_APP_CHAIN_ID
 
 const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const { path } = useRouteMatch()
@@ -99,11 +102,18 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
           : TranslateString(320, 'Stake LP tokens to earn LEEK')}
       </Heading>
       <Flex alignItems="center" justifyContent="center">
-        <Link target="blank" href="https://polygonscan.com/block/countdown/17086800">
-          <Heading as="h2" color="secondary" mb="10px" style={{ textAlign: 'center' }}>
-            🔥🔥 The LP Farming will start at Block #17086800
-          </Heading>
-        </Link>
+        {
+          chainId === "137" ? <Link target="blank" href={getBlockInfo(chainId, 17086800)} >
+            <Heading as="h2" color="secondary" mb="10px" style={{ textAlign: 'center' }}>
+              🔥🔥 The LP Farming will start at Block #17086800
+            </Heading>
+          </Link> : <Link target="blank" href={getBlockInfo(chainId, 16652200)} >
+            <Heading as="h2" color="secondary" mb="10px" style={{ textAlign: 'center' }}>
+              🔥🔥 The LP Farming will start at Block #16652200
+            </Heading>
+          </Link>
+        }
+
       </Flex>
       <Heading as="h2" color="" mb="10px" style={{ textAlign: 'center' }}>
         {TranslateString(10000, 'Deposit Fee will be used to buyback LEEK')}

@@ -17,7 +17,7 @@ import SetAddressTransactionModal from '../Modal/SetAddressTransactionModal'
 import WinnerNumberInputModal from '../Modal/WinnerNumberInputModal'
 import { ColumnCenter } from "../General/Column"
 import { useGetCurrentRound, useGetWinners } from '../../api'
-import store from "../../store/store"
+import { store } from "../../store/store"
 
 const chainId = process.env.REACT_APP_CHAIN_ID
 

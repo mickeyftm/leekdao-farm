@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Modal } from 'leek-uikit'
 import { AutoColumn } from '../General/Column'
 import TransactionMessage from '../General/TransactionMessage'
-import store from "../../store/store"
+import { store } from "../../store/store"
 
 type TransactionSubmittedContentProps = {
     onDismiss: () => void
