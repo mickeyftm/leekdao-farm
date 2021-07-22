@@ -21,12 +21,11 @@ import { store } from "../../store/store"
 
 const chainId = process.env.REACT_APP_CHAIN_ID
 
-const StyledResultCard = styled(Card)`
+const StyledResultCard = styled(Card) <{ size: number }>`
   background-repeat: no-repeat;
   background-size: contain;
-  max-height: 350px;
+  max-height: ${({ size }) => size}px;
   width: 100%;
-  margin-bottom:30px;
 `
 
 const ResultContainer = styled(ColumnCenter)`
@@ -54,7 +53,7 @@ const LotteryResultCard: React.FC = () => {
             <Heading color="primary">Congratulations! {winners.length === 1 ? "Winner is:" : "Winners are"}</Heading>
             <ResultContainer>
                 {
-                    winners.map(item => (
+                    winners.map((item) => (
                         <LinkExternal key={item} href={getChainExplorerUrl(chainId, item)} fontSize="18px"> 🏆 {truncateWalletAddress(item)}</LinkExternal>
                     ))
                 }
@@ -69,7 +68,7 @@ const LotteryResultCard: React.FC = () => {
     }
 
     return (
-        <StyledResultCard>
+        <StyledResultCard size={250 + winners.length * 25}>
             <CardHeader>
                 <Flex alignItems="center" justifyContent="space-between">
                     <Heading>Last Round Winner(s)</Heading>

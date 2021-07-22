@@ -39,9 +39,14 @@ const config: MenuEntry[] = [
     href: '/vote',
   },
   {
-    label: 'Lottery',
+    label: 'Lucky Draw',
     icon: 'TicketIcon',
     href: '/lottery',
+  },
+  {
+    label: 'AirDrop',
+    icon: 'VaultsIcon',
+    href: '/airdrop',
   },
   {
     label: 'More',

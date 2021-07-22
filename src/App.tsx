@@ -14,7 +14,7 @@ import PageLoader from './components/PageLoader'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Lottery = lazy(() => import('./views/Lottery'))
-// const Pools = lazy(() => import('./views/Pools'))
+const Airdrop = lazy(() => import('./views/ComingSoon'))
 const Ifos = lazy(() => import('./views/Ifos'))
 const Proposals = lazy(() => import('./views/Voting'))
 const NotFound = lazy(() => import('./views/NotFound'))
@@ -54,36 +54,15 @@ const App: React.FC = () => {
             <Route path="/ido">
               <Ifos />
             </Route>
-            {/* <Route path="/swap">
-              <Exchange />
-            </Route>
-            <Route path="/pool">
-              <Liquidity />
-            </Route> */}
             <Route path="/vote">
               <Proposals />
             </Route>
             <Route path="/lottery">
               <Lottery />
             </Route>
-            {/* <Route path="/nests">
-              <Farms tokenMode/>
-            </Route> */}
-            {/* <Route path="/pools"> */}
-            {/*  <Pools /> */}
-            {/* </Route> */}
-
-            {/* <Route path="/nft"> */}
-            {/*  <Nft /> */}
-            {/* </Route> */}
-            {/* Redirect */}
-            {/* <Route path="/staking"> */}
-            {/*  <Redirect to="/pools" /> */}
-            {/* </Route> */}
-            {/* <Route path="/syrup"> */}
-            {/*  <Redirect to="/pools" /> */}
-            {/* </Route> */}
-            {/* 404 */}
+            <Route path="/airdrop">
+              <Airdrop />
+            </Route>
             <Route component={NotFound} />
           </Switch>
         </Suspense>
