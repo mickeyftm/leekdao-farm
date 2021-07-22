@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Flex, Heading, Image } from 'leek-uikit'
+import { Box, Flex, Heading, Image } from 'leek-uikit'
 import styled from 'styled-components'
 import Container from 'components/layout/Container'
 
@@ -30,12 +30,13 @@ const Hero = () => {
         <Flex alignItems="center" justifyContent="space-between">
           <Box pr="32px">
             <Title>
-              LeekDAO Lottery
+              LeekDAO Lucky Draw
             </Title>
             <Heading mb="16px">
               Sometimes the Good Things in Life Do Come Easy
             </Heading>
           </Box>
+          <DesktopImage src="./images/lottery/luckyDraw.png" width={250} height={250} />
         </Flex>
       </Container>
     </StyledHero >

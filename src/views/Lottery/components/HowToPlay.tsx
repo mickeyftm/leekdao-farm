@@ -72,12 +72,12 @@ const HowToPlay: React.FC = () => {
         {
             label: "Step 2",
             title: "Wait for the Draw",
-            subtitle: 'The lucky draw will be open regularly.',
+            subtitle: 'The lucky draw will be open in person and regularly.',
         },
         {
             label: "Step 3",
             title: "Check for Prizes",
-            subtitle: "Each round winner will be displayed in public.",
+            subtitle: "Each round winner(s) will be displayed in public.",
         },
     ]
     return (
@@ -86,7 +86,7 @@ const HowToPlay: React.FC = () => {
                 <Title mb="24px" fontSize="30px" color="secondary">
                     How to Play
                 </Title>
-                <Text>It is a very simple game!</Text>
+                <Text>It is a very simple game! But you will receive satisified returns</Text>
             </Flex>
             <StepContainer>
                 {steps.map((step) => (
@@ -95,8 +95,8 @@ const HowToPlay: React.FC = () => {
             </StepContainer>
             <Divider />
             <Flex justifyContent="center" alignItems="center" flexDirection={['column', 'column', 'row']}>
-                <Flex maxWidth="240px" mr="8px" mb="16px">
-                    <img src="/images/lottery/tombola.png" alt="tombola bunny" />
+                <Flex maxWidth="100px" mr="8px" mb="16px">
+                    <img src="/images/lottery/question.png" alt="question" />
                 </Flex>
                 <Flex maxWidth="300px" flexDirection="column">
                     <Heading mb="16px">
@@ -105,7 +105,7 @@ const HowToPlay: React.FC = () => {
                     <Text>
                         Check our in-depth guide on
                         <InlineLink href="https://docs.leekdao.xyz" marginLeft="5px">
-                            how to play the LeekDAO Lottery!
+                            how to play the LeekDAO Lucky Draw!
                         </InlineLink>
                     </Text>
                 </Flex>

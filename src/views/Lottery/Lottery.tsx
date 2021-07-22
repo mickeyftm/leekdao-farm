@@ -50,12 +50,16 @@ const Lottery = () => {
     return (
         <div>
             <Hero />
+            <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
+                <Heading size="xl" color="secondary" mt="40px">
+                    Participate Lucky Draw Right now!
+                </Heading>
+            </Flex>
             <LotteryCard />
-
             <LotteryRoundContainer>
                 <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
                     <Heading mt="24px" size="xl">
-                        Lucky Draw Rounds
+                        Lucky Draw Results
                     </Heading>
                     <Box mt="30px">
                         <HistoryTabMenu

@@ -3,9 +3,16 @@ const defaultState = {
     error: "",
     addressTx: "",
 }
+
+const loadingState = {
+    isLoading: false
+}
+
 export const GET_LUCKY_DRAW_TRANSACTION_HASH = 'GET_LUCKY_DRAW_TRANSACTION_HASH'
 export const GET_ADDRESS_TRANSACTION_HASH = "GET_ADDRESS_TRANSACTION_HASH"
 export const RESET_TO_DEFAULT_STATE = "RESET_TO_DEFAULT_STATE"
+export const SET_LOADING_STATE_TRUE = "SET_LOADING_STATE_TRUE"
+export const SET_LOADING_STATE_FALSE = "SET_LOADING_STATE_FALSE"
 
 export const reducer = (state = defaultState, action) => {
     if (action.type === GET_LUCKY_DRAW_TRANSACTION_HASH) {
@@ -34,3 +41,4 @@ export const reducer = (state = defaultState, action) => {
 
     return state
 }
+
