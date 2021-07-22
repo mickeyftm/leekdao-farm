@@ -2,9 +2,29 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "contract ERC20",
         "name": "token_",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vrfCoordinator_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "linkToken_",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "keyHash_",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fees_",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -27,12 +47,12 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "drawNumber",
-        "type": "uint256"
+        "internalType": "address[]",
+        "name": "winners",
+        "type": "address[]"
       }
     ],
-    "name": "LuckyDrawRequest",
+    "name": "LuckDrawLog",
     "type": "event"
   },
   {
@@ -53,19 +73,6 @@
     ],
     "name": "OwnershipTransferred",
     "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "_token",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [],
@@ -91,6 +98,25 @@
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "round",
+        "type": "uint256"
+      }
+    ],
+    "name": "getWinners",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -230,6 +256,32 @@
     "outputs": [
       {
         "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount_",
+        "type": "uint256"
+      }
+    ],
+    "name": "setRewards",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "token",
+    "outputs": [
+      {
+        "internalType": "contract ERC20",
         "name": "",
         "type": "address"
       }

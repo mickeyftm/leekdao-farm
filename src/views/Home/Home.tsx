@@ -80,10 +80,10 @@ const Home: React.FC = () => {
       </div>
       <div>
         <Cards>
-          <FarmStakingCard />
+          {/* <FarmStakingCard /> */}
           <TwitterCard />
-          <CakeStats />
-          <TotalValueLockedCard />
+          {/* <CakeStats />
+          <TotalValueLockedCard /> */}
           <TokenVesting />
         </Cards>
         <Footer />

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Button, Modal } from 'leek-uikit'
-import { AutoColumn } from './Column'
-import { usePostParticipation } from "../api"
-import LoadingContent from "./LoadingContent"
-import ErrorMessage from "./ErrorMessage"
-import SuccessMessage from "./SuccessMessage"
+import { AutoColumn } from '../General/Column'
+import { usePostParticipation } from "../../api"
+import LoadingContent from "../General/LoadingContent"
+import ErrorMessage from "../General/ErrorMessage"
+import SuccessMessage from "../General/SuccessMessage"
 
 type ParticipationProps = {
     address: string
@@ -13,27 +13,16 @@ type ParticipationProps = {
 
 const ParticipationModal = ({ onDismiss, address }: ParticipationProps) => {
     const data = usePostParticipation(address);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        let mounted = true;
-        if (!data && mounted) {
-            setLoading(true)
-        } else {
-            setLoading(false)
-        }
-        return () => { mounted = false }
-    }, [data])
 
     let comp;
-    if (loading) {
-        comp = <LoadingContent />
-    } else if (data) {
+    if (data) {
         if (data.error) {
             comp = <ErrorMessage errorMessage={data.error} />
         } else {
             comp = <SuccessMessage />
         }
+    } else {
+        comp = <LoadingContent />
     }
 
     return (

@@ -9,9 +9,9 @@ import {
     ChevronUpIcon,
     Text,
 } from 'leek-uikit'
-import Row, { AddressColumn, ChoiceColumn, VotingPowerColumn } from './Row'
-import { useGetParticipationList } from '../api'
-import ListRow from "./ListRow"
+import Row, { AddressColumn, ChoiceColumn, VotingPowerColumn } from '../General/Row'
+import { useGetParticipationList, useGetCurrentRound } from '../../api'
+import ParticipantsListRow from "../General/ParticipantsListRow"
 
 
 const LIST_PER_VIEW = 5
@@ -20,7 +20,7 @@ const ParticipationListCard: React.FC = () => {
     const participationList = useGetParticipationList()
     const [showAll, setShowAll] = useState(false)
     const displayList = showAll ? participationList : participationList.slice(0, LIST_PER_VIEW)
-
+    const round = useGetCurrentRound();
 
     const handleClick = () => {
         setShowAll(!showAll)
@@ -29,12 +29,12 @@ const ParticipationListCard: React.FC = () => {
     let comp;
     if (participationList.length === 0) {
         comp = <Flex alignItems="center" justifyContent="center" py="32px">
-            <Heading as="h5">No Participators found</Heading>
+            <Heading as="h5">No Participants found</Heading>
         </Flex>
 
     } else {
         comp = displayList.map((item) => (
-            <ListRow key={item.wallet_address} address={item.wallet_address} score={item.wallet_score} level={item.wallet_level} />
+            <ParticipantsListRow key={item.wallet_address} address={item.wallet_address} score={item.wallet_score} level={item.wallet_level} />
         ))
     }
 
@@ -43,6 +43,9 @@ const ParticipationListCard: React.FC = () => {
             <CardHeader>
                 <Flex alignItems="center" justifyContent="space-between">
                     <Heading>Participation List ({participationList.length})</Heading>
+                    {
+                        round > 0 ? <Text>Current Round: #{round}</Text> : ""
+                    }
                 </Flex>
             </CardHeader>
 

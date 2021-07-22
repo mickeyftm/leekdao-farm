@@ -1,7 +1,9 @@
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import useRefresh from 'hooks/useRefresh'
 import { useLottery } from 'hooks/useContract'
+import store from '../store/store'
+import { GET_ADDRESS_TRANSACTION_HASH, RESET_TO_DEFAULT_STATE } from '../store/reducer'
 
 const url = "http://127.0.0.1:5000";
 const username = process.env.REACT_APP_API_USERNAME
@@ -86,73 +88,61 @@ export const useGetParticipationList = () => {
 }
 
 
-const setParticipationToContract = async () => {
+export const useSetParticipantsToContract = async () => {
     const customUrl = `${url}/setAddress`;
-    let response;
-    try {
-        const { data } = await axios.post(customUrl, {},
-            {
-                auth: {
-                    username,
-                    password
-                }
-            }
-        )
-        response = data;
-    } catch (error) {
-        console.error('Unable to fetch data:', error.response)
-    }
-    return response;
-}
-
-export const useGetTransactionHash = (account: string, number: number) => {
-    const [resposne, setResponse] = useState(null);
-    const contract = useLottery();
-
+    const { slowRefresh } = useRefresh()
     useEffect(() => {
-        const sendTransactionHash = async () => {
+        const fetchData = async () => {
             try {
-                const isParticipateIntoContract = await setParticipationToContract();
-                if (!isParticipateIntoContract.error) {
-                    const result = await contract.methods.luckyDraw(number).send({ from: account })
-                    setResponse(result)
-                } else {
-                    setResponse(isParticipateIntoContract)
+                store.dispatch({ type: RESET_TO_DEFAULT_STATE })
+                const { data } = await axios.post(customUrl, {},
+                    {
+                        auth: {
+                            username,
+                            password
+                        }
+                    }
+                )
+                const action = {
+                    type: GET_ADDRESS_TRANSACTION_HASH,
+                    addressTx: data.transactionHash,
+                    error: data.error,
                 }
+                store.dispatch(action)
+
             } catch (error) {
                 console.error('Unable to fetch data:', error.response)
             }
         }
-        sendTransactionHash()
-    }, [account, number, contract.methods])
-    return resposne
+        fetchData()
+    }, [customUrl, slowRefresh])
 }
 
-export const useGetWinners = (position: number) => {
+export const useGetWinners = () => {
     const contract = useLottery();
-    const [winner, setWinner] = useState("");
+    const [winners, setWinners] = useState([]);
     const { fastRefresh } = useRefresh()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const currentRound = await contract.methods.currentRound().call()
-                const roundWinner = await contract.methods.roundWinners(currentRound - 1, position).call()
+                const roundWinners = await contract.methods.getWinners(currentRound - 1).call()
 
-                setWinner(roundWinner)
+                setWinners(roundWinners)
             } catch (error) {
                 console.error('Unable to fetch data:', error.response)
             }
         }
         fetchData()
-    }, [position, contract.methods, fastRefresh])
-    return winner
+    }, [contract.methods, fastRefresh])
+    return winners
 }
 
 
 export const useGetCurrentRound = () => {
     const contract = useLottery();
-    const [round, setRound] = useState(0);
+    const [round, setRound] = useState(1);
     const { fastRefresh } = useRefresh()
 
     useEffect(() => {
@@ -170,3 +160,32 @@ export const useGetCurrentRound = () => {
     return round
 }
 
+export const useFetchWinnersAndRound = (round) => {
+    const contract = useLottery();
+    const [winnersList, setWinnersList] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const winners = [];
+                for (let i = round; i > 0; i--) {
+                    contract.methods.getWinners(i - 1).call().then((data) => {
+                        data.forEach(item => {
+                            winners.push({
+                                "address": item,
+                                "round": i - 1
+                            })
+                        })
+                    })
+                }
+
+                setWinnersList(winners)
+
+            } catch (error) {
+                console.error('Unable to fetch winners data:', error.response)
+            }
+        }
+        fetchData()
+    }, [contract.methods, round])
+    return winnersList
+}

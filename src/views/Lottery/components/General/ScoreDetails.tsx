@@ -2,7 +2,7 @@ import React from "react"
 import { Heading, Flex, Text } from "leek-uikit"
 import styled from "styled-components"
 import { ColumnCenter } from "./Column"
-import { ApiStatResponse } from "../api"
+import { ApiStatResponse } from "../../api"
 
 const SubTitle = styled(Heading).attrs({ as: 'h4', size: 'md' })`
   color: ${({ theme }) => theme.colors.primary};

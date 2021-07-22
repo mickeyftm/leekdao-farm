@@ -9,16 +9,39 @@ import {
     ChevronUpIcon,
     Text,
 } from 'leek-uikit'
-import Row, { AddressColumn, ChoiceColumn, VotingPowerColumn } from './Row'
-import ListRow from "./ListRow"
+import Row, { AddressColumn, VotingPowerColumn } from '../General/Row'
+import WinnersListRow from "../General/WinnersListRow"
+import { useGetCurrentRound, useFetchWinnersAndRound } from '../../api'
+import LoadingContent from '../General/LoadingContent'
 
+
+const LIST_PER_VIEW = 5
 
 const AllHistoryResultCard: React.FC = () => {
+    const round = useGetCurrentRound()
+    const winnersList = useFetchWinnersAndRound(round).sort((itemA, itemB) => itemB.round - itemA.round);
+    const [showAll, setShowAll] = useState(false)
+    const displayList = showAll ? winnersList : winnersList.slice(0, LIST_PER_VIEW)
+
+    const handleClick = () => {
+        setShowAll(!showAll)
+    }
+    let comp;
+
+    if (displayList.length === 0) {
+        comp = <Flex alignItems="center" justifyContent="center" py="32px">
+            <Heading as="h5">No Winners found</Heading>
+        </Flex>
+    } else {
+        comp = displayList.map((item) => (
+            <WinnersListRow key={item.address} address={item.address} round={item.round} />
+        ))
+    }
     return (
         <Card>
             <CardHeader>
                 <Flex alignItems="center" justifyContent="space-between">
-                    <Heading>Lucky Draw History Results</Heading>
+                    <Heading>Lucky Draw Winners History Results</Heading>
                 </Flex>
             </CardHeader>
 
@@ -30,11 +53,11 @@ const AllHistoryResultCard: React.FC = () => {
                 </AddressColumn>
                 <VotingPowerColumn>
                     <Text fontSize="12px" color="textSubtle" textTransform="uppercase" bold>
-                        Round
+                        Round No
                     </Text>
                 </VotingPowerColumn>
             </Row>
-            {/* {comp}
+            {comp}
             {
                 displayList.length > 0 && (<Flex alignItems="center" justifyContent="center" py="8px" px="24px">
                     <Button
@@ -51,7 +74,7 @@ const AllHistoryResultCard: React.FC = () => {
                         {showAll ? "Hide" : "See All"}
                     </Button>
                 </Flex>)
-            } */}
+            }
         </Card>
     )
 }

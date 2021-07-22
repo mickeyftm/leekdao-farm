@@ -3,12 +3,12 @@ import { BaseLayout, Box, Flex, Heading } from "leek-uikit";
 import Container from "components/layout/Container";
 import styled from "styled-components";
 import Hero from "./Hero";
-import LotteryCard from "./components/LotteryCard";
-import ParticipationListCard from "./components/ParticipationListCard"
-import LotteryResultCard from "./components/LotteryResultCard"
+import LotteryCard from "./components/LotteryCard/LotteryCard";
+import ParticipationListCard from "./components/LotteryCard/ParticipationListCard"
+import LotteryResultCard from "./components/LotteryCard/LotteryResultCard"
 import HowToPlay from "./components/HowToPlay"
-import HistoryTabMenu from "./components/HistoryTabMenu";
-import AllHistoryResultCard from "./components/AllHistoryResultCard"
+import HistoryTabMenu from "./components/General/HistoryTabMenu";
+import AllHistoryResultCard from "./components/LotteryCard/AllHistoryResultCard"
 
 const LotteryRoundContainer = styled.div`
  background-image:linear-gradient(180deg, #CBD7EF 0%, #9A9FD0 100%);
@@ -25,7 +25,7 @@ const CurrentLayout = styled(BaseLayout)`
   padding-bottom:50px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.3fr 1fr;
   }
 
   @media (max-width: 768px) {
@@ -72,8 +72,6 @@ const Lottery = () => {
                         <AllHistoryResultCard />
                     </HistoryLayout>
                 }
-
-
 
             </LotteryRoundContainer>
 

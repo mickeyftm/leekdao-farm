@@ -12,7 +12,7 @@ interface ListProps {
 
 const chainId = process.env.REACT_APP_CHAIN_ID
 
-const ListRow: React.FC<ListProps> = ({ address, level, score }) => {
+const ParticipantsListRow: React.FC<ListProps> = ({ address, level, score }) => {
     return (
         <Row>
             <AddressColumn>
@@ -32,4 +32,4 @@ const ListRow: React.FC<ListProps> = ({ address, level, score }) => {
     )
 }
 
-export default ListRow
+export default ParticipantsListRow

@@ -34,14 +34,14 @@ const config: MenuEntry[] = [
     href: '/ido',
   },
   {
-    label: 'Lottery',
-    icon: 'TicketIcon',
-    href: '/lottery',
-  },
-  {
     label: 'Vote',
     icon: 'GroupsIcon',
     href: '/vote',
+  },
+  {
+    label: 'Lottery',
+    icon: 'TicketIcon',
+    href: '/lottery',
   },
   {
     label: 'More',

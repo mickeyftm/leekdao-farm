@@ -3,9 +3,9 @@ import { Card, Heading, Flex, Button, useModal, Text } from 'leek-uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import styled from "styled-components"
 import UnlockButton from "components/UnlockButton";
-import AddressInput from "./AddressInput";
-import DeGenScoreModal from "./DeGenScoreModal";
-import ParticipationModal from "./ParticipationModal"
+import AddressInput from "../General/AddressInput";
+import DeGenScoreModal from "../Modal/DeGenScoreModal";
+import ParticipationModal from "../Modal/ParticipationModal"
 
 const StyledLotteryCard = styled(Card)`
   background-repeat: no-repeat;

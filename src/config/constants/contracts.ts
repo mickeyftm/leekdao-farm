@@ -13,7 +13,7 @@ export default {
   },
   lottery: {
     137: '',
-    80001: '0xd48F6feb2418881c8bFccf6307f74ABC4A39d6F3',
+    80001: '0x7489234ab412b2b52D4E4910A226E940eB23E34b',
   },
   lotteryNFT: {
     137: '',
