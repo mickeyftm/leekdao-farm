@@ -96,7 +96,7 @@ const HowToPlay: React.FC = () => {
             <Divider />
             <Flex justifyContent="center" alignItems="center" flexDirection={['column', 'column', 'row']}>
                 <Flex maxWidth="100px" mr="8px" mb="16px">
-                    <img src="/images/lottery/question.png" alt="question" />
+                    <img src="./images/lottery/question.png" alt="question" />
                 </Flex>
                 <Flex maxWidth="300px" flexDirection="column">
                     <Heading mb="16px">

@@ -68,7 +68,7 @@ const LotteryResultCard: React.FC = () => {
     }
 
     return (
-        <StyledResultCard size={250 + winners.length * 25}>
+        <StyledResultCard size={250 + winners.length * 30}>
             <CardHeader>
                 <Flex alignItems="center" justifyContent="space-between">
                     <Heading>Last Round Winner(s)</Heading>
@@ -85,7 +85,7 @@ const LotteryResultCard: React.FC = () => {
                     isOwner && (
 
                         <div>
-                            <Flex alignItems="center" justifyContent="space-between" mt="20px">
+                            <Flex alignItems="center" justifyContent="space-between">
                                 <Button onClick={onPresentSetAddressTransactionModal} disabled={isAddressSentToContract1 || isAddressSentToContract2}>Approve</Button>
                                 <Button onClick={onPresentWinnerNumberInputModal} disabled={!isAddressSentToContract1 && !isAddressSentToContract2}>Lucky Draw</Button>
                             </Flex>

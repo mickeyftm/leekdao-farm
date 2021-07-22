@@ -178,7 +178,6 @@ export const useFetchWinnersAndRound = (round) => {
                         })
                     })
                 }
-
                 setWinnersList(winners)
 
             } catch (error) {
@@ -187,5 +186,6 @@ export const useFetchWinnersAndRound = (round) => {
         }
         fetchData()
     }, [contract.methods, round])
+
     return winnersList
 }
