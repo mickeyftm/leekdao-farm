@@ -3,7 +3,7 @@ import { Card, CardBody, Heading, Text } from 'leek-uikit'
 import BigNumber from 'bignumber.js/bignumber'
 import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
+import { useTotalSupply, useLockBalance } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { getCakeAddress } from 'utils/addressHelpers'
 import CardValue from './CardValue'
@@ -25,7 +25,7 @@ const Row = styled.div`
 const CakeStats = () => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
-  const burnedBalance = new BigNumber(2000000000000000000000000)
+  const burnedBalance = useLockBalance() || new BigNumber(0)
   const reservedBalance = new BigNumber(2500000000000000000000000)
   const yieldFarmBalance = new BigNumber(5000000000000000000000000)
   const farms = useFarms()

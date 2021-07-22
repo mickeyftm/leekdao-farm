@@ -3,9 +3,10 @@ import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
 import cakeABI from 'config/abi/cake.json'
+import vestingABI from "config/abi/vesting.json"
 import { getContract } from 'utils/web3'
 import { getTokenBalance } from 'utils/erc20'
-import { getCakeAddress } from 'utils/addressHelpers'
+import { getCakeAddress, getVestingAddress } from 'utils/addressHelpers'
 import useRefresh from './useRefresh'
 
 const useTokenBalance = (tokenAddress: string) => {
@@ -57,6 +58,24 @@ export const useBurnedBalance = (tokenAddress: string) => {
 
     fetchBalance()
   }, [tokenAddress, slowRefresh])
+
+  return balance
+}
+
+
+export const useLockBalance = () => {
+  const [balance, setBalance] = useState(new BigNumber(0))
+  const { fastRefresh } = useRefresh()
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const vestingContract = getContract(vestingABI, getVestingAddress())
+      const bal = await vestingContract.methods.remainingTokens().call()
+      setBalance(new BigNumber(bal))
+    }
+
+    fetchBalance()
+  }, [fastRefresh])
 
   return balance
 }
