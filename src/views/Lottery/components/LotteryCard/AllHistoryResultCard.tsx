@@ -24,8 +24,6 @@ const AllHistoryResultCard: React.FC = () => {
     const displayList = showAll ? winnersList : winnersList.slice(0, LIST_PER_VIEW)
     const { isLoading } = loadingStore.getState()
 
-    console.log(">>>>>>>>>>>>>>", isLoading)
-
     const handleClick = () => {
         setShowAll(!showAll)
     }
