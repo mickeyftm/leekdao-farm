@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import useRefresh from 'hooks/useRefresh'
 import { useLottery } from 'hooks/useContract'
-import { store } from '../store/store'
-import { GET_ADDRESS_TRANSACTION_HASH, RESET_TO_DEFAULT_STATE } from '../store/reducer'
+import { store, loadingStore } from '../store/store'
+import { GET_ADDRESS_TRANSACTION_HASH, RESET_TO_DEFAULT_STATE, SET_LOADING_STATE_FALSE, SET_LOADING_STATE_TRUE } from '../store/reducer'
 
 const url = process.env.REACT_APP_API_URL;
 const username = process.env.REACT_APP_API_USERNAME
@@ -167,18 +167,25 @@ export const useFetchWinnersAndRound = (round) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const winners = [];
-                for (let i = round; i > 0; i--) {
-                    contract.methods.getWinners(i - 1).call().then((data) => {
-                        data.forEach(item => {
-                            winners.push({
-                                "address": item,
-                                "round": i - 1
-                            })
+                const winners = []
+                const promises = [];
+                loadingStore.dispatch({ type: SET_LOADING_STATE_TRUE })
+                for (let i = 2; i <= round; i++) {
+                    promises.push(contract.methods.getWinners(i - 1).call())
+                }
+
+                const winnersArray = await Promise.all(promises)
+
+                winnersArray.forEach((itemArray, index) => {
+                    itemArray.forEach(item => {
+                        winners.push({
+                            "address": item,
+                            "round": index + 1
                         })
                     })
-                }
+                })
                 setWinnersList(winners)
+                loadingStore.dispatch({ type: SET_LOADING_STATE_FALSE })
 
             } catch (error) {
                 console.error('Unable to fetch winners data:', error.response)
