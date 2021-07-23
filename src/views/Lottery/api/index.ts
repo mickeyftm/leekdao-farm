@@ -167,32 +167,32 @@ export const useFetchWinnersAndRound = (round) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                loadingStore.dispatch({ type: SET_LOADING_STATE_TRUE })
                 const winners = []
                 const promises = [];
-                loadingStore.dispatch({ type: SET_LOADING_STATE_TRUE })
-                for (let i = 2; i <= round; i++) {
-                    promises.push(contract.methods.getWinners(i - 1).call())
-                }
-
-                const winnersArray = await Promise.all(promises)
-
-                winnersArray.forEach((itemArray, index) => {
-                    itemArray.forEach(item => {
-                        winners.push({
-                            "address": item,
-                            "round": index + 1
+                if (round === 1) {
+                    setWinnersList(winners)
+                } else {
+                    for (let i = 2; i <= round; i++) {
+                        promises.push(contract.methods.getWinners(i - 1).call())
+                    }
+                    const winnersArray = await Promise.all(promises)
+                    winnersArray.forEach((itemArray, index) => {
+                        itemArray.forEach(item => {
+                            winners.push({
+                                "address": item,
+                                "round": index + 1
+                            })
                         })
                     })
-                })
-                setWinnersList(winners)
-                loadingStore.dispatch({ type: SET_LOADING_STATE_FALSE })
-
+                    setWinnersList(winners)
+                    loadingStore.dispatch({ type: SET_LOADING_STATE_FALSE })
+                }
             } catch (error) {
                 console.error('Unable to fetch winners data:', error.response)
             }
         }
         fetchData()
     }, [contract.methods, round])
-
     return winnersList
 }

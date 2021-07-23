@@ -24,21 +24,25 @@ const AllHistoryResultCard: React.FC = () => {
     const displayList = showAll ? winnersList : winnersList.slice(0, LIST_PER_VIEW)
     const { isLoading } = loadingStore.getState()
 
+    console.log(">>>>>>>>>>>>>>", isLoading)
+
     const handleClick = () => {
         setShowAll(!showAll)
     }
     let comp;
 
-    if (isLoading) {
-        comp = <LoadingContent />
-    } else if (displayList.length === 0) {
-        comp = <Flex alignItems="center" justifyContent="center" py="32px">
-            <Heading as="h5">No Winners found</Heading>
-        </Flex>
+    if (!isLoading) {
+        if (displayList.length === 0) {
+            comp = <Flex alignItems="center" justifyContent="center" py="32px">
+                <Heading as="h5">No Winners found</Heading>
+            </Flex>
+        } else {
+            comp = displayList.map((item) => (
+                <WinnersListRow key={item.address} address={item.address} round={item.round} />
+            ))
+        }
     } else {
-        comp = displayList.map((item) => (
-            <WinnersListRow key={item.address} address={item.address} round={item.round} />
-        ))
+        comp = <LoadingContent />
     }
 
     return (
