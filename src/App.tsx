@@ -14,7 +14,7 @@ import PageLoader from './components/PageLoader'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Lottery = lazy(() => import('./views/Lottery'))
-const Airdrop = lazy(() => import('./views/ComingSoon'))
+const Airdrop = lazy(() => import('./views/Airdrop'))
 const Ifos = lazy(() => import('./views/Ifos'))
 const Proposals = lazy(() => import('./views/Voting'))
 const NotFound = lazy(() => import('./views/NotFound'))
