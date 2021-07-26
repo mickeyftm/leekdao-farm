@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import Container from "components/layout/Container";
 import { BaseLayout, Flex, Heading } from "leek-uikit";
 import FormCard from "./AirdropCard/FormCard";
 import InfoCard from "./AirdropCard/InfoCard";
 import Hero from "./Hero"
+import HowToParticipate from "./HowToParticipate"
 
 const ParticipationLayout = styled(BaseLayout)`
   display: grid;
@@ -24,6 +26,18 @@ const ParticipationLayout = styled(BaseLayout)`
   }
 `
 
+const Divider = styled.div`
+  background-color: ${({ theme }) => theme.colors.borderColor};
+  height: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+`
+
+
+
 const Airdrop = () => {
     return (
         <div>
@@ -38,6 +52,10 @@ const Airdrop = () => {
                 <InfoCard />
             </ParticipationLayout>
 
+            <Container>
+                <Divider />
+                <HowToParticipate />
+            </Container>
         </div>
     )
 }

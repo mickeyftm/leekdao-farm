@@ -39,4 +39,8 @@ export default {
     137: '0x287554F2f0ef03811e1cDc3067b4C4Ae96f726A8',
     80001: '0x7968E3B3029E4d4c8fAc2D85EfaeA476a362AB75',
   },
+  airdrop: {
+    137: "",
+    80001: ""
+  }
 }

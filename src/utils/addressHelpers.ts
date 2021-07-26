@@ -13,6 +13,10 @@ export const getVestingAddress = () => {
   return addresses.vesting[chainId]
 }
 
+export const getAirdropAddress = () => {
+  return addresses.airdrop[chainId]
+}
+
 export const getMulticallAddress = () => {
   return addresses.mulltiCall[chainId]
 }

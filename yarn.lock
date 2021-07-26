@@ -1122,10 +1122,17 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.14.0", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.14.0":
   version "7.14.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
   integrity sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.8.7":
+  version "7.14.8"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.8.tgz#7119a56f421018852694290b9f9148097391b446"
+  integrity sha512-twj3L8Og5SaCRCErB4x4ajbvBIVV77CGeFglHpeg5WC5FF8TZzBWXtTJ4MqaD9QszLYTtr+IsaAL2rEUevb+eg==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -9949,10 +9956,10 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
-leek-uikit@1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/leek-uikit/-/leek-uikit-1.4.3.tgz#9af000d9f43d5d3b0847d8933e9ecc84d232d513"
-  integrity sha512-LgVBeUn2bZQfVW87oecvA7CpvSSl04LHpA8y+EG+xCnUpRauLLRSZEA5LXQLekCJzGcIiC3RgkKkpIaAcgFapA==
+leek-uikit@1.4.6:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/leek-uikit/-/leek-uikit-1.4.6.tgz#b6879e70b4bc01ddfeba08749633c366b8113329"
+  integrity sha512-8aHEe1klUk6tiL8gBf64/CGr710OXIZGvabmNM1UZAGZZtbugbci2H1SG5I9suYrhcUs5ntxQM3GhF/8VRaL6g==
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"

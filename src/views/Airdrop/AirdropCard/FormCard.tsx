@@ -67,8 +67,13 @@ const FormCard = () => {
         onPresentParticipationModal()
     }
 
-    const onChange = () => {
-        setIsVerified(true)
+    const onChange = (value) => {
+        if (value) {
+            setIsVerified(true)
+        } else {
+            setIsVerified(false)
+        }
+
     }
 
     const [onPresentParticipationModal] = useModal(<ParticipationModal onDismiss={() => { return null }} />)
@@ -100,7 +105,7 @@ const FormCard = () => {
                     </div>
 
                     <div style={{ marginBottom: "10px" }}>
-                        <Text mb="5px">* If your retweet our AirDrop Tweets, Please enter the Retweet URL below.</Text>
+                        <Text mb="5px">* If your retweet our AirDrop Tweets, please enter the Retweet URL below.</Text>
                         <Input placeholder="Your Retweeted URL..." required value={retweetUrl} onChange={(e) => setRetweetUrl(e.currentTarget.value)} isSuccess={account && isRetweetUrlNotEmpty && isRetweetUrlValid} isWarning={account && (!isRetweetUrlNotEmpty || !isRetweetUrlValid)} name="retweet_url" />
                         {RetweetUrlErrorMessageComp}
                     </div>
