@@ -18,7 +18,6 @@ const WinnerNumberInputModal = ({ onDismiss, account }: WinnerNumberInputProps) 
     const contract = useLottery();
     const isNumberValid = number > 0
 
-
     const submitRequest = async () => {
         onPresentConfrimationModal();
         store.dispatch({ type: RESET_TO_DEFAULT_STATE })
@@ -43,7 +42,7 @@ const WinnerNumberInputModal = ({ onDismiss, account }: WinnerNumberInputProps) 
                         placeholder="Enter Winners Number..."
                         type="number"
                         value={number}
-                        onChange={(e) => setNumber(parseInt(e.currentTarget.value))}
+                        onChange={(e) => setNumber(parseInt(e.currentTarget.value) || 0)}
                         min="0" />
                 </div>
             </div>
