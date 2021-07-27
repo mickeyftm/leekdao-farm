@@ -1,16 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
-import BigNumber from 'bignumber.js'
-import { Text, LinkExternal, Link } from 'leek-uikit'
-import { getBalanceNumber } from 'utils/formatBalance'
-import useI18n from 'hooks/useI18n'
+import { Text, Link } from 'leek-uikit'
+import { getBlockInfo } from 'utils/chainExplorer'
 import numeral from 'numeral'
 
 interface AirdropInfoDetailsProps {
-    launchTime: string
-    salesAmount: number
+    startBlock: number
+    endBlock: number
+    airdropAmount: number
+    vipAirdropAmount: number
+    remainingTokens: number
     tokenName: string
+    totalAmount: number
 }
+
 
 const StyledAirdropInfoDetails = styled.div`
   margin-bottom: 24px;
@@ -26,9 +29,15 @@ const Display = styled(Text)`
   flex: 1;
 `
 
+const chainId = process.env.REACT_APP_CHAIN_ID
+
 const AirdropInfoDetails: React.FC<AirdropInfoDetailsProps> = ({
-    launchTime,
-    salesAmount,
+    startBlock,
+    endBlock,
+    airdropAmount,
+    vipAirdropAmount,
+    remainingTokens,
+    totalAmount,
     tokenName
 }) => {
 
@@ -36,28 +45,59 @@ const AirdropInfoDetails: React.FC<AirdropInfoDetailsProps> = ({
         <>
             <StyledAirdropInfoDetails>
                 <Item>
-                    <Display>Launch Time</Display>
+                    <Display>Start Block</Display>
                     <Text>
                         <Link
-                            href="https://www.timeanddate.com/worldclock/timezone/utc"
+                            href={getBlockInfo(chainId, startBlock)}
                             target="blank"
-                            rel="noopener noreferrer"
-                            ml="4px"
                             style={{ display: 'inline' }}
                         >
-                            {launchTime} UTC
+                            # {startBlock}
                         </Link>
                     </Text>
                 </Item>
 
                 <Item>
-                    <Display>AirDrop Amount</Display>
+                    <Display>End Block</Display>
                     <Text>
-                        {numeral(salesAmount).format('0,0')} {tokenName}
+                        <Link
+                            href={getBlockInfo(chainId, endBlock)}
+                            target="blank"
+                            style={{ display: 'inline' }}
+                        >
+                            # {endBlock}
+                        </Link>
+                    </Text>
+                </Item>
+
+                <Item>
+                    <Display>AirDrop Amount/Person</Display>
+                    <Text>
+                        {numeral(airdropAmount).format('0,0')} {tokenName}
+                    </Text>
+                </Item>
+
+                <Item>
+                    <Display>AirDrop Amount/VIP Person</Display>
+                    <Text>
+                        {numeral(vipAirdropAmount).format('0,0')} {tokenName}
+                    </Text>
+                </Item>
+
+                <Item>
+                    <Display>Total Airdrop Amount</Display>
+                    <Text>
+                        {numeral(totalAmount).format('0,0')} {tokenName}
+                    </Text>
+                </Item>
+
+                <Item>
+                    <Display>Remaining Amount</Display>
+                    <Text>
+                        {numeral(remainingTokens).format('0,0')} {tokenName}
                     </Text>
                 </Item>
             </StyledAirdropInfoDetails>
-
         </>
     )
 }

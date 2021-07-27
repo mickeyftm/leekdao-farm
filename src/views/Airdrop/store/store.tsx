@@ -1,5 +1,8 @@
 import { createStore } from 'redux'
-import { reducer } from './reducer'
+import { reducer, airdropApproveReducer, vipAirdropApproveReducer, claimAirdropReducer } from './reducer'
 
-const store = createStore(reducer)
-export default store
+export const store = createStore(reducer)
+export const airdropApproveStore = createStore(airdropApproveReducer)
+export const vipAirdropApproveStore = createStore(vipAirdropApproveReducer)
+export const claimAirdropStore = createStore(claimAirdropReducer)
+

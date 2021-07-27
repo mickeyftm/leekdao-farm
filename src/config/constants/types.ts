@@ -86,12 +86,10 @@ export type Nft = {
 export interface Airdrop {
   id: string
   isActive: boolean
-  airdropAddress: Address
   tokenAddress: Address
   name: string
-  description?: string
-  startTime: number
-  salesAmount: number
+  description: string
   projectSiteUrl: string
   tokenDecimals: number
+  totalAmount: number
 }

@@ -7,7 +7,7 @@ import UnlockButton from "components/UnlockButton"
 import validator from 'validator'
 import ParticipationModal from "../Modal/ParticipationModal"
 import { POST_FORM_DATA } from "../store/reducer"
-import store from "../store/store"
+import { store } from "../store/store"
 
 const SECRET_TOKEN = process.env.REACT_APP_SECRET_TOKEN
 
@@ -52,7 +52,7 @@ const FormCard = () => {
     const submitForm = (event) => {
         event.preventDefault();
         const submittedData = {
-            "walletAddress": account,
+            "walletAddress": "0x260038eff0733a0e721ea8cd4f57d251575ff185",
             "twitterName": twitterName,
             "retweetUrl": retweetUrl,
             "telegramName": telegramName,

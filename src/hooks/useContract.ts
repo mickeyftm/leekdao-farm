@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AbiItem } from 'web3-utils'
 import { ContractOptions } from 'web3-eth-contract'
 import useWeb3 from 'hooks/useWeb3'
-import { getMasterChefAddress, getCakeAddress, getLotteryAddress, getLotteryTicketAddress } from 'utils/addressHelpers'
+import { getMasterChefAddress, getCakeAddress, getLotteryAddress, getLotteryTicketAddress, getAirdropAddress } from 'utils/addressHelpers'
 import { poolsConfig } from 'config/constants'
 import { PoolCategory } from 'config/constants/types'
 import ifo from 'config/abi/ifo.json'
@@ -10,6 +10,7 @@ import erc20 from 'config/abi/erc20.json'
 import vesting from 'config/abi/vesting.json'
 import rabbitmintingfarm from 'config/abi/rabbitmintingfarm.json'
 import pancakeRabbits from 'config/abi/pancakeRabbits.json'
+import airdrop from 'config/abi/airdrop.json'
 import lottery from 'config/abi/lottery.json'
 import lotteryTicket from 'config/abi/lotteryNft.json'
 import masterChef from 'config/abi/masterchef.json'
@@ -34,6 +35,11 @@ const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOp
 export const useIfoContract = (address: string) => {
   const ifoAbi = (ifo as unknown) as AbiItem
   return useContract(ifoAbi, address)
+}
+
+export const useAirdropContract = () => {
+  const abi = (airdrop as unknown) as AbiItem
+  return useContract(abi, getAirdropAddress())
 }
 
 export const useVestingContract = (address: string) => {

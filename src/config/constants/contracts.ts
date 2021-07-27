@@ -41,6 +41,6 @@ export default {
   },
   airdrop: {
     137: "",
-    80001: ""
+    80001: "0xe2CBdD7f4c866b8bcc5f96457056B0c61c92DF2a"
   }
 }
