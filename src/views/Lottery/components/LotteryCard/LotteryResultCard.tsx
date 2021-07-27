@@ -12,12 +12,16 @@ import {
 import truncateWalletAddress from "utils/truncateWalletAddress"
 import { getChainExplorerUrl } from 'utils/chainExplorer'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useLottery } from 'hooks/useContract'
 import styled from "styled-components"
-import SetAddressTransactionModal from '../Modal/SetAddressTransactionModal'
 import WinnerNumberInputModal from '../Modal/WinnerNumberInputModal'
 import { ColumnCenter } from "../General/Column"
-import { useGetCurrentRound, useGetWinners } from '../../api'
+import ApproveTransactionModal from '../Modal/ApproveTransactionModal'
+import ConfirmationPendingContent from '../Modal/ConfirmationPendingModal'
+import ErrorMessageModal from '../Modal/ErrorMessageModal'
+import { useGetCurrentRound, useGetWinners, useGetNotParticipatedList, updateParticipationStatus } from '../../api'
 import { store } from "../../store/store"
+import { GET_ADDRESS_TRANSACTION_HASH, RESET_TO_DEFAULT_STATE, UPDATE_ERROR_MESSAGE } from "../../store/reducer"
 
 const chainId = process.env.REACT_APP_CHAIN_ID
 
@@ -39,12 +43,44 @@ const LotteryResultCard: React.FC = () => {
     const round = useGetCurrentRound();
     const { account } = useWallet();
     const isOwner = LOTTERY_OWNER === account
-    const [onPresentSetAddressTransactionModal] = useModal(<SetAddressTransactionModal onDismiss={() => { return null }} />)
+    const notParticpatedList = useGetNotParticipatedList()
     const [onPresentWinnerNumberInputModal] = useModal(<WinnerNumberInputModal onDismiss={() => { return null }} account={account} />)
-    const state = store.getState();
-    const isAddressSentToContract1 = state.error === "No new participants attended"
+    const [onPresentApproveTransactionModal] = useModal(<ApproveTransactionModal onDismiss={() => { return null }} />)
+    const [onPresentConfrimationModal] = useModal(<ConfirmationPendingContent onDismiss={() => { return null }} />)
+    const [onPresentErrorMessageModal] = useModal(<ErrorMessageModal onDismiss={() => { return null }} />)
+    const contract = useLottery();
+    const state = store.getState()
+    const isAddressSentToContract1 = state.error === "There are no new participants"
     const isAddressSentToContract2 = state.addressTx && state.addressTx.length > 0
 
+    const submitRequest = async () => {
+        onPresentConfrimationModal();
+        store.dispatch({ type: RESET_TO_DEFAULT_STATE })
+        if (notParticpatedList.error) {
+            const action = {
+                type: UPDATE_ERROR_MESSAGE,
+                error: notParticpatedList.error,
+            }
+            store.dispatch(action);
+            onPresentErrorMessageModal()
+        } else {
+            const result = await contract.methods.participate(notParticpatedList).send({ from: account })
+            if (result) {
+                const action = {
+                    type: GET_ADDRESS_TRANSACTION_HASH,
+                    addressTx: result.transactionHash,
+                    error: result.error,
+                }
+                store.dispatch(action);
+                onPresentApproveTransactionModal();
+                await updateParticipationStatus();
+            }
+        }
+
+        return null;
+
+
+    }
 
     let comp;
 
@@ -86,7 +122,7 @@ const LotteryResultCard: React.FC = () => {
 
                         <div>
                             <Flex alignItems="center" justifyContent="space-between">
-                                <Button onClick={onPresentSetAddressTransactionModal} disabled={isAddressSentToContract1 || isAddressSentToContract2}>Approve</Button>
+                                <Button onClick={submitRequest} disabled={isAddressSentToContract1 || isAddressSentToContract2}>Approve</Button>
                                 <Button onClick={onPresentWinnerNumberInputModal} disabled={!isAddressSentToContract1 && !isAddressSentToContract2}>Lucky Draw</Button>
                             </Flex>
                         </div>

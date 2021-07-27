@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import useRefresh from 'hooks/useRefresh'
 import { useLottery } from 'hooks/useContract'
-import { store, loadingStore } from '../store/store'
-import { GET_ADDRESS_TRANSACTION_HASH, RESET_TO_DEFAULT_STATE, SET_LOADING_STATE_FALSE, SET_LOADING_STATE_TRUE } from '../store/reducer'
+import { loadingStore } from '../store/store'
+import { SET_LOADING_STATE_FALSE, SET_LOADING_STATE_TRUE } from '../store/reducer'
 
 const url = process.env.REACT_APP_API_URL;
 const username = process.env.REACT_APP_API_USERNAME
@@ -20,6 +20,7 @@ export const useGetScore = (address) => {
     const customUrl = `${url}/luckyDraw`;
 
     useEffect(() => {
+        let mounted = true;
         const fetchData = async () => {
             try {
                 const { data } = await axios.get(customUrl, {
@@ -28,12 +29,17 @@ export const useGetScore = (address) => {
                     }
                 })
 
-                setDeGenScore(data)
+                if (mounted) {
+                    setDeGenScore(data)
+                }
             } catch (error) {
-                console.error('Unable to fetch data:', error.response)
+                console.error('Unable to fetch DeGen Score data:', error.response)
             }
         }
         fetchData()
+        return () => {
+            mounted = false
+        }
     }, [customUrl, address, setDeGenScore])
 
     return deGenScore
@@ -44,6 +50,7 @@ export const usePostParticipation = (address) => {
     const customUrl = `${url}/luckyDraw`;
 
     useEffect(() => {
+        let mounted = true;
         const fetchData = async () => {
             try {
                 const { data } = await axios.post(customUrl, {
@@ -57,12 +64,17 @@ export const usePostParticipation = (address) => {
                     }
                 )
 
-                setSuccessData(data)
+                if (mounted) {
+                    setSuccessData(data)
+                }
             } catch (error) {
-                console.error('Unable to fetch data:', error.response)
+                console.error('Unable to fetch participation data:', error.response)
             }
         }
         fetchData()
+        return () => {
+            mounted = false
+        }
     }, [customUrl, address, setSuccessData])
 
     return successData
@@ -74,48 +86,61 @@ export const useGetParticipationList = () => {
     const { fastRefresh } = useRefresh()
 
     useEffect(() => {
+        let mounted = true;
         const fetchData = async () => {
             try {
                 const { data } = await axios.get(customUrl)
-                setParticipationList(data)
+                if (mounted) {
+                    setParticipationList(data)
+                }
+
             } catch (error) {
-                console.error('Unable to fetch data:', error.response)
+                console.error('Unable to fetch participation list data:', error.response)
             }
+
         }
         fetchData()
+        return () => {
+            mounted = false
+        }
     }, [customUrl, setParticipationList, fastRefresh])
     return participationList
 }
 
+export const useGetNotParticipatedList = () => {
+    const [participationList, setParticipationList] = useState(null)
+    const customUrl = `${url}/notParticipatedList`;
 
-export const useSetParticipantsToContract = async () => {
-    const customUrl = `${url}/setAddress`;
-    const { slowRefresh } = useRefresh()
     useEffect(() => {
+        let mounted = true;
         const fetchData = async () => {
             try {
-                store.dispatch({ type: RESET_TO_DEFAULT_STATE })
-                const { data } = await axios.post(customUrl, {},
-                    {
-                        auth: {
-                            username,
-                            password
-                        }
-                    }
-                )
-                const action = {
-                    type: GET_ADDRESS_TRANSACTION_HASH,
-                    addressTx: data.transactionHash,
-                    error: data.error,
-                }
-                store.dispatch(action)
+                const { data } = await axios.get(customUrl)
 
+                if (mounted) {
+                    setParticipationList(data)
+                }
             } catch (error) {
-                console.error('Unable to fetch data:', error.response)
+                console.error('Unable to fetch not particpated persons list:', error.response)
             }
         }
         fetchData()
-    }, [customUrl, slowRefresh])
+        return () => {
+            mounted = false
+        }
+    }, [customUrl, setParticipationList])
+
+    return participationList
+}
+
+export const updateParticipationStatus = async () => {
+    const customUrl = `${url}/participationStatus`;
+    await axios.patch(customUrl, {}, {
+        auth: {
+            username,
+            password
+        }
+    })
 }
 
 export const useGetWinners = () => {
@@ -124,17 +149,24 @@ export const useGetWinners = () => {
     const { fastRefresh } = useRefresh()
 
     useEffect(() => {
+        let mounted = true;
         const fetchData = async () => {
             try {
                 const currentRound = await contract.methods.currentRound().call()
                 const roundWinners = await contract.methods.getWinners(currentRound - 1).call()
 
-                setWinners(roundWinners)
+                if (mounted) {
+                    setWinners(roundWinners)
+                }
+
             } catch (error) {
-                console.error('Unable to fetch data:', error.response)
+                console.error('Unable to fetch winners:', error.response)
             }
         }
         fetchData()
+        return () => {
+            mounted = false
+        }
     }, [contract.methods, fastRefresh])
     return winners
 }
@@ -146,16 +178,24 @@ export const useGetCurrentRound = () => {
     const { fastRefresh } = useRefresh()
 
     useEffect(() => {
+        let mounted = true;
         const fetchData = async () => {
             try {
                 const currentRound = await contract.methods.currentRound().call()
 
-                setRound(currentRound);
+                if (mounted) {
+                    setRound(currentRound);
+                }
+
             } catch (error) {
-                console.error('Unable to fetch data:', error.response)
+                console.error('Unable to fetch current round:', error.response)
             }
+
         }
         fetchData()
+        return () => {
+            mounted = false
+        }
     }, [contract.methods, fastRefresh])
     return round
 }
@@ -165,13 +205,17 @@ export const useFetchWinnersAndRound = (round) => {
     const [winnersList, setWinnersList] = useState([]);
 
     useEffect(() => {
+        let mounted = true;
         const fetchData = async () => {
             try {
                 loadingStore.dispatch({ type: SET_LOADING_STATE_TRUE })
                 const winners = []
                 const promises = [];
+
                 if (round === 1) {
-                    setWinnersList(winners)
+                    if (mounted) {
+                        setWinnersList(winners)
+                    }
                 } else {
                     for (let i = 2; i <= round; i++) {
                         promises.push(contract.methods.getWinners(i - 1).call())
@@ -185,14 +229,20 @@ export const useFetchWinnersAndRound = (round) => {
                             })
                         })
                     })
-                    setWinnersList(winners)
+
+                    if (mounted) {
+                        setWinnersList(winners)
+                    }
                     loadingStore.dispatch({ type: SET_LOADING_STATE_FALSE })
                 }
             } catch (error) {
-                console.error('Unable to fetch winners data:', error.response)
+                console.error('Unable to fetch history winners:', error.response)
             }
         }
         fetchData()
+        return () => {
+            mounted = false
+        }
     }, [contract.methods, round])
     return winnersList
 }
