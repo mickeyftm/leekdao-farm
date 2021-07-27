@@ -10,6 +10,7 @@ const usePostParticipation = (formData) => {
     const customUrl = `${url}/airdrop`;
 
     useEffect(() => {
+        let mounted = true
         const fetchData = async () => {
             try {
                 const { data } = await axios.post(customUrl,
@@ -21,13 +22,17 @@ const usePostParticipation = (formData) => {
                         }
                     }
                 )
-
-                setSuccessData(data)
+                if (mounted) {
+                    setSuccessData(data)
+                }
             } catch (error) {
                 console.error('Unable to post participation data:', error.response)
             }
         }
         fetchData()
+        return () => {
+            mounted = false
+        }
     }, [customUrl, formData, setSuccessData])
 
     return successData

@@ -6,7 +6,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from "components/UnlockButton"
 import validator from 'validator'
 import ParticipationModal from "../Modal/ParticipationModal"
-import { GET_FORM_DATA } from "../store/reducer"
+import { POST_FORM_DATA } from "../store/reducer"
 import store from "../store/store"
 
 const SECRET_TOKEN = process.env.REACT_APP_SECRET_TOKEN
@@ -52,15 +52,16 @@ const FormCard = () => {
     const submitForm = (event) => {
         event.preventDefault();
         const submittedData = {
-            "wallet_address": account,
-            "twitter_name": twitterName,
-            "retweet_url": retweetUrl,
-            "telegram_name": telegramName,
-            "discord_name": discordName,
-            "early_contributor": email
+            "walletAddress": account,
+            "twitterName": twitterName,
+            "retweetUrl": retweetUrl,
+            "telegramName": telegramName,
+            "discordName": discordName,
+            "earlyContributor": email,
+            "isVerified": isVerified
         }
         const action = {
-            type: GET_FORM_DATA,
+            type: POST_FORM_DATA,
             formData: submittedData,
         }
         store.dispatch(action)
