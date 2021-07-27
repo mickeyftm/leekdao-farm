@@ -110,6 +110,7 @@ export const useGetParticipationList = () => {
 export const useGetNotParticipatedList = () => {
     const [participationList, setParticipationList] = useState(null)
     const customUrl = `${url}/notParticipatedList`;
+    const { fastRefresh } = useRefresh()
 
     useEffect(() => {
         let mounted = true;
@@ -128,7 +129,7 @@ export const useGetNotParticipatedList = () => {
         return () => {
             mounted = false
         }
-    }, [customUrl, setParticipationList])
+    }, [customUrl, fastRefresh, setParticipationList])
 
     return participationList
 }
