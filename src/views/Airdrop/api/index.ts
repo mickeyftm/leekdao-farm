@@ -15,37 +15,6 @@ interface airdropInfo {
     remainingAmount?: number
 }
 
-export const useIsVIPFromDb = (email) => {
-    const [isVIP, setIsVIP] = useState(false);
-    const customUrl = `${url}/isVIP`;
-
-    useEffect(() => {
-        let mounted = true;
-        const fetchData = async () => {
-            try {
-                const { data } = await axios.get(customUrl, {
-                    params: {
-                        email
-                    }
-                })
-
-                if (mounted) {
-                    setIsVIP(data)
-                }
-
-            } catch (error) {
-                console.error('Unable to find this email from db:', error.response)
-            }
-        }
-        fetchData();
-        return () => {
-            mounted = false
-        }
-    }, [customUrl, email])
-    return isVIP
-}
-
-
 export const usePostParticipation = (formData) => {
     const [successData, setSuccessData] = useState(null);
     const customUrl = `${url}/airdrop`;
