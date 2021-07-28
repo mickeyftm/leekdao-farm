@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import ReCAPTCHA from "react-google-recaptcha";
-import { Card, CardHeader, Heading, Flex, Button, useModal, Text, Input } from 'leek-uikit'
+import { Card, CardHeader, Heading, Flex, Button, useModal, Text, Input, Link, InfoIcon } from 'leek-uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from "components/UnlockButton"
 import validator from 'validator'
@@ -38,6 +38,7 @@ const FormCard = () => {
     const isRetweetUrlValid = validator.isURL(retweetUrl)
     const isEmailValid = validator.isEmail(email)
     const [isVerified, setIsVerified] = useState(false);
+    const [hover, setHover] = useState(false);
 
     let RetweetUrlErrorMessageComp;
 
@@ -52,12 +53,12 @@ const FormCard = () => {
     const submitForm = (event) => {
         event.preventDefault();
         const submittedData = {
-            "walletAddress": "0x260038eff0733a0e721ea8cd4f57d251575ff185",
+            "walletAddress": account,
             "twitterName": twitterName,
             "retweetUrl": retweetUrl,
             "telegramName": telegramName,
             "discordName": discordName,
-            "earlyContributor": email,
+            "email": email,
             "isVerified": isVerified
         }
         const action = {
@@ -67,6 +68,15 @@ const FormCard = () => {
         store.dispatch(action)
         onPresentParticipationModal()
     }
+
+    const onHover = () => {
+        setHover(true)
+    }
+
+    const onLeave = () => {
+        setHover(false);
+    };
+
 
     const onChange = (value) => {
         if (value) {
@@ -128,7 +138,19 @@ const FormCard = () => {
                     </div>
 
                     <div style={{ marginBottom: "10px" }}>
-                        <Text mb="5px">If you are an early contributor, please enter your email address below.</Text>
+                        <Flex alignItems="center" justifyContent="center" mb="10px">
+                            <Text>If you are an early contributor, please enter your email address below.</Text>
+                            <InfoIcon onMouseMove={onHover} onMouseLeave={onLeave} style={{ cursor: "pointer" }} />
+                        </Flex>
+
+
+                        {
+                            hover && <Flex alignItems="start" justifyContent="start">
+                                <Text mb="5px" mr="5px">Note: Early contributors are paid members from</Text>
+                                <Link href="https://www.bitcoinleek.com" target="_blank">bitcoinleek.com</Link>
+                            </Flex>
+                        }
+
                         <Input type="text" placeholder="Your Email Address ..." value={email} onChange={(e) => setEmail(e.currentTarget.value)} isSuccess={account && isEmailValid} isWarning={account && !isEmailValid} name="early_contributor" />
                         {
                             account && !isEmailValid ? <Text color="failure" fontSize="15px" mt="5px">Sorry! Please input a valid email address</Text> : ""
@@ -142,7 +164,7 @@ const FormCard = () => {
                 />,
 
                 {
-                    account ? <Button type="submit" fullWidth disabled={!(isTwitterNameValid && isTelegramNameValid && isDiscordNameValid && isRetweetUrlValid && isVerified)}> Participate AirDrop</Button> : <UnlockButton fullWidth />
+                    account ? <Button type="submit" fullWidth disabled={!(isTwitterNameValid && isTelegramNameValid && isDiscordNameValid && isRetweetUrlValid && isVerified)}> Participate</Button> : <UnlockButton fullWidth />
                 }
 
             </FormLayout>

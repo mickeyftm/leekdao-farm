@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Modal } from 'leek-uikit'
 import { AutoColumn } from '../General/Column'
-import { usePostParticipation } from "../api"
+import { usePostParticipation, useIsVIPFromDb } from "../api"
 import LoadingContent from "../General/LoadingContent"
 import ErrorMessage from "../General/ErrorMessage"
 import SuccessMessage from "../General/SuccessMessage"

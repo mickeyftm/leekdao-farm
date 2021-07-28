@@ -104,7 +104,7 @@ const HowToPlay: React.FC = () => {
                     </Heading>
                     <Text>
                         Check our in-depth guide on
-                        <InlineLink href="https://docs.leekdao.xyz" marginLeft="5px">
+                        <InlineLink href="https://docs.leekdao.xyz" marginLeft="5px" target="_blank">
                             how to play the LeekDAO Lucky Draw!
                         </InlineLink>
                     </Text>

@@ -36,7 +36,7 @@ const InfoLayout = styled.div`
 const StyledInfoCard = styled(Card) <{ isOwner: boolean }>`
   background-repeat: no-repeat;
   background-size: contain;
-  max-height: ${({ isOwner }) => isOwner ? '580px' : '500px'}}
+  max-height: ${({ isOwner }) => isOwner ? '580px' : '510px'}}
   width: 100%;
 `
 
@@ -153,9 +153,15 @@ const InfoCard = () => {
                         )}
                     </div>
 
-                    {
-                        account ? <Button disabled={!isVIP && !isWhitelisted} onClick={claimAirdrop}>Claim AirDrop</Button> : <UnlockButton />
-                    }
+                    <div>
+                        {
+                            account ? <Button disabled={!isVIP && !isWhitelisted} onClick={claimAirdrop} fullWidth>Claim</Button> : <UnlockButton />
+                        }
+                        {
+                            account && !isVIP && !isWhitelisted && <Text color="failure">* Please fill in the form first</Text>
+                        }
+                    </div>
+
                 </Flex>
 
                 {
