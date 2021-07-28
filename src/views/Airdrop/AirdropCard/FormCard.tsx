@@ -138,9 +138,9 @@ const FormCard = () => {
                     </div>
 
                     <div style={{ marginBottom: "10px" }}>
-                        <Flex alignItems="center" justifyContent="center" mb="10px">
-                            <Text>If you are an early contributor, please enter your email address below.</Text>
-                            <InfoIcon onMouseMove={onHover} onMouseLeave={onLeave} style={{ cursor: "pointer" }} />
+                        <Flex alignItems="start" justifyContent="start">
+                            <Text mb="5px">If you are an early contributor, please enter your email address below.</Text>
+                            <InfoIcon mt="3px" onMouseMove={onHover} onMouseLeave={onLeave} style={{ cursor: "pointer" }} />
                         </Flex>
 
 
