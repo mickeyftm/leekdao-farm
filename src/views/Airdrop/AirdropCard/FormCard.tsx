@@ -39,8 +39,6 @@ const FormCard = () => {
     const [isVerified, setIsVerified] = useState(false);
     const [hover, setHover] = useState(false);
 
-    const RetweetUrlErrorMessageComp = "";
-
     const submitForm = (event) => {
         event.preventDefault();
         const submittedData = {
@@ -130,15 +128,6 @@ const FormCard = () => {
           'email': email
         }
         validateAllFields(field, fieldMapping[field])
-
-      if (field === 'twitter') {
-        const currentTwitterName = twitterName;
-        if (currentTwitterName.length > 2) {
-          setValidTwitter(true)
-        } else {
-          setValidTwitter(false)
-        }
-      }
     }
 
     const [onPresentParticipationModal] = useModal(<ParticipationModal onDismiss={() => { return null }} />)
