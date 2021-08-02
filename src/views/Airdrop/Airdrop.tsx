@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Container from "components/layout/Container";
-import { BaseLayout, Flex, Heading } from "leek-uikit";
+import { BaseLayout, Flex, Heading, Box, Text } from "leek-uikit";
 import FormCard from "./AirdropCard/FormCard";
 import InfoCard from "./AirdropCard/InfoCard";
 import Hero from "./Hero"
 import HowToParticipate from "./HowToParticipate"
+import RetweetCard from "./AirdropCard/RetweetCard";
 
 const ParticipationLayout = styled(BaseLayout)`
   display: grid;
@@ -43,13 +44,17 @@ const Airdrop = () => {
         <div>
             <Hero />
             <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
-                <Heading size="xl" color="secondary" mt="40px">
+                <Heading size="xl" color="secondary" mt="40px" fontSize="50px">
                     Participate our AirDrop Right now!
                 </Heading>
             </Flex>
             <ParticipationLayout>
                 <FormCard />
-                <InfoCard />
+                <Box>
+                    <RetweetCard />
+                    <InfoCard />
+                </Box>
+
             </ParticipationLayout>
 
             <Container>
