@@ -35,12 +35,13 @@ const TwitterCard = () => {
         <Timeline
           dataSource={{
             sourceType: 'profile',
-            screenName: 'CryptoLeek',
+            screenName: 'cryptoleek',
           }}
           options={{
             height: '300',
             chrome: 'noheader, nofooter',
             width: '400',
+            id: "profile:cryptoleek"
           }}
         />
       </CardBody>
