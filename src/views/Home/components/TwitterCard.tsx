@@ -41,8 +41,7 @@ const TwitterCard = () => {
             id: 'profile:cryptoleek',
             height: '300',
             chrome: 'noheader, nofooter',
-            width: '400',
-            id: "profile:cryptoleek"
+            width: '400'
           }}
         />
       </CardBody>
