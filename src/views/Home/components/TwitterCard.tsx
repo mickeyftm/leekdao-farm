@@ -38,6 +38,7 @@ const TwitterCard = () => {
             screenName: 'cryptoleek',
           }}
           options={{
+            id: 'profile:cryptoleek',
             height: '300',
             chrome: 'noheader, nofooter',
             width: '400',

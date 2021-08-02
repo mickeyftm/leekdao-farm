@@ -117,6 +117,8 @@ dist
 
 /build
 
-./buildscript.sh
+build_prod.sh
+build_dev.sh
+build_dev.js
 
 .DS_Store
