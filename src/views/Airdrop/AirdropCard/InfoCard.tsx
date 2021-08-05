@@ -158,7 +158,7 @@ const InfoCard = () => {
                             account ? <Button disabled={!isVIP && !isWhitelisted} onClick={claimAirdrop} fullWidth>Claim</Button> : <UnlockButton />
                         }
                         {
-                            account && !isVIP && !isWhitelisted && <Text color="failure">* Please fill in the form first</Text>
+                            account && !isVIP && !isWhitelisted && <Text color="failure">* System is validating your info</Text>
                         }
                     </div>
 

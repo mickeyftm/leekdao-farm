@@ -269,7 +269,7 @@ const FormCard = () => {
             )}
           </div>
         </div>
-        <ReCAPTCHA sitekey={SECRET_TOKEN} onChange={onChange} />,
+        <ReCAPTCHA sitekey={SECRET_TOKEN} onChange={onChange} />
         {account ? (
           <Button
             type="submit"
