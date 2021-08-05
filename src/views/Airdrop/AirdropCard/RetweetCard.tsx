@@ -7,29 +7,31 @@ const StyledTwitterCard = styled(Card)`
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
+  height: 400px;
+  overflow-y: scroll;
 `
 
 const RetweetCard = () => {
 
     return (
-        <StyledTwitterCard>
-            <CardHeader>
-                <Flex alignItems="center" justifyContent="space-between">
-                    <Heading>AirDrop Annoucement</Heading>
-                </Flex>
-            </CardHeader>
-            <CardBody>
-                <Text mb="10px">* Retweet this tweet, and copy the link to the participation form</Text>
-                <Tweet
-                    tweetId="1395016666249981956"
-                    options={{
-                        height: '300',
-                        chrome: 'noheader, nofooter',
-                        width: '60%'
-                    }}
-                />
-            </CardBody>
-        </StyledTwitterCard>
+      <StyledTwitterCard>
+        <CardHeader>
+          <Flex alignItems="center" justifyContent="space-between">
+            <Heading>AirDrop Annoucement</Heading>
+          </Flex>
+        </CardHeader>
+        <CardBody>
+          <Text mb="10px">* Retweet this tweet, and copy the link to the participation form</Text>
+          <Tweet
+            tweetId="1423148480239861760"
+            options={{
+              height: '300',
+              chrome: 'noheader, nofooter',
+              width: '60%',
+            }}
+          />
+        </CardBody>
+      </StyledTwitterCard>
     )
 }
 

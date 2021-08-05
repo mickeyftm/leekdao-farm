@@ -133,7 +133,7 @@ const FormCard = () => {
   const [onPresentParticipationModal] = useModal(<ParticipationModal onDismiss={() => { return null }} />)
 
   return (
-    <Card style={{ width: "100%" }}>
+    <Card style={{ width: '100%' }}>
       <CardHeader>
         <Flex alignItems="center" justifyContent="space-between">
           <Heading>AirDrop Participation Form</Heading>
@@ -272,6 +272,7 @@ const FormCard = () => {
         <ReCAPTCHA sitekey={SECRET_TOKEN} onChange={onChange} />
         {account ? (
           <Button
+            mt="20px"
             type="submit"
             fullWidth
             disabled={!(validTwitter && validTelegram && validDiscord && validRetweetUrl && isVerified)}
@@ -280,7 +281,7 @@ const FormCard = () => {
             Participate
           </Button>
         ) : (
-          <UnlockButton fullWidth />
+          <UnlockButton mt="20px" fullWidth />
         )}
       </FormLayout>
     </Card>
