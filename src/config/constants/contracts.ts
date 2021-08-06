@@ -40,8 +40,8 @@ export default {
     80001: '0x7968E3B3029E4d4c8fAc2D85EfaeA476a362AB75',
   },
   airdrop: {
-    137: "",
-    80001: "0xe2CBdD7f4c866b8bcc5f96457056B0c61c92DF2a"
+    137: "0x169EC54Fb9728D9777Fe33FA5cB1620848152245",
+    80001: "0xe5A06E441B11fBfae3CF6913d5FEfCf0d9D60069",
   },
   billboard: {
     137: "",
