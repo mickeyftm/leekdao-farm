@@ -15,6 +15,11 @@
                 "internalType": "uint256",
                 "name": "ratio_",
                 "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "minimum_",
+                "type": "uint256"
             }
         ],
         "stateMutability": "nonpayable",
@@ -38,25 +43,6 @@
         ],
         "name": "OwnershipTransferred",
         "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "allBillBoards",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
     },
     {
         "inputs": [],
@@ -150,6 +136,69 @@
     },
     {
         "inputs": [],
+        "name": "getAllBillBoards",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "id",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "city",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "ipfsHash",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "desc",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "bidLevel",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "init",
+                        "type": "bool"
+                    }
+                ],
+                "internalType": "struct WorldMapBillBoard.BillBoard[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "minimumTokenAmountToCreate",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "owner",
         "outputs": [
             {
@@ -177,6 +226,19 @@
             }
         ],
         "name": "setBasePrice",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "minimum_",
+                "type": "uint256"
+            }
+        ],
+        "name": "setMinimumTokenAmount",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

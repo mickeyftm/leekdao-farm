@@ -8,7 +8,10 @@ import MapGL, {
 } from 'react-map-gl';
 import Pins from './Pins';
 import BillboardForm from './BillboardForm';
+import BillboardDetails from './BillboardDetails';
 import { useGetBillboardDetails } from "../api/index"
+import { bidStore } from "../store/store"
+import { HIDE_FORM } from '../store/reducer';
 
 const TOKEN = process.env.REACT_APP_MAP_TOKEN
 
@@ -47,6 +50,8 @@ const Map = () => {
 
     const cities = useGetBillboardDetails();
 
+    const { show } = bidStore.getState()
+
     const [popupInfo, setPopupInfo] = useState(null);
 
     useEffect(() => {
@@ -61,6 +66,16 @@ const Map = () => {
         }
     }, [popupInfo])
 
+    let comp = <BillboardForm info={popupInfo} />;
+
+    if (popupInfo && popupInfo.ipfsHash) {
+        if (show) {
+            comp = <BillboardForm info={popupInfo} />
+        } else {
+            comp = <BillboardDetails info={popupInfo} />
+        }
+    }
+
 
     return (
         <>
@@ -73,7 +88,7 @@ const Map = () => {
                 mapboxApiAccessToken={TOKEN}
             >
 
-                <Pins data={cities} onClick={setPopupInfo} zoom={viewport.zoom} />
+                <Pins data={cities} onClick={setPopupInfo} />
 
                 {popupInfo && (
                     <Popup
@@ -82,9 +97,13 @@ const Map = () => {
                         longitude={popupInfo.longitude}
                         latitude={popupInfo.latitude}
                         closeOnClick={false}
-                        onClose={setPopupInfo}
+                        onClose={() => {
+                            setPopupInfo(null)
+                            bidStore.dispatch({ type: HIDE_FORM })
+                        }
+                        }
                     >
-                        <BillboardForm info={popupInfo} />
+                        {comp}
                     </Popup>
                 )}
 

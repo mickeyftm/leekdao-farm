@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import ipfsClient from 'ipfs-http-client'
 import styled from 'styled-components';
+import { getBalanceNumber } from "utils/formatBalance"
 import { Text, Button, Input, Heading, Flex, useModal } from "leek-uikit"
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton';
@@ -8,12 +9,14 @@ import { useBillboardApprove } from 'hooks/useApprove';
 import { getCakeAddress, getBillboardAddress } from 'utils/addressHelpers';
 import { useERC20, useBillboardContract } from 'hooks/useContract';
 import { useBillboardAllowance } from 'hooks/useAllowance';
+import useTokenBalance from 'hooks/useTokenBalance';
 import BigNumber from 'bignumber.js';
+import validator from "validator"
 import ConfirmationPendingContent from '../Modal/ConfirmationPendeingContent';
 import BillboardBidModal from '../Modal/BillboardBidModal';
-import { GET_BID_BILLBOARD_HASH } from '../store/reducer';
-import { store } from "../store/store"
-
+import { GET_BID_BILLBOARD_HASH, HIDE_FORM } from '../store/reducer';
+import { store, bidStore } from "../store/store"
+import { useGetBaseInfo } from '../api';
 
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
 
@@ -42,21 +45,28 @@ const Textarea = styled.textarea`
 const BillboardForm = (props) => {
     const { info } = props;
     const { id, city } = info;
+    const { account } = useWallet()
     const [description, setDescription] = useState("")
     const [buffer, setBuffer] = useState(null);
     const [file, setFile] = useState(null);
-    const { account } = useWallet()
-    const [approval, setApproval] = useState(false)
+    const [validImage, setValidImage] = useState(true)
+    const [validDescription, setValidDescription] = useState(true)
+    const [approval, setApproval] = useState(true)
     const tokenAddress = getCakeAddress()
+    const baseInfo = useGetBaseInfo()
+    const minimumTokenAmount = baseInfo && baseInfo.minimumTokenAmount
+    const formatedMinimumTokenAmount = getBalanceNumber(new BigNumber(minimumTokenAmount))
     const tokenContract = useERC20(tokenAddress);
     const billboardContract = useBillboardContract()
     const billboardAddress = getBillboardAddress()
     const { onApprove } = useBillboardApprove(tokenContract, billboardAddress)
     const allowance = new BigNumber(useBillboardAllowance(tokenContract, billboardAddress) || 0)
     const needsApproval = allowance.toNumber() <= 0
+    const tokenBalance = useTokenBalance(tokenAddress)
+    const formatedTokenBalance = getBalanceNumber(tokenBalance)
+    const isQualified = formatedTokenBalance >= formatedMinimumTokenAmount
     const [onPresentConfirmationModal] = useModal(<ConfirmationPendingContent onDismiss={() => { return null }} />)
     const [onPresentBillboardBidModal] = useModal(<BillboardBidModal onDismiss={() => { return null }} />)
-
 
     const handleApprove = useCallback(async () => {
         try {
@@ -71,9 +81,31 @@ const BillboardForm = (props) => {
         }
     }, [onApprove, setApproval])
 
+    const validateAllFields = (field: string, fieldValue: string) => {
+        if (field === 'description') {
+            setDescription(fieldValue)
+            if (validator.isLength(fieldValue, { min: 1, max: 100 })) {
+                setValidDescription(true)
+            } else {
+                setValidDescription(false)
+            }
+        }
+    }
+
+    const handleIsValid = (e, field: string) => {
+        validateAllFields(field, e.currentTarget.value);
+    }
+
     const captureFile = (event) => {
         event.preventDefault()
         const image = event.target.files[0]
+        const maxAllowedSize = 5 * 1024 * 1024;
+        if (image.size > maxAllowedSize) {
+            setValidImage(false)
+        } else {
+            setValidImage(true)
+        }
+
         const urlReader = new window.FileReader()
         const bufferReader = new window.FileReader()
         urlReader.readAsDataURL(image)
@@ -85,26 +117,25 @@ const BillboardForm = (props) => {
 
         bufferReader.onloadend = () => {
             const arrayBuffer = new Uint8Array(bufferReader.result as ArrayBuffer)
-            const enc = new TextDecoder("utf-8");
-            setBuffer(Buffer.from(enc.decode(arrayBuffer)))
+            setBuffer(Buffer.from(arrayBuffer));
         }
     }
 
     const onSubmit = async (event) => {
         event.preventDefault()
         const response = await ipfs.add(buffer);
-        console.log(">>>>>>>>>>>>>>>>", response);
-        // const { hash } = response[0];
-        // onPresentConfirmationModal();
-        // const result = await billboardContract.methods.bid(id, city, hash, description).send({ from: account })
-        // if (result) {
-        //     const action = {
-        //         type: GET_BID_BILLBOARD_HASH,
-        //         hash: result.transactionHash,
-        //     }
-        //     store.dispatch(action)
-        //     onPresentBillboardBidModal()
-        // }
+        const { hash } = response[0];
+        onPresentConfirmationModal();
+        const result = await billboardContract.methods.bid(id, city, hash, description).send({ from: account })
+        if (result) {
+            const action = {
+                type: GET_BID_BILLBOARD_HASH,
+                bidHash: result.transactionHash,
+            }
+            store.dispatch(action)
+            onPresentBillboardBidModal()
+        }
+        bidStore.dispatch({ type: HIDE_FORM })
     }
 
     return (
@@ -118,7 +149,7 @@ const BillboardForm = (props) => {
                         placeholder="Descriptions..."
                         name="description"
                         value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        onChange={(e) => handleIsValid(e, "description")}
                         required
                     />
                 </div>
@@ -134,13 +165,21 @@ const BillboardForm = (props) => {
                         style={{ padding: "8px" }}
                     />
 
-                    {file && <img src={file} alt="board" width="200px" />}<br />
+                    {file && <img src={file} alt="board" width="200px" style={{ marginTop: "10px" }} />}<br />
                 </div>
 
+                {account && !isQualified && <Text color="failure" mb="10px">* Minimum Required Token Amount is: {formatedMinimumTokenAmount} LEEK</Text>}
+
+                {account && !validImage && <Text color="failure" mb="10px">* Maximum Image Size is: 5MB</Text>}
+
+                {account && !validDescription && <Text color="failure" mb="10px">* Character size is 1-100</Text>}
+
                 {account ? <Flex alignItems="center" justifyContent="space-between">
-                    <Button onClick={handleApprove} disabled={!needsApproval && !approval}>Approve</Button>
-                    <Button type="submit" >Submit</Button>
+                    <Button onClick={handleApprove} disabled={!isQualified || !needsApproval || !approval || !validImage || !validDescription}>Approve</Button>
+                    <Button type="submit" disabled={!isQualified || needsApproval || !validImage || !validDescription}>Submit</Button>
                 </Flex> : <UnlockButton />}
+
+
             </form>
         </FormLayout>
 
