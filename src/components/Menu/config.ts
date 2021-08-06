@@ -49,6 +49,16 @@ const config: MenuEntry[] = [
     href: '/airdrop',
   },
   {
+    label: 'Games',
+    icon: 'SunIcon',
+    items: [
+      {
+        label: 'World Map Billboard',
+        href: '/billboard',
+      }
+    ],
+  },
+  {
     label: 'More',
     icon: 'MoreIcon',
     items: [

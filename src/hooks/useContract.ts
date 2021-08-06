@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AbiItem } from 'web3-utils'
 import { ContractOptions } from 'web3-eth-contract'
 import useWeb3 from 'hooks/useWeb3'
-import { getMasterChefAddress, getCakeAddress, getLotteryAddress, getLotteryTicketAddress, getAirdropAddress } from 'utils/addressHelpers'
+import { getMasterChefAddress, getCakeAddress, getLotteryAddress, getLotteryTicketAddress, getAirdropAddress, getBillboardAddress } from 'utils/addressHelpers'
 import { poolsConfig } from 'config/constants'
 import { PoolCategory } from 'config/constants/types'
 import ifo from 'config/abi/ifo.json'
@@ -14,6 +14,7 @@ import airdrop from 'config/abi/airdrop.json'
 import lottery from 'config/abi/lottery.json'
 import lotteryTicket from 'config/abi/lotteryNft.json'
 import masterChef from 'config/abi/masterchef.json'
+import billboard from "config/abi/billboard.json"
 import sousChef from 'config/abi/sousChef.json'
 import sousChefBnb from 'config/abi/sousChefBnb.json'
 
@@ -40,6 +41,11 @@ export const useIfoContract = (address: string) => {
 export const useAirdropContract = () => {
   const abi = (airdrop as unknown) as AbiItem
   return useContract(abi, getAirdropAddress())
+}
+
+export const useBillboardContract = () => {
+  const abi = (billboard as unknown) as AbiItem
+  return useContract(abi, getBillboardAddress())
 }
 
 export const useVestingContract = (address: string) => {

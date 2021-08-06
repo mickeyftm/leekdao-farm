@@ -17,6 +17,10 @@ export const getAirdropAddress = () => {
   return addresses.airdrop[chainId]
 }
 
+export const getBillboardAddress = () => {
+  return addresses.billboard[chainId]
+}
+
 export const getMulticallAddress = () => {
   return addresses.mulltiCall[chainId]
 }

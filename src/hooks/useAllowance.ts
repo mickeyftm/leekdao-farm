@@ -4,6 +4,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Contract } from 'web3-eth-contract'
 import { useCake, useLottery } from './useContract'
 import { getAllowance } from '../utils/erc20'
+import useRefresh from './useRefresh'
 
 // Retrieve lottery allowance
 export const useLotteryAllowance = () => {
@@ -44,6 +45,28 @@ export const useIfoAllowance = (tokenContract: Contract, spenderAddress: string,
     }
     fetch()
   }, [account, spenderAddress, tokenContract, dependency])
+
+  return allowance
+}
+
+
+// Retrieve Billboard Allowance
+export const useBillboardAllowance = (tokenContract: Contract, spenderAddress: string) => {
+  const { account }: { account: string } = useWallet()
+  const [allowance, setAllowance] = useState(null)
+  const { fastRefresh } = useRefresh()
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await tokenContract.methods.allowance(account, spenderAddress).call()
+        setAllowance(new BigNumber(res))
+      } catch (e) {
+        setAllowance(null)
+      }
+    }
+    fetch()
+  }, [account, spenderAddress, tokenContract, fastRefresh])
 
   return allowance
 }

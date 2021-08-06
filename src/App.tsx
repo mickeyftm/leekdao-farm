@@ -18,6 +18,7 @@ const Airdrop = lazy(() => import('./views/Airdrop'))
 const Ifos = lazy(() => import('./views/Ifos'))
 const Proposals = lazy(() => import('./views/Voting'))
 const NotFound = lazy(() => import('./views/NotFound'))
+const Billboard = lazy(() => import('./views/Billboard'))
 // const Exchange = lazy(() => import('./views/ComingSoon'))
 // const Liquidity = lazy(() => import('./views/ComingSoon'))
 // const Nft = lazy(() => import('./views/Nft'))
@@ -62,6 +63,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/airdrop">
               <Airdrop />
+            </Route>
+            <Route path="/billboard">
+              <Billboard />
             </Route>
             <Route component={NotFound} />
           </Switch>
