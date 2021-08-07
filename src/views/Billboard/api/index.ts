@@ -48,26 +48,37 @@ export const useGetBillboardDetails = () => {
         const fetchData = async () => {
             try {
                 const billboards = await contract.methods.getAllBillBoards().call();
-                let billboardsDetails = [];
+                const newBillboards = {}
 
-                if (billboards.length === 0) {
-                    billboardsDetails = cities
-                } else {
-                    cities.forEach((city) => {
-                        billboards.forEach((billboard) => {
-                            if (billboard.id === city.id.toString()) {
-                                billboardsDetails.push({
-                                    ...city,
-                                    desc: billboard.desc,
-                                    isBid: billboard.init,
-                                    owner: billboard.owner,
-                                    ipfsHash: billboard.ipfsHash,
-                                    bidLevel: billboard.bidLevel
-                                })
-                            }
-                        });
-                    })
-                }
+                billboards.forEach(billboard => {
+                    const { id, desc, owner, ipfsHash, bidLevel } = billboard;
+                    const isBid = billboard.init;
+
+                    newBillboards[id] = {
+                        id,
+                        desc,
+                        isBid,
+                        owner,
+                        ipfsHash,
+                        bidLevel
+                    }
+                })
+
+                const billboardsDetails = []
+
+                cities.forEach(city => {
+                    const { id } = city
+                    const billboardData = newBillboards[id];
+
+                    if (billboardData) {
+                        billboardsDetails.push({
+                            ...city,
+                            ...billboardData
+                        })
+                    } else {
+                        billboardsDetails.push(city)
+                    }
+                })
 
                 if (mounted) {
                     setBillboardDetails(billboardsDetails)
