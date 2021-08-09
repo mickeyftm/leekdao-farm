@@ -1,9 +1,7 @@
 import React from 'react'
 import { Text } from 'leek-uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import BigNumber from 'bignumber.js'
 import useI18n from 'hooks/useI18n'
-import useAllEarnings from 'hooks/useAllEarnings'
 import CardValue from './CardValue'
 
 const CakeHarvestBalance = ({ earningsSum }) => {

@@ -82,7 +82,7 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
     const tokenBalance = useTokenBalance(tokenAddress)
     const formatedTokenBalance = getBalanceNumber(tokenBalance)
     const isQualified = isBid || formatedTokenBalance >= formatedMinimumTokenAmount
-    const isTokenEnough = formatedTokenBalance >= bidTokenAmount
+    const isTokenEnough = !isBid || formatedTokenBalance >= bidTokenAmount
 
     const [onPresentConfirmationModal] = useModal(<ConfirmationPendingContent onDismiss={() => { return null }} />)
     const [onPresentBillboardBidModal] = useModal(<BillboardBidModal onDismiss={() => { return null }} />)
@@ -126,7 +126,9 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
     const captureFile = (event) => {
         event.preventDefault()
         const image = event.target.files[0]
-        handleIsValid(image.size, 'image')
+        if (image) {
+            handleIsValid(image.size, 'image')
+        }
         const urlReader = new window.FileReader()
         const bufferReader = new window.FileReader()
         urlReader.readAsDataURL(image)

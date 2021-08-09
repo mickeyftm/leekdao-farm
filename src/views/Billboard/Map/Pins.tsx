@@ -18,6 +18,7 @@ const StyledImg = styled.img<{ zoom: number }>`
     height: ${({ zoom }) => zoom * 40}px;
     borderRadius:50%;
     transform: translate(-20px, -32px);
+    cursor: pointer;
 `
 
 function Pins(props) {

@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Heading, Text } from 'leek-uikit'
 import Container from 'components/layout/Container'
-import useI18n from 'hooks/useI18n'
 
 const Title = styled(Heading).attrs({ as: 'h1', size: 'xl' })`
   color: ${({ theme }) => theme.colors.primary};
@@ -21,8 +20,6 @@ const StyledHero = styled.div`
   margin-bottom: 32px;
 `
 const Hero = () => {
-  const TranslateString = useI18n()
-
   return (
     <StyledHero>
       <Container>

@@ -5,7 +5,7 @@ import MapGL, {
     FullscreenControl,
     ScaleControl,
     GeolocateControl
-} from 'react-map-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+} from 'react-map-gl';
 import Pins from './Pins';
 import BillboardForm from './BillboardForm';
 import BillboardDetails from './BillboardDetails';
@@ -18,13 +18,13 @@ const TOKEN = process.env.REACT_APP_MAP_TOKEN
 const geolocateStyle = {
     top: 0,
     left: 0,
-    padding: '10px'
+    padding: '10px',
 };
 
 const fullscreenControlStyle = {
     top: 36,
     left: 0,
-    padding: '10px'
+    padding: '10px',
 };
 
 const navStyle = {
