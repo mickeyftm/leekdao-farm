@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import ipfsClient from 'ipfs-http-client'
 import styled from 'styled-components';
+import { City } from "config/constants/types"
 import { getBalanceNumber } from "utils/formatBalance"
 import { Text, Button, Input, Heading, Flex, useModal } from "leek-uikit"
 import { useWallet } from '@binance-chain/bsc-use-wallet'
@@ -19,6 +20,20 @@ import { store, bidStore } from "../store/store"
 import { useGetBaseInfo } from '../api';
 
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
+
+interface Info extends City {
+    desc?: string
+    isBid?: boolean,
+    owner?: string,
+    ipfsHash?: string,
+    bidLevel?: number
+
+}
+
+interface formPorps {
+    info: Info
+    setPopupInfo: (params) => void
+}
 
 const FormLayout = styled.div`
     padding:30px;
@@ -42,14 +57,13 @@ const Textarea = styled.textarea`
     padding:15px;
 `
 
-const BillboardForm = (props) => {
-    const { info } = props;
-    const { id, city } = info;
+const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
+    const { id, city, isBid } = info;
     const { account } = useWallet()
     const [description, setDescription] = useState("")
     const [buffer, setBuffer] = useState(null);
     const [file, setFile] = useState(null);
-    const [validImage, setValidImage] = useState(true)
+    const [validImage, setValidImage] = useState(false)
     const [validDescription, setValidDescription] = useState(true)
     const [approval, setApproval] = useState(true)
     const tokenAddress = getCakeAddress()
@@ -62,9 +76,10 @@ const BillboardForm = (props) => {
     const { onApprove } = useBillboardApprove(tokenContract, billboardAddress)
     const allowance = new BigNumber(useBillboardAllowance(tokenContract, billboardAddress) || 0)
     const needsApproval = allowance.toNumber() <= 0
+    console.log(">>>>>>>>>>>>>", allowance.toNumber())
     const tokenBalance = useTokenBalance(tokenAddress)
     const formatedTokenBalance = getBalanceNumber(tokenBalance)
-    const isQualified = formatedTokenBalance >= formatedMinimumTokenAmount
+    const isQualified = isBid || formatedTokenBalance >= formatedMinimumTokenAmount
     const [onPresentConfirmationModal] = useModal(<ConfirmationPendingContent onDismiss={() => { return null }} />)
     const [onPresentBillboardBidModal] = useModal(<BillboardBidModal onDismiss={() => { return null }} />)
 
@@ -72,7 +87,6 @@ const BillboardForm = (props) => {
         try {
             setApproval(true)
             const txHash = await onApprove()
-            // user rejected tx or didn't go thru
             if (!txHash) {
                 setApproval(false)
             }
@@ -84,28 +98,31 @@ const BillboardForm = (props) => {
     const validateAllFields = (field: string, fieldValue: string) => {
         if (field === 'description') {
             setDescription(fieldValue)
-            if (validator.isLength(fieldValue, { min: 1, max: 100 })) {
+            if (validator.isLength(fieldValue, { min: 1, max: 50 })) {
                 setValidDescription(true)
             } else {
                 setValidDescription(false)
             }
         }
+
+        if (field === 'image') {
+            const maxAllowedSize = 5 * 1024 * 1024;
+            if (Number(fieldValue) > maxAllowedSize) {
+                setValidImage(false)
+            } else {
+                setValidImage(true)
+            }
+        }
     }
 
     const handleIsValid = (e, field: string) => {
-        validateAllFields(field, e.currentTarget.value);
+        validateAllFields(field, e);
     }
 
     const captureFile = (event) => {
         event.preventDefault()
         const image = event.target.files[0]
-        const maxAllowedSize = 5 * 1024 * 1024;
-        if (image.size > maxAllowedSize) {
-            setValidImage(false)
-        } else {
-            setValidImage(true)
-        }
-
+        handleIsValid(image.size, 'image')
         const urlReader = new window.FileReader()
         const bufferReader = new window.FileReader()
         urlReader.readAsDataURL(image)
@@ -135,6 +152,7 @@ const BillboardForm = (props) => {
             store.dispatch(action)
             onPresentBillboardBidModal()
         }
+        setPopupInfo(null);
         bidStore.dispatch({ type: HIDE_FORM })
     }
 
@@ -149,7 +167,7 @@ const BillboardForm = (props) => {
                         placeholder="Descriptions..."
                         name="description"
                         value={description}
-                        onChange={(e) => handleIsValid(e, "description")}
+                        onChange={(e) => handleIsValid(e.currentTarget.value, "description")}
                         required
                     />
                 </div>
@@ -168,11 +186,11 @@ const BillboardForm = (props) => {
                     {file && <img src={file} alt="board" width="200px" style={{ marginTop: "10px" }} />}<br />
                 </div>
 
-                {account && !isQualified && <Text color="failure" mb="10px">* Minimum Required Token Amount is: {formatedMinimumTokenAmount} LEEK</Text>}
+                {account && !isQualified && <Text color="failure" mb="10px">* First Time Creation Required: {formatedMinimumTokenAmount} LEEK</Text>}
+
+                {account && !validDescription && <Text color="failure" mb="10px">* Character size is 1 - 50</Text>}
 
                 {account && !validImage && <Text color="failure" mb="10px">* Maximum Image Size is: 5MB</Text>}
-
-                {account && !validDescription && <Text color="failure" mb="10px">* Character size is 1-100</Text>}
 
                 {account ? <Flex alignItems="center" justifyContent="space-between">
                     <Button onClick={handleApprove} disabled={!isQualified || !needsApproval || !approval || !validImage || !validDescription}>Approve</Button>

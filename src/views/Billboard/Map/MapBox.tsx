@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import MapGL, {
     Popup,
     NavigationControl,
@@ -56,9 +57,12 @@ const Map = () => {
 
     useEffect(() => {
         const mapbox = document.getElementsByClassName('mapboxgl-map')[0]
+        const closeButton = document.getElementsByClassName('mapboxgl-popup-close-button')[0]
+
         if (mapbox) {
             if (popupInfo) {
                 mapbox.setAttribute("style", "position: absolute; width: 100%; height: 100%; overflow: hidden; visibility: inherit; opacity:50%")
+                closeButton.setAttribute('style', "font-size:50px; width:50px;")
             } else {
                 mapbox.setAttribute('style', 'position: absolute; width: 100%; height: 100%; overflow: hidden; visibility: inherit;')
 
@@ -66,11 +70,11 @@ const Map = () => {
         }
     }, [popupInfo])
 
-    let comp = <BillboardForm info={popupInfo} />;
+    let comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} />;
 
     if (popupInfo && popupInfo.ipfsHash) {
         if (show) {
-            comp = <BillboardForm info={popupInfo} />
+            comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} />
         } else {
             comp = <BillboardDetails info={popupInfo} />
         }

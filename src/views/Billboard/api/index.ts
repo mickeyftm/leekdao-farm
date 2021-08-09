@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useBillboardContract } from "hooks/useContract"
+import useRefresh from "hooks/useRefresh"
 import { billboardStore } from '../store/store';
+
 
 interface billboardBaseInfo {
     basePrice: number
@@ -42,6 +44,7 @@ export const useGetBillboardDetails = () => {
     const [billboardDetails, setBillboardDetails] = useState(null)
     const contract = useBillboardContract()
     const cities = billboardStore.getState()
+    const { slowRefresh } = useRefresh()
 
     useEffect(() => {
         let mounted = true;
@@ -92,6 +95,6 @@ export const useGetBillboardDetails = () => {
         return () => {
             mounted = false
         }
-    }, [contract.methods, billboardDetails, cities])
+    }, [contract.methods, billboardDetails, cities, slowRefresh])
     return billboardDetails
 }

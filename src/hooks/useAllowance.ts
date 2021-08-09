@@ -54,7 +54,7 @@ export const useIfoAllowance = (tokenContract: Contract, spenderAddress: string,
 export const useBillboardAllowance = (tokenContract: Contract, spenderAddress: string) => {
   const { account }: { account: string } = useWallet()
   const [allowance, setAllowance] = useState(null)
-  const { fastRefresh } = useRefresh()
+  const { slowRefresh } = useRefresh()
 
   useEffect(() => {
     const fetch = async () => {
@@ -66,7 +66,7 @@ export const useBillboardAllowance = (tokenContract: Contract, spenderAddress: s
       }
     }
     fetch()
-  }, [account, spenderAddress, tokenContract, fastRefresh])
+  }, [account, spenderAddress, tokenContract, slowRefresh])
 
   return allowance
 }
