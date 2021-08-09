@@ -10,7 +10,7 @@ import Pins from './Pins';
 import BillboardForm from './BillboardForm';
 import BillboardDetails from './BillboardDetails';
 import { useGetBillboardDetails } from "../api/index"
-import { bidStore } from "../store/store"
+import { bidStore, billboardStore } from "../store/store"
 import { HIDE_FORM } from '../store/reducer';
 
 const TOKEN = process.env.REACT_APP_MAP_TOKEN
@@ -47,8 +47,9 @@ const Map = () => {
         bearing: 0,
         pitch: 0
     });
+    useGetBillboardDetails();
 
-    const cities = useGetBillboardDetails();
+    const { cities } = billboardStore.getState();
 
     const { show } = bidStore.getState()
 

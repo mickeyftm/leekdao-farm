@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useBillboardContract } from "hooks/useContract"
 import useRefresh from "hooks/useRefresh"
 import { billboardStore } from '../store/store';
+import { GET_BILLBOARD_DETAILS } from '../store/reducer'
 
 
 interface billboardBaseInfo {
@@ -41,9 +42,8 @@ export const useGetBaseInfo = () => {
 }
 
 export const useGetBillboardDetails = () => {
-    const [billboardDetails, setBillboardDetails] = useState(null)
     const contract = useBillboardContract()
-    const cities = billboardStore.getState()
+    const { cities } = billboardStore.getState()
     const { slowRefresh } = useRefresh()
 
     useEffect(() => {
@@ -84,7 +84,12 @@ export const useGetBillboardDetails = () => {
                 })
 
                 if (mounted) {
-                    setBillboardDetails(billboardsDetails)
+                    const action = {
+                        type: GET_BILLBOARD_DETAILS,
+                        cities: billboardsDetails
+                    }
+
+                    billboardStore.dispatch(action)
                 }
 
             } catch (err) {
@@ -95,6 +100,5 @@ export const useGetBillboardDetails = () => {
         return () => {
             mounted = false
         }
-    }, [contract.methods, billboardDetails, cities, slowRefresh])
-    return billboardDetails
+    }, [contract.methods, cities, slowRefresh])
 }

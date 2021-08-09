@@ -84,7 +84,8 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
     const isQualified = isBid || formatedTokenBalance >= formatedMinimumTokenAmount
     const isTokenEnough = !isBid || formatedTokenBalance >= bidTokenAmount
 
-    const [onPresentConfirmationModal] = useModal(<ConfirmationPendingContent onDismiss={() => { return null }} />)
+    const [onPresentConfirmationModal] = useModal(<ConfirmationPendingContent title="Waiting for Confirmation" onDismiss={() => { return null }} />)
+    const [onPresentImageUploadingModal] = useModal(<ConfirmationPendingContent title="Uploading to IPFS" onDismiss={() => { return null }} />)
     const [onPresentBillboardBidModal] = useModal(<BillboardBidModal onDismiss={() => { return null }} />)
 
     const handleApprove = useCallback(async () => {
@@ -146,20 +147,24 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
 
     const onSubmit = async (event) => {
         event.preventDefault()
+        onPresentImageUploadingModal()
         const response = await ipfs.add(buffer);
-        const { hash } = response[0];
-        onPresentConfirmationModal();
-        const result = await billboardContract.methods.bid(id, city, hash, description).send({ from: account })
-        if (result) {
-            const action = {
-                type: GET_BID_BILLBOARD_HASH,
-                bidHash: result.transactionHash,
+        if (response) {
+            const { hash } = response[0];
+            onPresentConfirmationModal();
+            const result = await billboardContract.methods.bid(id, city, hash, description).send({ from: account })
+            if (result) {
+                const action = {
+                    type: GET_BID_BILLBOARD_HASH,
+                    bidHash: result.transactionHash,
+                }
+                store.dispatch(action)
+                onPresentBillboardBidModal()
             }
-            store.dispatch(action)
-            onPresentBillboardBidModal()
+            setPopupInfo(null);
+            bidStore.dispatch({ type: HIDE_FORM })
+
         }
-        setPopupInfo(null);
-        bidStore.dispatch({ type: HIDE_FORM })
     }
 
     return (

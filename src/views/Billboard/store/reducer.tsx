@@ -4,7 +4,9 @@ const defaultState = {
     bidHash: '',
 }
 
-const billboardState = cities
+const billboardState = {
+    cities
+}
 
 const formState = {
     show: false
@@ -27,6 +29,7 @@ export const reducer = (state = defaultState, action) => {
 export const billboardReducer = (state = billboardState, action) => {
     if (action.type === GET_BILLBOARD_DETAILS) {
         const newState = JSON.parse(JSON.stringify(state))
+        newState.cities = action.cities
         return newState
     }
     return state
