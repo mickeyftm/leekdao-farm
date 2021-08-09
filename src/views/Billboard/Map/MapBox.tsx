@@ -92,7 +92,7 @@ const Map = () => {
                 mapboxApiAccessToken={TOKEN}
             >
 
-                <Pins data={cities} onClick={setPopupInfo} />
+                <Pins data={cities} onClick={setPopupInfo} zoom={viewport.zoom} />
 
                 {popupInfo && (
                     <Popup

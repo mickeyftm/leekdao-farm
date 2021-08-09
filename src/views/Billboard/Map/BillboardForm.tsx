@@ -58,17 +58,20 @@ const Textarea = styled.textarea`
 `
 
 const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
-    const { id, city, isBid } = info;
+    const { id, city, isBid, bidLevel } = info;
     const { account } = useWallet()
     const [description, setDescription] = useState("")
     const [buffer, setBuffer] = useState(null);
     const [file, setFile] = useState(null);
-    const [validImage, setValidImage] = useState(false)
+    const [validImage, setValidImage] = useState(true)
     const [validDescription, setValidDescription] = useState(true)
     const [approval, setApproval] = useState(true)
     const tokenAddress = getCakeAddress()
     const baseInfo = useGetBaseInfo()
     const minimumTokenAmount = baseInfo && baseInfo.minimumTokenAmount
+    const basePrice = baseInfo && baseInfo.basePrice
+    const formatedBasePrice = getBalanceNumber(new BigNumber(basePrice));
+    const bidTokenAmount = formatedBasePrice * bidLevel
     const formatedMinimumTokenAmount = getBalanceNumber(new BigNumber(minimumTokenAmount))
     const tokenContract = useERC20(tokenAddress);
     const billboardContract = useBillboardContract()
@@ -76,10 +79,11 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
     const { onApprove } = useBillboardApprove(tokenContract, billboardAddress)
     const allowance = new BigNumber(useBillboardAllowance(tokenContract, billboardAddress) || 0)
     const needsApproval = allowance.toNumber() <= 0
-    console.log(">>>>>>>>>>>>>", allowance.toNumber())
     const tokenBalance = useTokenBalance(tokenAddress)
     const formatedTokenBalance = getBalanceNumber(tokenBalance)
     const isQualified = isBid || formatedTokenBalance >= formatedMinimumTokenAmount
+    const isTokenEnough = formatedTokenBalance >= bidTokenAmount
+
     const [onPresentConfirmationModal] = useModal(<ConfirmationPendingContent onDismiss={() => { return null }} />)
     const [onPresentBillboardBidModal] = useModal(<BillboardBidModal onDismiss={() => { return null }} />)
 
@@ -172,7 +176,7 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
+                <div>
                     <Text mb="5px">* Upload Images:</Text>
                     <Input
                         type="file"
@@ -186,15 +190,17 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
                     {file && <img src={file} alt="board" width="200px" style={{ marginTop: "10px" }} />}<br />
                 </div>
 
-                {account && !isQualified && <Text color="failure" mb="10px">* First Time Creation Required: {formatedMinimumTokenAmount} LEEK</Text>}
+                {account && !isQualified && <Text color="failure" mb="10px">Sorry! First Time Creation Required: {formatedMinimumTokenAmount} LEEK</Text>}
 
-                {account && !validDescription && <Text color="failure" mb="10px">* Character size is 1 - 50</Text>}
+                {account && !isTokenEnough && <Text color="failure" mb="10px">Sorry! Minimum LEEK Required: {bidTokenAmount} LEEK</Text>}
 
-                {account && !validImage && <Text color="failure" mb="10px">* Maximum Image Size is: 5MB</Text>}
+                {account && !validDescription && <Text color="failure" mb="10px">Sorry! Text Size is 1 - 50</Text>}
+
+                {account && !validImage && <Text color="failure" mb="10px">Sorry! Maximum Image Size is: 5MB</Text>}
 
                 {account ? <Flex alignItems="center" justifyContent="space-between">
-                    <Button onClick={handleApprove} disabled={!isQualified || !needsApproval || !approval || !validImage || !validDescription}>Approve</Button>
-                    <Button type="submit" disabled={!isQualified || needsApproval || !validImage || !validDescription}>Submit</Button>
+                    <Button onClick={handleApprove} disabled={!isQualified || !needsApproval || !approval || !validImage || !validDescription || !isTokenEnough}>Approve</Button>
+                    <Button type="submit" disabled={!isQualified || needsApproval || !validImage || !validDescription || !isTokenEnough}>Submit</Button>
                 </Flex> : <UnlockButton />}
 
 

@@ -13,15 +13,15 @@ const StyledSvg = styled.svg`
     transform: translate(-20px, -32px);
 `
 
-const StyledImg = styled.img`
-    width: 50px;
-    height: 50px; 
+const StyledImg = styled.img<{ zoom: number }>`
+    width: ${({ zoom }) => zoom * 40}px;
+    height: ${({ zoom }) => zoom * 40}px;
     borderRadius:50%;
     transform: translate(-20px, -32px);
 `
 
 function Pins(props) {
-    const { data, onClick } = props;
+    const { data, onClick, zoom } = props;
 
     return (
         <div>
@@ -30,7 +30,7 @@ function Pins(props) {
                     <Marker key={city.id} longitude={city.longitude} latitude={city.latitude} >
                         {
                             city.ipfsHash ?
-                                <StyledImg src={`https://ipfs.infura.io/ipfs/${city.ipfsHash}`} alt="city" onClick={() => onClick(city)} /> :
+                                <StyledImg zoom={zoom} src={`https://ipfs.infura.io/ipfs/${city.ipfsHash}`} alt="city" onClick={() => onClick(city)} /> :
                                 <StyledSvg
                                     height={SIZE}
                                     viewBox="0 0 24 24"
@@ -39,8 +39,6 @@ function Pins(props) {
                                     <path d={ICON} />
                                 </StyledSvg>
                         }
-
-
                     </Marker >
                 ))
             }
