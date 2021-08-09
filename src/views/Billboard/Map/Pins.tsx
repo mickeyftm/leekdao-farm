@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Marker } from 'react-map-gl';
 import styled from 'styled-components';
 

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import MapGL, {
     Popup,
     NavigationControl,
     FullscreenControl,
     ScaleControl,
     GeolocateControl
-} from 'react-map-gl';
+} from 'react-map-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import Pins from './Pins';
 import BillboardForm from './BillboardForm';
 import BillboardDetails from './BillboardDetails';
