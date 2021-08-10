@@ -482,13 +482,6 @@ const cities: City[] = [
         "latitude": -17,
         "longitude": 80
     }
-
-
-
-
-
-
-
 ]
 
 export default cities

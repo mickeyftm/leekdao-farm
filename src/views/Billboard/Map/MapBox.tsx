@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import MapGL, {
-    Popup,
     NavigationControl,
     FullscreenControl,
     ScaleControl,
@@ -15,8 +14,7 @@ import useTokenBalance from 'hooks/useTokenBalance';
 import Pins from './Pins';
 import PostOrBid from './PostOrBid'
 import { useGetBillboardDetails, useGetBaseInfo } from "../api/index"
-import { bidStore, billboardStore } from "../store/store"
-import { HIDE_FORM } from '../store/reducer';
+import { billboardStore } from "../store/store"
 
 const TOKEN = process.env.REACT_APP_MAP_TOKEN
 
@@ -99,22 +97,8 @@ const Map = () => {
 
                 <Pins data={cities} onClick={setPopupInfo} zoom={viewport.zoom} />
 
-                {popupInfo && (
-                    <Popup
-                        tipSize={10}
-                        anchor="bottom"
-                        longitude={popupInfo.longitude}
-                        latitude={popupInfo.latitude}
-                        closeOnClick={false}
-                        onClose={() => {
-                            setPopupInfo(null)
-                            bidStore.dispatch({ type: HIDE_FORM })
-                        }
-                        }
-                    >
-                        <PostOrBid info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />
-                    </Popup>
-                )}
+
+                <PostOrBid info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />
 
                 <GeolocateControl style={geolocateStyle} />
                 <FullscreenControl style={fullscreenControlStyle} />

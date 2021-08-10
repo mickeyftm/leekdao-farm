@@ -7,8 +7,6 @@ import truncateWalletAddress from "utils/truncateWalletAddress"
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from "components/UnlockButton"
 import { getChainExplorerUrl } from "utils/chainExplorer"
-import { bidStore } from "../store/store"
-import { SHOW_FORM } from "../store/reducer"
 
 const chainId = process.env.REACT_APP_CHAIN_ID
 
@@ -26,14 +24,15 @@ const BillboardLayout = styled(BaseLayout)`
 `
 
 const BillboardDetails = (props) => {
-    const { info, baseInfo } = props;
+    const { info, baseInfo, setShowForm } = props;
     const { ipfsHash, desc, bidLevel, owner, twitter } = info;
     const basePrice = baseInfo && baseInfo.basePrice
     const formatedBasePrice = getBalanceNumber(new BigNumber(basePrice));
     const { account } = useWallet()
 
+
     const bid = () => {
-        bidStore.dispatch({ type: SHOW_FORM })
+        setShowForm(true)
     }
 
     return (

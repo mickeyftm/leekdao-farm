@@ -42,7 +42,7 @@ export const useGetBaseInfo = () => {
 export const useGetBillboardDetails = () => {
     const contract = useBillboardContract()
     const { cities } = billboardStore.getState()
-    const { slowRefresh } = useRefresh()
+    const { fastRefresh } = useRefresh()
 
     useEffect(() => {
         let mounted = true;
@@ -99,5 +99,5 @@ export const useGetBillboardDetails = () => {
         return () => {
             mounted = false
         }
-    }, [slowRefresh])// eslint-disable-line react-hooks/exhaustive-deps
+    }, [fastRefresh])// eslint-disable-line react-hooks/exhaustive-deps
 }

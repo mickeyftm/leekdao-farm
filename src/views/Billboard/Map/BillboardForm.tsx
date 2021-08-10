@@ -14,8 +14,8 @@ import BigNumber from 'bignumber.js';
 import validator from "validator"
 import ConfirmationPendingContent from '../Modal/ConfirmationPendeingContent';
 import BillboardBidModal from '../Modal/BillboardBidModal';
-import { GET_BID_BILLBOARD_HASH, HIDE_FORM } from '../store/reducer';
-import { store, bidStore } from "../store/store"
+import { GET_BID_BILLBOARD_HASH } from '../store/reducer';
+import { store } from "../store/store"
 import { BillboardBaseInfo } from "../api"
 
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
@@ -32,6 +32,7 @@ interface Info extends City {
 export interface FormProps {
     info: Info
     setPopupInfo: (params) => void
+    setShowForm?: (params) => void
     baseInfo: BillboardBaseInfo
     tokenBalance: BigNumber
     allowance: BigNumber
@@ -59,7 +60,7 @@ const Textarea = styled.textarea<{ backgroundColor: string, textColor: string }>
     padding:15px;
 `
 
-const BillboardForm: React.FC<FormProps> = ({ info, setPopupInfo, baseInfo, tokenBalance, allowance }) => {
+const BillboardForm: React.FC<FormProps> = ({ info, setPopupInfo, baseInfo, tokenBalance, allowance, setShowForm }) => {
     const { id, city, isBid, bidLevel } = info;
     const { isDark } = useTheme()
     const { account } = useWallet()
@@ -172,7 +173,7 @@ const BillboardForm: React.FC<FormProps> = ({ info, setPopupInfo, baseInfo, toke
                 onPresentBillboardBidModal()
             }
             setPopupInfo(null);
-            bidStore.dispatch({ type: HIDE_FORM })
+            setShowForm(false);
 
         }
     }
