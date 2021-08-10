@@ -7,10 +7,15 @@ import MapGL, {
     GeolocateControl
 } from 'react-map-gl';
 import useTheme from 'hooks/useTheme'
+import BigNumber from 'bignumber.js';
+import { getCakeAddress, getBillboardAddress } from 'utils/addressHelpers';
+import { useERC20 } from 'hooks/useContract';
+import { useBillboardAllowance } from 'hooks/useAllowance';
+import useTokenBalance from 'hooks/useTokenBalance';
 import Pins from './Pins';
 import BillboardForm from './BillboardForm';
 import BillboardDetails from './BillboardDetails';
-import { useGetBillboardDetails } from "../api/index"
+import { useGetBillboardDetails, useGetBaseInfo } from "../api/index"
 import { bidStore, billboardStore } from "../store/store"
 import { HIDE_FORM } from '../store/reducer';
 
@@ -50,14 +55,16 @@ const Map = () => {
         pitch: 0
     });
     const { isDark } = useTheme()
-
-    useGetBillboardDetails();
-
-    const { cities } = billboardStore.getState();
-
     const { show } = bidStore.getState()
-
+    useGetBillboardDetails();
+    const { cities } = billboardStore.getState();
+    const baseInfo = useGetBaseInfo()
+    const tokenAddress = getCakeAddress()
+    const tokenContract = useERC20(tokenAddress);
+    const billboardAddress = getBillboardAddress()
+    const allowance = new BigNumber(useBillboardAllowance(tokenContract, billboardAddress) || 0)
     const [popupInfo, setPopupInfo] = useState(null);
+    const tokenBalance = useTokenBalance(tokenAddress)
 
     useEffect(() => {
         const mapbox = document.getElementsByClassName('mapboxgl-map')[0]
@@ -67,7 +74,6 @@ const Map = () => {
         if (mapbox) {
             if (popupInfo) {
                 mapbox.setAttribute("style", "position: absolute; width: 100%; height: 100%; overflow: hidden; visibility: inherit; opacity:50%")
-
 
                 if (isDark) {
                     popupContent.setAttribute('style', "background:#18151f")
@@ -83,16 +89,15 @@ const Map = () => {
         }
     }, [popupInfo, isDark])
 
-    let comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} />;
+    let comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />;
 
     if (popupInfo && popupInfo.ipfsHash) {
         if (show) {
-            comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} />
+            comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />
         } else {
-            comp = <BillboardDetails info={popupInfo} />
+            comp = <BillboardDetails info={popupInfo} baseInfo={baseInfo} />
         }
     }
-
 
     return (
         <>
@@ -133,4 +138,4 @@ const Map = () => {
     );
 }
 
-export default Map
+export default React.memo(Map)

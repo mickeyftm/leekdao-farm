@@ -10,15 +10,13 @@ import UnlockButton from 'components/UnlockButton';
 import { useBillboardApprove } from 'hooks/useApprove';
 import { getCakeAddress, getBillboardAddress } from 'utils/addressHelpers';
 import { useERC20, useBillboardContract } from 'hooks/useContract';
-import { useBillboardAllowance } from 'hooks/useAllowance';
-import useTokenBalance from 'hooks/useTokenBalance';
 import BigNumber from 'bignumber.js';
 import validator from "validator"
 import ConfirmationPendingContent from '../Modal/ConfirmationPendeingContent';
 import BillboardBidModal from '../Modal/BillboardBidModal';
 import { GET_BID_BILLBOARD_HASH, HIDE_FORM } from '../store/reducer';
 import { store, bidStore } from "../store/store"
-import { useGetBaseInfo } from '../api';
+import { BillboardBaseInfo } from "../api"
 
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
 
@@ -34,6 +32,9 @@ interface Info extends City {
 interface formPorps {
     info: Info
     setPopupInfo: (params) => void
+    baseInfo: BillboardBaseInfo
+    tokenBalance: BigNumber
+    allowance: BigNumber
 }
 
 const FormLayout = styled.div`
@@ -58,34 +59,32 @@ const Textarea = styled.textarea<{ backgroundColor: string, textColor: string }>
     padding:15px;
 `
 
-const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
+const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo, baseInfo, tokenBalance, allowance }) => {
     const { id, city, isBid, bidLevel } = info;
     const { isDark } = useTheme()
     const { account } = useWallet()
     const [description, setDescription] = useState("")
+    const [twitter, setTwitter] = useState("")
     const [buffer, setBuffer] = useState(null);
     const [file, setFile] = useState(null);
     const [validImage, setValidImage] = useState(true)
     const [validDescription, setValidDescription] = useState(true)
+    const [validTwitter, setValidTwitter] = useState(true);
     const [approval, setApproval] = useState(true)
     const tokenAddress = getCakeAddress()
-    const baseInfo = useGetBaseInfo()
     const minimumTokenAmount = baseInfo && baseInfo.minimumTokenAmount
     const basePrice = baseInfo && baseInfo.basePrice
     const formatedBasePrice = getBalanceNumber(new BigNumber(basePrice));
     const bidTokenAmount = formatedBasePrice * bidLevel
-    const formatedMinimumTokenAmount = getBalanceNumber(new BigNumber(minimumTokenAmount))
     const tokenContract = useERC20(tokenAddress);
     const billboardContract = useBillboardContract()
     const billboardAddress = getBillboardAddress()
+    const formatedMinimumTokenAmount = getBalanceNumber(new BigNumber(minimumTokenAmount))
     const { onApprove } = useBillboardApprove(tokenContract, billboardAddress)
-    const allowance = new BigNumber(useBillboardAllowance(tokenContract, billboardAddress) || 0)
     const needsApproval = allowance.toNumber() <= 0
-    const tokenBalance = useTokenBalance(tokenAddress)
     const formatedTokenBalance = getBalanceNumber(tokenBalance)
     const isQualified = isBid || formatedTokenBalance >= formatedMinimumTokenAmount
     const isTokenEnough = !isBid || formatedTokenBalance >= bidTokenAmount
-
     const [onPresentConfirmationModal] = useModal(<ConfirmationPendingContent title="Waiting for Confirmation" onDismiss={() => { return null }} />)
     const [onPresentImageUploadingModal] = useModal(<ConfirmationPendingContent title="Uploading to IPFS" onDismiss={() => { return null }} />)
     const [onPresentBillboardBidModal] = useModal(<BillboardBidModal onDismiss={() => { return null }} />)
@@ -109,6 +108,15 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
                 setValidDescription(true)
             } else {
                 setValidDescription(false)
+            }
+        }
+
+        if (field === 'twitter') {
+            setTwitter(fieldValue)
+            if (validator.isLength(fieldValue, { min: 1, max: 50 })) {
+                setValidTwitter(true)
+            } else {
+                setValidTwitter(false)
             }
         }
 
@@ -154,7 +162,7 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
         if (response) {
             const { hash } = response[0];
             onPresentConfirmationModal();
-            const result = await billboardContract.methods.bid(id, city, hash, description).send({ from: account })
+            const result = await billboardContract.methods.bid(id, city, hash, description, twitter).send({ from: account })
             if (result) {
                 const action = {
                     type: GET_BID_BILLBOARD_HASH,
@@ -174,6 +182,17 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
             <Heading color="secondary" size="lg">Bill Board Bid Form</Heading>
             <Text>City: {info.city}</Text>
             <form onSubmit={onSubmit}>
+                <div style={{ marginBottom: '10px' }}>
+                    <Text mb="5px">Twitter Username: (without @)</Text>
+                    <Input
+                        placeholder="Twitter Username..."
+                        name="twitter"
+                        value={twitter}
+                        onChange={(e) => handleIsValid(e.currentTarget.value, "twitter")}
+                        onBlur={() => setValidTwitter(true)}
+                    />
+                </div>
+
                 <div style={{ marginBottom: '10px' }}>
                     <Text mb="5px">* Descriptions:</Text>
                     <Textarea
@@ -208,6 +227,8 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
                 {account && !validDescription && <Text color="failure" mb="10px">Sorry! Text Size is 1 - 50</Text>}
 
                 {account && !validImage && <Text color="failure" mb="10px">Sorry! Maximum Image Size is: 5MB</Text>}
+
+                {account && !validTwitter && <Text color="failure" mb="10px">Sorry! Please enter a valid twitter name</Text>}
 
                 {account ? <Flex alignItems="center" justifyContent="space-between">
                     <Button onClick={handleApprove} disabled={!isQualified || !needsApproval || !approval || !validImage || !validDescription || !isTokenEnough}>Approve</Button>

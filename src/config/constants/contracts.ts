@@ -45,6 +45,6 @@ export default {
   },
   billboard: {
     137: "",
-    80001: "0xB416d3526a7Da0ECd9D8a143A9beD97c9e8A5335"
+    80001: "0x5aAb4b7FC9Bf6CfAE58646815A4c814b46801DC2"
   }
 }
