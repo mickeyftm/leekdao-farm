@@ -13,12 +13,10 @@ import { useERC20 } from 'hooks/useContract';
 import { useBillboardAllowance } from 'hooks/useAllowance';
 import useTokenBalance from 'hooks/useTokenBalance';
 import Pins from './Pins';
-import BillboardForm from './BillboardForm';
-import BillboardDetails from './BillboardDetails';
+import PostOrBid from './PostOrBid'
 import { useGetBillboardDetails, useGetBaseInfo } from "../api/index"
 import { bidStore, billboardStore } from "../store/store"
 import { HIDE_FORM } from '../store/reducer';
-
 
 const TOKEN = process.env.REACT_APP_MAP_TOKEN
 
@@ -55,7 +53,6 @@ const Map = () => {
         pitch: 0
     });
     const { isDark } = useTheme()
-    const { show } = bidStore.getState()
     useGetBillboardDetails();
     const { cities } = billboardStore.getState();
     const baseInfo = useGetBaseInfo()
@@ -89,16 +86,6 @@ const Map = () => {
         }
     }, [popupInfo, isDark])
 
-    let comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />;
-
-    if (popupInfo && popupInfo.ipfsHash) {
-        if (show) {
-            comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />
-        } else {
-            comp = <BillboardDetails info={popupInfo} baseInfo={baseInfo} />
-        }
-    }
-
     return (
         <>
             <MapGL
@@ -125,7 +112,7 @@ const Map = () => {
                         }
                         }
                     >
-                        {comp}
+                        <PostOrBid info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />
                     </Popup>
                 )}
 

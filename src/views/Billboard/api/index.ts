@@ -99,5 +99,5 @@ export const useGetBillboardDetails = () => {
         return () => {
             mounted = false
         }
-    }, [cities, slowRefresh])// eslint-disable-line react-hooks/exhaustive-deps
+    }, [slowRefresh])// eslint-disable-line react-hooks/exhaustive-deps
 }

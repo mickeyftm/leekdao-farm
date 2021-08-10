@@ -29,7 +29,7 @@ interface Info extends City {
 
 }
 
-interface formPorps {
+export interface FormProps {
     info: Info
     setPopupInfo: (params) => void
     baseInfo: BillboardBaseInfo
@@ -59,7 +59,7 @@ const Textarea = styled.textarea<{ backgroundColor: string, textColor: string }>
     padding:15px;
 `
 
-const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo, baseInfo, tokenBalance, allowance }) => {
+const BillboardForm: React.FC<FormProps> = ({ info, setPopupInfo, baseInfo, tokenBalance, allowance }) => {
     const { id, city, isBid, bidLevel } = info;
     const { isDark } = useTheme()
     const { account } = useWallet()
