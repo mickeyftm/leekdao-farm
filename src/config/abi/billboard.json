@@ -78,6 +78,11 @@
                 "internalType": "string",
                 "name": "desc_",
                 "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "twitter_",
+                "type": "string"
             }
         ],
         "name": "bid",
@@ -108,6 +113,11 @@
             {
                 "internalType": "string",
                 "name": "ipfsHash",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "twitter",
                 "type": "string"
             },
             {
@@ -153,6 +163,11 @@
                     {
                         "internalType": "string",
                         "name": "ipfsHash",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "twitter",
                         "type": "string"
                     },
                     {

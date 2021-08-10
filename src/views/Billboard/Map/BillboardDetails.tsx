@@ -2,14 +2,13 @@ import React from "react"
 import styled from "styled-components"
 import BigNumber from "bignumber.js"
 import { getBalanceNumber } from "utils/formatBalance"
-import { Text, Button, Heading, Flex, Box, BaseLayout, LinkExternal } from "leek-uikit"
+import { Text, Button, Heading, Flex, Box, BaseLayout, LinkExternal, Link } from "leek-uikit"
 import truncateWalletAddress from "utils/truncateWalletAddress"
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from "components/UnlockButton"
 import { getChainExplorerUrl } from "utils/chainExplorer"
 import { bidStore } from "../store/store"
 import { SHOW_FORM } from "../store/reducer"
-import { useGetBaseInfo } from "../api/index"
 
 const chainId = process.env.REACT_APP_CHAIN_ID
 
@@ -27,9 +26,8 @@ const BillboardLayout = styled(BaseLayout)`
 `
 
 const BillboardDetails = (props) => {
-    const { info } = props;
-    const { ipfsHash, desc, bidLevel, owner } = info;
-    const baseInfo = useGetBaseInfo();
+    const { info, baseInfo } = props;
+    const { ipfsHash, desc, bidLevel, owner, twitter } = info;
     const basePrice = baseInfo && baseInfo.basePrice
     const formatedBasePrice = getBalanceNumber(new BigNumber(basePrice));
     const { account } = useWallet()
@@ -38,10 +36,9 @@ const BillboardDetails = (props) => {
         bidStore.dispatch({ type: SHOW_FORM })
     }
 
-
     return (
         <BillboardLayout>
-            <img src={`https://ipfs.infura.io/ipfs/${ipfsHash}`} alt="city" width={200} height={200} />
+            <img src={`https://ipfs.infura.io/ipfs/${ipfsHash}`} alt="city" width={300} />
             <Box>
                 <div style={{ marginBottom: "10px" }}>
                     <Heading size="lg" color="secondary">{desc}</Heading>
@@ -51,6 +48,13 @@ const BillboardDetails = (props) => {
                     <Text bold marginRight="10px">Owner:</Text>
                     <LinkExternal href={getChainExplorerUrl(chainId, owner)}>{truncateWalletAddress(owner)}</LinkExternal>
                 </Flex>
+
+                {
+                    twitter && <Flex alignItems="center" justifyContent="start">
+                        <Text bold marginRight="10px">Twitter:</Text>
+                        <Link href={`https://twitter.com/${twitter}`} target="_blank">@{twitter}</Link>
+                    </Flex>
+                }
 
                 <Flex alignItems="center" justifyContent="start">
                     <Text bold marginRight="10px">Bid Level:</Text>
@@ -67,8 +71,8 @@ const BillboardDetails = (props) => {
                 }
 
             </Box>
-        </BillboardLayout>
+        </BillboardLayout >
     )
 }
 
-export default BillboardDetails
+export default React.memo(BillboardDetails)

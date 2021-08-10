@@ -14,8 +14,12 @@ const StyledSvg = styled.svg`
 `
 
 const StyledImg = styled.img<{ zoom: number }>`
-    width: ${({ zoom }) => zoom * 40}px;
-    height: ${({ zoom }) => zoom * 40}px;
+    min-width:64px;
+    min-height:48px;
+    max-width:${({ zoom }) => zoom * 85}px;
+    max-height:${({ zoom }) => zoom * 64}px;
+    width: ${({ zoom }) => zoom * 10}%;
+    height: ${({ zoom }) => zoom * 10}%;
     borderRadius:50%;
     transform: translate(-20px, -32px);
     cursor: pointer;

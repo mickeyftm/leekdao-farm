@@ -4,14 +4,13 @@ import useRefresh from "hooks/useRefresh"
 import { billboardStore } from '../store/store';
 import { GET_BILLBOARD_DETAILS } from '../store/reducer'
 
-
-interface billboardBaseInfo {
+export interface BillboardBaseInfo {
     basePrice: number
     minimumTokenAmount: number
 }
 
 export const useGetBaseInfo = () => {
-    const [baseInfo, setBaseInfo] = useState<billboardBaseInfo>()
+    const [baseInfo, setBaseInfo] = useState<BillboardBaseInfo>()
     const contract = useBillboardContract()
     const { slowRefresh } = useRefresh()
 
@@ -53,12 +52,13 @@ export const useGetBillboardDetails = () => {
                 const newBillboards = {}
 
                 billboards.forEach(billboard => {
-                    const { id, desc, owner, ipfsHash, bidLevel } = billboard;
+                    const { id, desc, owner, ipfsHash, bidLevel, twitter } = billboard;
                     const isBid = billboard.init;
 
                     newBillboards[id] = {
                         id,
                         desc,
+                        twitter,
                         isBid,
                         owner,
                         ipfsHash,
