@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import ipfsClient from 'ipfs-http-client'
 import styled from 'styled-components';
 import { City } from "config/constants/types"
+import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from "utils/formatBalance"
 import { Text, Button, Input, Heading, Flex, useModal } from "leek-uikit"
 import { useWallet } from '@binance-chain/bsc-use-wallet'
@@ -43,12 +44,12 @@ const FormLayout = styled.div`
     }
 `
 
-const Textarea = styled.textarea`
-    background-color: #eeeaf4;
+const Textarea = styled.textarea<{ backgroundColor: string, textColor: string }>`
+    background-color:${({ backgroundColor }) => backgroundColor};
     border: 0;
     border-radius: 16px;
     box-shadow: inset 0px 2px 2px -1px rgb(74 74 104 / 10%);
-    color: #452A7A;
+    color: ${({ textColor }) => textColor};
     display: block;
     font-size: 16px;
     height: 100px;
@@ -59,6 +60,7 @@ const Textarea = styled.textarea`
 
 const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
     const { id, city, isBid, bidLevel } = info;
+    const { isDark } = useTheme()
     const { account } = useWallet()
     const [description, setDescription] = useState("")
     const [buffer, setBuffer] = useState(null);
@@ -180,6 +182,8 @@ const BillboardForm: React.FC<formPorps> = ({ info, setPopupInfo }) => {
                         value={description}
                         onChange={(e) => handleIsValid(e.currentTarget.value, "description")}
                         required
+                        backgroundColor={!isDark ? "#eeeaf4" : "#483f5a"}
+                        textColor={!isDark ? "#452A7A" : "#EAE2FC"}
                     />
                 </div>
 

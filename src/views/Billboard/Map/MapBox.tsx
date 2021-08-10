@@ -6,12 +6,14 @@ import MapGL, {
     ScaleControl,
     GeolocateControl
 } from 'react-map-gl';
+import useTheme from 'hooks/useTheme'
 import Pins from './Pins';
 import BillboardForm from './BillboardForm';
 import BillboardDetails from './BillboardDetails';
 import { useGetBillboardDetails } from "../api/index"
 import { bidStore, billboardStore } from "../store/store"
 import { HIDE_FORM } from '../store/reducer';
+
 
 const TOKEN = process.env.REACT_APP_MAP_TOKEN
 
@@ -47,6 +49,8 @@ const Map = () => {
         bearing: 0,
         pitch: 0
     });
+    const { isDark } = useTheme()
+
     useGetBillboardDetails();
 
     const { cities } = billboardStore.getState();
@@ -58,17 +62,26 @@ const Map = () => {
     useEffect(() => {
         const mapbox = document.getElementsByClassName('mapboxgl-map')[0]
         const closeButton = document.getElementsByClassName('mapboxgl-popup-close-button')[0]
+        const popupContent = document.getElementsByClassName("mapboxgl-popup-content")[0]
 
         if (mapbox) {
             if (popupInfo) {
                 mapbox.setAttribute("style", "position: absolute; width: 100%; height: 100%; overflow: hidden; visibility: inherit; opacity:50%")
-                closeButton.setAttribute('style', "font-size:50px; width:50px;")
+
+
+                if (isDark) {
+                    popupContent.setAttribute('style', "background:#18151f")
+                    closeButton.setAttribute('style', "font-size:50px; width:50px;color:#c9c4d4")
+                } else {
+                    popupContent.setAttribute('style', "background:#fff")
+                    closeButton.setAttribute('style', "font-size:50px; width:50px;color:#483f5a")
+                }
             } else {
                 mapbox.setAttribute('style', 'position: absolute; width: 100%; height: 100%; overflow: hidden; visibility: inherit;')
 
             }
         }
-    }, [popupInfo])
+    }, [popupInfo, isDark])
 
     let comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} />;
 
@@ -87,7 +100,7 @@ const Map = () => {
                 {...viewport}
                 width="100%"
                 height="100vh"
-                mapStyle="mapbox://styles/mapbox/streets-v11"
+                mapStyle={!isDark ? "mapbox://styles/mapbox/streets-v10" : 'mapbox://styles/mapbox/dark-v10'}
                 onViewportChange={setViewport}
                 mapboxApiAccessToken={TOKEN}
             >

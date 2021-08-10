@@ -19,6 +19,7 @@ const BillboardLayout = styled(BaseLayout)`
   grid-gap: 32px;
   margin: 0 auto;
   padding:30px;
+  align-items: center;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     grid-template-columns: 0.8fr 1fr;

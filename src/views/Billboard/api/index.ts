@@ -13,6 +13,7 @@ interface billboardBaseInfo {
 export const useGetBaseInfo = () => {
     const [baseInfo, setBaseInfo] = useState<billboardBaseInfo>()
     const contract = useBillboardContract()
+    const { slowRefresh } = useRefresh()
 
     useEffect(() => {
         let mounted = true;
@@ -34,10 +35,8 @@ export const useGetBaseInfo = () => {
             }
         }
         fetchData();
-        return () => {
-            mounted = false
-        }
-    }, [contract.methods])
+        return () => { mounted = false }
+    }, [slowRefresh])// eslint-disable-line react-hooks/exhaustive-deps
     return baseInfo
 }
 
@@ -100,5 +99,5 @@ export const useGetBillboardDetails = () => {
         return () => {
             mounted = false
         }
-    }, [contract.methods, cities, slowRefresh])
+    }, [cities, slowRefresh])// eslint-disable-line react-hooks/exhaustive-deps
 }

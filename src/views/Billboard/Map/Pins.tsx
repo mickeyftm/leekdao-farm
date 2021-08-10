@@ -31,7 +31,7 @@ function Pins(props) {
                     <Marker key={city.id} longitude={city.longitude} latitude={city.latitude} >
                         {
                             city.ipfsHash ?
-                                <StyledImg zoom={zoom} src={`https://ipfs.infura.io/ipfs/${city.ipfsHash}`} alt="city" onClick={() => onClick(city)} /> :
+                                <StyledImg zoom={zoom} src={`https://ipfs.infura.io/ipfs/${city.ipfsHash}`} alt={city.id} onClick={() => onClick(city)} /> :
                                 <StyledSvg
                                     height={SIZE}
                                     viewBox="0 0 24 24"
