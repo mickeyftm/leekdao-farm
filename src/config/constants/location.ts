@@ -69,9 +69,9 @@ const cities: City[] = [
     },
     {
         "id": 11,
-        "city": "Guangzhou",
-        "latitude": 23.145,
-        "longitude": 113.325
+        "city": "Chengdu",
+        "latitude": 30.67,
+        "longitude": 104.07
     },
     {
         "id": 12,
@@ -129,9 +129,9 @@ const cities: City[] = [
     },
     {
         "id": 21,
-        "city": "Hong Kong",
-        "latitude": 22.305,
-        "longitude": 114.185
+        "city": "Greenland",
+        "latitude": 75,
+        "longitude": -45
     },
     {
         "id": 22,
@@ -453,43 +453,59 @@ const cities: City[] = [
     },
     {
         "id": 75,
-        "city": "uninhabited islands",
+        "city": "Uninhabited islands",
         "latitude": -40,
         "longitude": 80
     },
     {
         "id": 76,
-        "city": "paek islands",
+        "city": "Paek islands",
         "latitude": -40,
         "longitude": 100
     },
 
     {
         "id": 77,
-        "city": "ice sea",
+        "city": "Ice sea",
         "latitude": -33,
         "longitude": -20
     },
     {
         "id": 78,
-        "city": "turtle sea",
+        "city": "Turtle sea",
         "latitude": 20,
         "longitude": 160
     },
     {
         "id": 79,
-        "city": "middel sea",
+        "city": "Middel sea",
         "latitude": -17,
         "longitude": 80
+    },
+    {
+        "id": 80,
+        "city": "Edmonton",
+        "latitude": 53.55,
+        "longitude": -113.5
+    },
+    {
+        "id": 81,
+        "city": "Krasnoyarsk",
+        "latitude": 56.014,
+        "longitude": 92.866
+    },
+    {
+        "id": 82,
+        "city": "Noginsk",
+        "latitude": 64.4833,
+        "longitude": 91.2333
+    },
+    {
+        "id": 83,
+        "city": "South Pole",
+        "latitude": -80,
+        "longitude": 2
     }
-
-
-
-
-
-
-
 ]
 
 export default cities
-
