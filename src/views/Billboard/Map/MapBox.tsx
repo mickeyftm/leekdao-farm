@@ -6,7 +6,9 @@ import MapGL, {
     GeolocateControl
 } from 'react-map-gl';
 import useTheme from 'hooks/useTheme'
+import styled from 'styled-components';
 import BigNumber from 'bignumber.js';
+import { Spinner } from 'leek-uikit';
 import { getCakeAddress, getBillboardAddress } from 'utils/addressHelpers';
 import { useERC20 } from 'hooks/useContract';
 import { useBillboardAllowance } from 'hooks/useAllowance';
@@ -42,6 +44,17 @@ const scaleControlStyle = {
     padding: '10px'
 };
 
+const MapLoadingLayout = styled.div<{ isDark: boolean }>`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color:${({ isDark }) => isDark ? `rgba(255, 255, 255, 0.5)` : `rgba(0, 0, 0, 0.5)`};
+    z-index:2;
+`
+
 const Map = () => {
     const [viewport, setViewport] = useState({
         latitude: 51.29,
@@ -52,7 +65,7 @@ const Map = () => {
     });
     const { isDark } = useTheme()
     useGetBillboardDetails();
-    const { cities } = billboardStore.getState();
+    const { cities, isMounted } = billboardStore.getState();
     const baseInfo = useGetBaseInfo()
     const tokenAddress = getCakeAddress()
     const tokenContract = useERC20(tokenAddress);
@@ -79,10 +92,9 @@ const Map = () => {
                 }
             } else {
                 mapbox.setAttribute('style', 'position: absolute; width: 100%; height: 100%; overflow: hidden; visibility: inherit;')
-
             }
         }
-    }, [popupInfo, isDark])
+    }, [popupInfo, isDark, isMounted])
 
     return (
         <>
@@ -95,8 +107,9 @@ const Map = () => {
                 mapboxApiAccessToken={TOKEN}
             >
 
-                <Pins data={cities} onClick={setPopupInfo} zoom={viewport.zoom} />
-
+                {isMounted ? <Pins data={cities} onClick={setPopupInfo} zoom={viewport.zoom} /> : <MapLoadingLayout isDark={isDark}>
+                    <Spinner />
+                </MapLoadingLayout>}
 
                 <PostOrBid info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />
 

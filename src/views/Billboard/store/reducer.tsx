@@ -5,7 +5,8 @@ const defaultState = {
 }
 
 const billboardState = {
-    cities
+    cities,
+    isMounted: false
 }
 
 export const GET_BID_BILLBOARD_HASH = 'GET_BID_BILLBOARD_HASH'
@@ -24,6 +25,7 @@ export const billboardReducer = (state = billboardState, action) => {
     if (action.type === GET_BILLBOARD_DETAILS) {
         const newState = JSON.parse(JSON.stringify(state))
         newState.cities = action.cities
+        newState.isMounted = true;
         return newState
     }
     return state
