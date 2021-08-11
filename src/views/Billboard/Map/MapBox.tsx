@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import MapGL, {
-    Popup,
     NavigationControl,
     FullscreenControl,
     ScaleControl,
@@ -13,12 +12,9 @@ import { useERC20 } from 'hooks/useContract';
 import { useBillboardAllowance } from 'hooks/useAllowance';
 import useTokenBalance from 'hooks/useTokenBalance';
 import Pins from './Pins';
-import BillboardForm from './BillboardForm';
-import BillboardDetails from './BillboardDetails';
+import PostOrBid from './PostOrBid'
 import { useGetBillboardDetails, useGetBaseInfo } from "../api/index"
-import { bidStore, billboardStore } from "../store/store"
-import { HIDE_FORM } from '../store/reducer';
-
+import { billboardStore } from "../store/store"
 
 const TOKEN = process.env.REACT_APP_MAP_TOKEN
 
@@ -55,7 +51,6 @@ const Map = () => {
         pitch: 0
     });
     const { isDark } = useTheme()
-    const { show } = bidStore.getState()
     useGetBillboardDetails();
     const { cities } = billboardStore.getState();
     const baseInfo = useGetBaseInfo()
@@ -89,16 +84,6 @@ const Map = () => {
         }
     }, [popupInfo, isDark])
 
-    let comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />;
-
-    if (popupInfo && popupInfo.ipfsHash) {
-        if (show) {
-            comp = <BillboardForm info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />
-        } else {
-            comp = <BillboardDetails info={popupInfo} baseInfo={baseInfo} />
-        }
-    }
-
     return (
         <>
             <MapGL
@@ -112,22 +97,8 @@ const Map = () => {
 
                 <Pins data={cities} onClick={setPopupInfo} zoom={viewport.zoom} />
 
-                {popupInfo && (
-                    <Popup
-                        tipSize={10}
-                        anchor="bottom"
-                        longitude={popupInfo.longitude}
-                        latitude={popupInfo.latitude}
-                        closeOnClick={false}
-                        onClose={() => {
-                            setPopupInfo(null)
-                            bidStore.dispatch({ type: HIDE_FORM })
-                        }
-                        }
-                    >
-                        {comp}
-                    </Popup>
-                )}
+
+                <PostOrBid info={popupInfo} setPopupInfo={setPopupInfo} baseInfo={baseInfo} tokenBalance={tokenBalance} allowance={allowance} />
 
                 <GeolocateControl style={geolocateStyle} />
                 <FullscreenControl style={fullscreenControlStyle} />
