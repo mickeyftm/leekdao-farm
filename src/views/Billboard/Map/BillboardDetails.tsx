@@ -25,7 +25,7 @@ const BillboardLayout = styled(BaseLayout)`
 
 const BillboardDetails = (props) => {
     const { info, baseInfo, setShowForm } = props;
-    const { ipfsHash, desc, bidLevel, owner, twitter } = info;
+    const { ipfsHash, desc, bidLevel, owner, twitter, city } = info;
     const basePrice = baseInfo && baseInfo.basePrice
     const formatedBasePrice = getBalanceNumber(new BigNumber(basePrice));
     const { account } = useWallet()
@@ -42,6 +42,11 @@ const BillboardDetails = (props) => {
                 <div style={{ marginBottom: "10px" }}>
                     <Heading size="lg" color="secondary">{desc}</Heading>
                 </div>
+
+                <Flex alignItems="center" justifyContent="start">
+                    <Text bold marginRight="10px">City: </Text>
+                    <Text>{city}</Text>
+                </Flex>
 
                 <Flex alignItems="center" justifyContent="start">
                     <Text bold marginRight="10px">Owner:</Text>
