@@ -33,7 +33,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const link = from([
     errorLink,
-    new HttpLink({ uri: "https://hub.snapshot.page/graphql" }),
+    new HttpLink({ uri: "https://hub.snapshot.org/graphql" }),
 ]);
 
 const client = new ApolloClient({
